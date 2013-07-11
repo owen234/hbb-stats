@@ -1,0 +1,77 @@
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms030-nosyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms030-nosyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms030-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms030-doublesyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms030-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms030-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms050-nosyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms050-nosyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms050-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms050-doublesyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms050-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms050-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms100-nosyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms100-nosyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms100-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms100-doublesyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms100-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms100-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms150-nosyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms150-nosyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms150-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms150-doublesyst.txt\",\"outputfiles/ws-nosig-250-1metbin-mms150-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms150-doublesyst.log
+
+
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms030-nosyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms030-nosyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms030-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms030-doublesyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms030-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms030-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms050-nosyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms050-nosyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms050-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms050-doublesyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms050-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms050-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms100-nosyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms100-nosyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms100-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms100-doublesyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms100-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms100-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms150-nosyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms150-nosyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms150-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms150-doublesyst.txt\",\"outputfiles/ws-nosig-400-1metbin-mms150-doublesyst.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms150-doublesyst.log
+
+
+
+
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms030-nosyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms030-nosyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms030-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms030-doublesyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms030-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms030-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms050-nosyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms050-nosyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms050-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms050-doublesyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms050-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms050-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms100-nosyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms100-nosyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms100-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms100-doublesyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms100-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms100-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms150-nosyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms150-nosyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms150-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms150-doublesyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms150-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms150-doublesyst.log
+
+
+
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms030-nosyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms030-nosyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms030-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms030-doublesyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms030-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms030-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms050-nosyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms050-nosyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms050-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms050-doublesyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms050-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms050-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms100-nosyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms100-nosyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms100-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms100-doublesyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms100-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms100-doublesyst.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms150-nosyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms150-nosyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms150-nosyst.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms150-doublesyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms150-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms150-doublesyst.log
+
+
+
+
+
+
+
+
+
+
+
+
+

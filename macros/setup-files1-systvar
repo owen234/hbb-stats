@@ -1,0 +1,23 @@
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0-4metbin-nosyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-4metbin-nosyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-4metbin-nosyst.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0-4metbin-nosyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-4metbin-nosyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-4metbin-nosyst.log
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0-4metbin-doublesyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-4metbin-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-4metbin-doublesyst.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0-4metbin-doublesyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-4metbin-doublesyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-4metbin-doublesyst.log
+
+
+
+
+
+
+
+
+
+

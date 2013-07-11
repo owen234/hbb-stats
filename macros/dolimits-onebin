@@ -1,0 +1,29 @@
+
+
+  #-- asymptotic
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms030.root\",3,1.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-250-1metbin-mms030.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms050.root\",3,1.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-250-1metbin-mms050.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms100.root\",3,1.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-250-1metbin-mms100.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms150.root\",3,1.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-250-1metbin-mms150.log
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms030.root\",3,2.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-400-1metbin-mms030.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms050.root\",3,2.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-400-1metbin-mms050.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms100.root\",3,2.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-400-1metbin-mms100.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms150.root\",3,2.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-400-1metbin-mms150.log
+
+  #-- toys
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms030.root\",0,1.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-250-1metbin-mms030.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms050.root\",0,1.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-250-1metbin-mms050.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms100.root\",0,1.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-250-1metbin-mms100.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-1metbin-mms150.root\",0,1.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-250-1metbin-mms150.log
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms030.root\",0,2.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-400-1metbin-mms030.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms050.root\",0,2.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-400-1metbin-mms050.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms100.root\",0,2.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-400-1metbin-mms100.log
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-1metbin-mms150.root\",0,2.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-400-1metbin-mms150.log
+
+
+
+

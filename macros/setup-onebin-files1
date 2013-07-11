@@ -1,0 +1,116 @@
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-250-1metbin-mms030.txt\",250,0.,1,30.\)  |& tee logfiles/gen-input-nosig-250-1metbin-mms030.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-400-1metbin-mms030.txt\",400,0.,1,30.\)  |& tee logfiles/gen-input-nosig-400-1metbin-mms030.log
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-250-1metbin-mms050.txt\",250,0.,1,50.\)  |& tee logfiles/gen-input-nosig-250-1metbin-mms050.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-400-1metbin-mms050.txt\",400,0.,1,50.\)  |& tee logfiles/gen-input-nosig-400-1metbin-mms050.log
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-250-1metbin-mms100.txt\",250,0.,1,100.\) |& tee logfiles/gen-input-nosig-250-1metbin-mms100.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-400-1metbin-mms100.txt\",400,0.,1,100.\) |& tee logfiles/gen-input-nosig-400-1metbin-mms100.log
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-250-1metbin-mms150.txt\",250,0.,1,150.\) |& tee logfiles/gen-input-nosig-250-1metbin-mms150.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-400-1metbin-mms150.txt\",400,0.,1,150.\) |& tee logfiles/gen-input-nosig-400-1metbin-mms150.log
+
+
+
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms030.txt\",250,1.,1,30.\)  |& tee logfiles/gen-input-withsig-250-ss1.0-1metbin-mms030.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms030.txt\",400,1.,1,30.\)  |& tee logfiles/gen-input-withsig-400-ss1.0-1metbin-mms030.log
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms050.txt\",250,1.,1,50.\)  |& tee logfiles/gen-input-withsig-250-ss1.0-1metbin-mms050.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms050.txt\",400,1.,1,50.\)  |& tee logfiles/gen-input-withsig-400-ss1.0-1metbin-mms050.log
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms100.txt\",250,1.,1,100.\) |& tee logfiles/gen-input-withsig-250-ss1.0-1metbin-mms100.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms100.txt\",400,1.,1,100.\) |& tee logfiles/gen-input-withsig-400-ss1.0-1metbin-mms100.log
+
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms150.txt\",250,1.,1,150.\) |& tee logfiles/gen-input-withsig-250-ss1.0-1metbin-mms150.log
+# root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms150.txt\",400,1.,1,150.\) |& tee logfiles/gen-input-withsig-400-ss1.0-1metbin-mms150.log
+
+
+
+
+
+# #----------
+
+
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms030.txt\",\"outputfiles/ws-nosig-250-1metbin-mms030.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms030.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms030.txt\",\"outputfiles/ws-nosig-400-1metbin-mms030.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms030.log
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms050.txt\",\"outputfiles/ws-nosig-250-1metbin-mms050.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms050.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms050.txt\",\"outputfiles/ws-nosig-400-1metbin-mms050.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms050.log
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms100.txt\",\"outputfiles/ws-nosig-250-1metbin-mms100.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms100.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms100.txt\",\"outputfiles/ws-nosig-400-1metbin-mms100.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms100.log
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin-mms150.txt\",\"outputfiles/ws-nosig-250-1metbin-mms150.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin-mms150.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin-mms150.txt\",\"outputfiles/ws-nosig-400-1metbin-mms150.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin-mms150.log
+
+
+
+
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms030.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms030.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms030.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms030.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms030.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms030.log
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms050.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms050.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms050.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms050.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms050.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms050.log
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms100.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms100.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms100.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms100.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms100.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms100.log
+
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin-mms150.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms150.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin-mms150.log
+# root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin-mms150.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms150.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin-mms150.log
+
+
+
+
+# #----------
+
+
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-1metbin-mms030.root\"\) |& tee logfiles/fitqual-nosig-250-1metbin-mms030.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-1metbin-mms030.root\"\) |& tee logfiles/fitqual-nosig-400-1metbin-mms030.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-1metbin-mms050.root\"\) |& tee logfiles/fitqual-nosig-250-1metbin-mms050.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-1metbin-mms050.root\"\) |& tee logfiles/fitqual-nosig-400-1metbin-mms050.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-1metbin-mms100.root\"\) |& tee logfiles/fitqual-nosig-250-1metbin-mms100.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-1metbin-mms100.root\"\) |& tee logfiles/fitqual-nosig-400-1metbin-mms100.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-1metbin-mms150.root\"\) |& tee logfiles/fitqual-nosig-250-1metbin-mms150.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-1metbin-mms150.root\"\) |& tee logfiles/fitqual-nosig-400-1metbin-mms150.log
+
+
+
+
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms030.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-1metbin-mms030.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms030.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-1metbin-mms030.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms050.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-1metbin-mms050.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms050.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-1metbin-mms050.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms100.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-1metbin-mms100.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms100.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-1metbin-mms100.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms150.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-1metbin-mms150.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms150.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-1metbin-mms150.log
+
+
+
+
+
+
+
+
+
+
+

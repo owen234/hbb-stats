@@ -1,0 +1,37 @@
+
+#
+#  Source this file from the parent directory (ewkino_hbb).  That is, do this
+#
+#    source macros/setup_files1
+#
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+
+
+  root -b -q gen_input_file.c+\(\"input-nosig-250.txt\",250,0.\) |& tee logfiles/gen-input-nosig-250.log
+  root -b -q gen_input_file.c+\(\"input-nosig-400.txt\",400,0.\) |& tee logfiles/gen-input-nosig-400.log
+
+  root -b -q gen_input_file.c+\(\"input-withsig-250-ss1.0.txt\",250,1.\) |& tee logfiles/gen-input-withsig-250-ss1.0.log
+  root -b -q gen_input_file.c+\(\"input-withsig-400-ss1.0.txt\",400,1.\) |& tee logfiles/gen-input-withsig-400-ss1.0.log
+
+
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-250.txt\",\"outputfiles/ws-nosig-250.root\"\) |& tee logfiles/build-ws-nosig-250.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-400.txt\",\"outputfiles/ws-nosig-400.root\"\) |& tee logfiles/build-ws-nosig-400.log
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0.txt\",\"outputfiles/ws-withsig-250-ss1.0.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0.txt\",\"outputfiles/ws-withsig-400-ss1.0.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0.log
+
+
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250.root\"\) |& tee logfiles/fitqual-nosig-250.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400.root\"\) |& tee logfiles/fitqual-nosig-400.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0.log
+
+

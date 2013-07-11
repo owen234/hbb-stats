@@ -1,0 +1,36 @@
+
+
+ set ntoy = 2000
+ set minmu = 0.30
+ set maxmu = 2.00
+ set npoints = 10
+
+  #-- toys
+
+   root -b -q rundemo.c\(\"outputfiles/ws-met-nosig-200-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-met-nosig-200-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-met-nosig-250-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-met-nosig-250-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-met-nosig-300-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-met-nosig-300-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-met-nosig-350-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-met-nosig-350-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-met-nosig-400-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-met-nosig-400-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-met-nosig-450-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-met-nosig-450-4metbin.log
+
+
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-200-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-200-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-250-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-250-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-300-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-300-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-350-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-350-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-400-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-400-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-450-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-450-4metbin.log
+
+
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig2012-nosig-200-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig2012-nosig-200-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig2012-nosig-250-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig2012-nosig-250-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig2012-nosig-300-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig2012-nosig-300-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig2012-nosig-350-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig2012-nosig-350-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig2012-nosig-400-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig2012-nosig-400-4metbin.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig2012-nosig-450-4metbin.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig2012-nosig-450-4metbin.log
+
+
+
+
+

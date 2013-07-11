@@ -1,0 +1,14 @@
+
+
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-250-ss1.0.txt\",1000\) |& tee logfiles/toymc-withsig-250-ss1.0.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-400-ss1.0.txt\",1000\) |& tee logfiles/toymc-withsig-400-ss1.0.log
+
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-250.txt\",1000\) |& tee logfiles/toymc-nosig-250.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-400.txt\",1000\) |& tee logfiles/toymc-nosig-400.log
+
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-250-ss1.0.root\",0\)
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-400-ss1.0.root\",0\)
+
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-250.root\",1\)
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-400.root\",1\)
+

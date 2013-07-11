@@ -1,0 +1,4 @@
+
+   set ntoy = 2000
+
+   echo ntoy is $ntoy

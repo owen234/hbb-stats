@@ -1,0 +1,17 @@
+
+
+  #-- asymptotic
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-4metbin.root\",3,1.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-250-4metbin.log
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-4metbin.root\",3,2.,0.,20,15000\) |& tee logfiles/limit-asymptotic-nosig-400-4metbin.log
+
+  #-- toys
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-250-4metbin.root\",0,1.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-250-4metbin.log
+
+   root -b -q rundemo.c\(\"outputfiles/ws-nosig-400-4metbin.root\",0,2.,0.,20,15000\) |& tee logfiles/limit-toys-nosig-400-4metbin.log
+
+
+
+

@@ -1,0 +1,104 @@
+
+#
+#  Source this file from the parent directory (ewkino_hbb).  That is, do this
+#
+#
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-250-nocor-nosyst.txt\",\"outputfiles/ws-nosig-250-nocor-nosyst.root\"\) |& tee logfiles/build-ws-nosig-250-nocor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-nocor-nosyst.root\"\) |& tee logfiles/fitqual-nosig-250-nocor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-250-nocor-nosyst.txt\",1000\) |& tee logfiles/toymc-nosig-250-ss1.0-nocor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-250-nocor-nosyst.root\",1\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-250-nocor-wsyst.txt\",\"outputfiles/ws-nosig-250-nocor-wsyst.root\"\) |& tee logfiles/build-ws-nosig-250-nocor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-nocor-wsyst.root\"\) |& tee logfiles/fitqual-nosig-250-nocor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-250-nocor-wsyst.txt\",1000\) |& tee logfiles/toymc-nosig-250-ss1.0-nocor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-250-nocor-wsyst.root\",1\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-250-wcor-nosyst.txt\",\"outputfiles/ws-nosig-250-wcor-nosyst.root\"\) |& tee logfiles/build-ws-nosig-250-wcor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-wcor-nosyst.root\"\) |& tee logfiles/fitqual-nosig-250-wcor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-250-wcor-nosyst.txt\",1000\) |& tee logfiles/toymc-nosig-250-ss1.0-wcor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-250-wcor-nosyst.root\",1\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-250-wcor-wsyst.txt\",\"outputfiles/ws-nosig-250-wcor-wsyst.root\"\) |& tee logfiles/build-ws-nosig-250-wcor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-wcor-wsyst.root\"\) |& tee logfiles/fitqual-nosig-250-wcor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-250-wcor-wsyst.txt\",1000\) |& tee logfiles/toymc-nosig-250-ss1.0-wcor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-250-wcor-wsyst.root\",1\)
+
+
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-400-nocor-nosyst.txt\",\"outputfiles/ws-nosig-400-nocor-nosyst.root\"\) |& tee logfiles/build-ws-nosig-400-nocor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-nocor-nosyst.root\"\) |& tee logfiles/fitqual-nosig-400-nocor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-400-nocor-nosyst.txt\",1000\) |& tee logfiles/toymc-nosig-400-ss1.0-nocor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-400-nocor-nosyst.root\",1\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-400-nocor-wsyst.txt\",\"outputfiles/ws-nosig-400-nocor-wsyst.root\"\) |& tee logfiles/build-ws-nosig-400-nocor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-nocor-wsyst.root\"\) |& tee logfiles/fitqual-nosig-400-nocor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-400-nocor-wsyst.txt\",1000\) |& tee logfiles/toymc-nosig-400-ss1.0-nocor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-400-nocor-wsyst.root\",1\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-400-wcor-nosyst.txt\",\"outputfiles/ws-nosig-400-wcor-nosyst.root\"\) |& tee logfiles/build-ws-nosig-400-wcor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-wcor-nosyst.root\"\) |& tee logfiles/fitqual-nosig-400-wcor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-400-wcor-nosyst.txt\",1000\) |& tee logfiles/toymc-nosig-400-ss1.0-wcor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-400-wcor-nosyst.root\",1\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-400-wcor-wsyst.txt\",\"outputfiles/ws-nosig-400-wcor-wsyst.root\"\) |& tee logfiles/build-ws-nosig-400-wcor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-wcor-wsyst.root\"\) |& tee logfiles/fitqual-nosig-400-wcor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-nosig-400-wcor-wsyst.txt\",1000\) |& tee logfiles/toymc-nosig-400-ss1.0-wcor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-nosig-400-wcor-wsyst.root\",1\)
+
+
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0-nocor-nosyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-nocor-nosyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-nocor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-nocor-nosyst.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-nocor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-250-ss1.0-nocor-nosyst.txt\",1000\) |& tee logfiles/toymc-withsig-250-ss1.0-ss1.0-nocor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-250-ss1.0-nocor-nosyst.root\",0\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0-nocor-wsyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-nocor-wsyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-nocor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-nocor-wsyst.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-nocor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-250-ss1.0-nocor-wsyst.txt\",1000\) |& tee logfiles/toymc-withsig-250-ss1.0-ss1.0-nocor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-250-ss1.0-nocor-wsyst.root\",0\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0-wcor-nosyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-wcor-nosyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-wcor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-wcor-nosyst.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-wcor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-250-ss1.0-wcor-nosyst.txt\",1000\) |& tee logfiles/toymc-withsig-250-ss1.0-ss1.0-wcor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-250-ss1.0-wcor-nosyst.root\",0\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0-wcor-wsyst.txt\",\"outputfiles/ws-withsig-250-ss1.0-wcor-wsyst.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-wcor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-wcor-wsyst.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-wcor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-250-ss1.0-wcor-wsyst.txt\",1000\) |& tee logfiles/toymc-withsig-250-ss1.0-ss1.0-wcor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-250-ss1.0-wcor-wsyst.root\",0\)
+
+
+
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0-nocor-nosyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-nocor-nosyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-nocor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-nocor-nosyst.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-nocor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-400-ss1.0-nocor-nosyst.txt\",1000\) |& tee logfiles/toymc-withsig-400-ss1.0-ss1.0-nocor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-400-ss1.0-nocor-nosyst.root\",0\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0-nocor-wsyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-nocor-wsyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-nocor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-nocor-wsyst.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-nocor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-400-ss1.0-nocor-wsyst.txt\",1000\) |& tee logfiles/toymc-withsig-400-ss1.0-ss1.0-nocor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-400-ss1.0-nocor-wsyst.root\",0\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0-wcor-nosyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-wcor-nosyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-wcor-nosyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-wcor-nosyst.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-wcor-nosyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-400-ss1.0-wcor-nosyst.txt\",1000\) |& tee logfiles/toymc-withsig-400-ss1.0-ss1.0-wcor-nosyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-400-ss1.0-wcor-nosyst.root\",0\)
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0-wcor-wsyst.txt\",\"outputfiles/ws-withsig-400-ss1.0-wcor-wsyst.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-wcor-wsyst.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-wcor-wsyst.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-wcor-wsyst.log
+  root -b -q toymc1.c+\(\"outputfiles/input-withsig-400-ss1.0-wcor-wsyst.txt\",1000\) |& tee logfiles/toymc-withsig-400-ss1.0-ss1.0-wcor-wsyst.log
+  root -b -q plottoy1.c+\(\"outputfiles/toytt-withsig-400-ss1.0-wcor-wsyst.root\",0\)
+
+
+
+
+

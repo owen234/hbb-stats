@@ -1,0 +1,36 @@
+
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms030-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms030-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms030-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms030-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms030.root\",0,50000\)               |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms030.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms050-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms050-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms050-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms050-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms050.root\",0,50000\)               |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms050.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms100-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms100-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms100-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms100-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms100.root\",0,50000\)               |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms100.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms150-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms150-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms150-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms150-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-1metbin-mms150.root\",0,50000\)               |& tee      logfiles/signif-withsig-250-ss1.0-1metbin-mms150.log
+
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms030-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms030-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms030-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms030-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms030.root\",0,50000\)               |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms030.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms050-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms050-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms050-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms050-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms050.root\",0,50000\)               |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms050.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms100-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms100-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms100-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms100-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms100.root\",0,50000\)               |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms100.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms150-doublesyst.root\",0,50000\)    |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms150-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms150-nosyst.root\",0,50000\)        |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms150-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-1metbin-mms150.root\",0,50000\)               |& tee      logfiles/signif-withsig-400-ss1.0-1metbin-mms150.log
+
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-4metbin-doublesyst.root\",0,50000\)           |& tee      logfiles/signif-withsig-250-ss1.0-4metbin-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-4metbin-nosyst.root\",0,50000\)               |& tee      logfiles/signif-withsig-250-ss1.0-4metbin-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-250-ss1.0-4metbin.root\",0,50000\)                      |& tee      logfiles/signif-withsig-250-ss1.0-4metbin.log
+
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-4metbin-doublesyst.root\",0,50000\)           |& tee      logfiles/signif-withsig-400-ss1.0-4metbin-doublesyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-4metbin-nosyst.root\",0,50000\)               |& tee      logfiles/signif-withsig-400-ss1.0-4metbin-nosyst.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-withsig-400-ss1.0-4metbin.root\",0,50000\)                      |& tee      logfiles/signif-withsig-400-ss1.0-4metbin.log
+
+

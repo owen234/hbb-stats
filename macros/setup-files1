@@ -1,0 +1,74 @@
+
+#
+#  Source this file from the parent directory (ewkino_hbb).  That is, do this
+#
+#    source macros/setup_files1
+#
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+
+
+  root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-250-1metbin.txt\",250,0.,1\) |& tee logfiles/gen-input-nosig-250-1metbin.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-400-1metbin.txt\",400,0.,1\) |& tee logfiles/gen-input-nosig-400-1metbin.log
+
+  root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin.txt\",250,1.,1\) |& tee logfiles/gen-input-withsig-250-ss1.0-1metbin.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin.txt\",400,1.,1\) |& tee logfiles/gen-input-withsig-400-ss1.0-1metbin.log
+
+
+  root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-250-4metbin.txt\",250,0.,4\) |& tee logfiles/gen-input-nosig-250-4metbin.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-nosig-400-4metbin.txt\",400,0.,4\) |& tee logfiles/gen-input-nosig-400-4metbin.log
+
+  root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-250-ss1.0-4metbin.txt\",250,1.,4\) |& tee logfiles/gen-input-withsig-250-ss1.0-4metbin.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-withsig-400-ss1.0-4metbin.txt\",400,1.,4\) |& tee logfiles/gen-input-withsig-400-ss1.0-4metbin.log
+
+
+
+
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-250-4metbin.txt\",\"outputfiles/ws-nosig-250-4metbin.root\"\) |& tee logfiles/build-ws-nosig-250-4metbin.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-nosig-400-4metbin.txt\",\"outputfiles/ws-nosig-400-4metbin.root\"\) |& tee logfiles/build-ws-nosig-400-4metbin.log
+
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-250-ss1.0-4metbin.txt\",\"outputfiles/ws-withsig-250-ss1.0-4metbin.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-4metbin.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-withsig-400-ss1.0-4metbin.txt\",\"outputfiles/ws-withsig-400-ss1.0-4metbin.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-4metbin.log
+
+
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-250-1metbin.txt\",\"outputfiles/ws-nosig-250-1metbin.root\"\) |& tee logfiles/build-ws-nosig-250-1metbin.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-nosig-400-1metbin.txt\",\"outputfiles/ws-nosig-400-1metbin.root\"\) |& tee logfiles/build-ws-nosig-400-1metbin.log
+
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-250-ss1.0-1metbin.txt\",\"outputfiles/ws-withsig-250-ss1.0-1metbin.root\"\) |& tee logfiles/build-ws-withsig-250-ss1.0-1metbin.log
+  root -b -q build_hbb_workspace_onebin.c+\(\"outputfiles/input-withsig-400-ss1.0-1metbin.txt\",\"outputfiles/ws-withsig-400-ss1.0-1metbin.root\"\) |& tee logfiles/build-ws-withsig-400-ss1.0-1metbin.log
+
+
+
+
+
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-4metbin.root\"\) |& tee logfiles/fitqual-nosig-250-4metbin.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-4metbin.root\"\) |& tee logfiles/fitqual-nosig-400-4metbin.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-4metbin.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-4metbin.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-4metbin.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-4metbin.log
+
+
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-250-1metbin.root\"\) |& tee logfiles/fitqual-nosig-250-1metbin.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-nosig-400-1metbin.root\"\) |& tee logfiles/fitqual-nosig-400-1metbin.log
+
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-250-ss1.0-1metbin.root\"\) |& tee logfiles/fitqual-withsig-250-ss1.0-1metbin.log
+  root -b -q fitqual_plots.c+\(\"outputfiles/ws-withsig-400-ss1.0-1metbin.root\"\) |& tee logfiles/fitqual-withsig-400-ss1.0-1metbin.log
+
+
+
+
+
+
+
+
+
+
+
