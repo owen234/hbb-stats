@@ -1,0 +1,22 @@
+
+   root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-200-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-met-withsig-200-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-250-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-met-withsig-250-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-300-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-met-withsig-300-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-350-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-met-withsig-350-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-400-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-met-withsig-400-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-450-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-met-withsig-450-4metbin-no3b.log
+
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-200-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig-withsig-200-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-250-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig-withsig-250-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-300-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig-withsig-300-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-350-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig-withsig-350-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-400-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig-withsig-400-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-450-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig-withsig-450-4metbin-no3b.log
+
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig2012-withsig-200-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig2012-withsig-200-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig2012-withsig-250-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig2012-withsig-250-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig2012-withsig-300-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig2012-withsig-300-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig2012-withsig-350-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig2012-withsig-350-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig2012-withsig-400-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig2012-withsig-400-4metbin-no3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig2012-withsig-450-4metbin-no3b.root\",0,5000\)   |& tee logfiles/signif-metsig2012-withsig-450-4metbin-no3b.log
+
