@@ -4,6 +4,7 @@
 #include "TH1.h"
 #include "TSystem.h"
 #include "histio.c"
+#include "TMath.h"
 
 
    int  nbgcomps(3) ;
@@ -508,25 +509,25 @@
                bgsum_nmsig_4b_val += nmsig_4b_val ;
                bgsum_nmsig_3b_val += nmsig_3b_val ;
                bgsum_nmsig_2b_val += nmsig_2b_val ;
-               bgsum_nmsig_4b_err2 += pow( nmsig_4b_err, 2.) ;
-               bgsum_nmsig_3b_err2 += pow( nmsig_3b_err, 2.) ;
-               bgsum_nmsig_2b_err2 += pow( nmsig_2b_err, 2.) ;
+               bgsum_nmsig_4b_err2 += ::pow( nmsig_4b_err, 2.) ;
+               bgsum_nmsig_3b_err2 += ::pow( nmsig_3b_err, 2.) ;
+               bgsum_nmsig_2b_err2 += ::pow( nmsig_2b_err, 2.) ;
                bgsum_nmsb_4b_val += nmsb_4b_val ;
                bgsum_nmsb_3b_val += nmsb_3b_val ;
                bgsum_nmsb_2b_val += nmsb_2b_val ;
-               bgsum_nmsb_4b_err2 += pow( nmsb_4b_err, 2.) ;
-               bgsum_nmsb_3b_err2 += pow( nmsb_3b_err, 2.) ;
-               bgsum_nmsb_2b_err2 += pow( nmsb_2b_err, 2.) ;
+               bgsum_nmsb_4b_err2 += ::pow( nmsb_4b_err, 2.) ;
+               bgsum_nmsb_3b_err2 += ::pow( nmsb_3b_err, 2.) ;
+               bgsum_nmsb_2b_err2 += ::pow( nmsb_2b_err, 2.) ;
             }
 
             if ( si == (nbgcomps-1) ) {
 
                Rsigsb_4b_val[hbi] =  bgsum_nmsig_4b_val / bgsum_nmsb_4b_val ;
-               Rsigsb_4b_err[hbi] =  Rsigsb_4b_val[hbi] * sqrt( bgsum_nmsig_4b_err2 / pow(bgsum_nmsig_4b_val,2) + bgsum_nmsb_4b_err2 / pow(bgsum_nmsb_4b_val,2) ) ;
+               Rsigsb_4b_err[hbi] =  Rsigsb_4b_val[hbi] * sqrt( bgsum_nmsig_4b_err2 / ::pow(bgsum_nmsig_4b_val,2) + bgsum_nmsb_4b_err2 / ::pow(bgsum_nmsb_4b_val,2) ) ;
                Rsigsb_3b_val[hbi] =  bgsum_nmsig_3b_val / bgsum_nmsb_3b_val ;
-               Rsigsb_3b_err[hbi] =  Rsigsb_3b_val[hbi] * sqrt( bgsum_nmsig_3b_err2 / pow(bgsum_nmsig_3b_val,2) + bgsum_nmsb_3b_err2 / pow(bgsum_nmsb_3b_val,2) ) ;
+               Rsigsb_3b_err[hbi] =  Rsigsb_3b_val[hbi] * sqrt( bgsum_nmsig_3b_err2 / ::pow(bgsum_nmsig_3b_val,2) + bgsum_nmsb_3b_err2 / ::pow(bgsum_nmsb_3b_val,2) ) ;
                Rsigsb_2b_val[hbi] =  bgsum_nmsig_2b_val / bgsum_nmsb_2b_val ;
-               Rsigsb_2b_err[hbi] =  Rsigsb_2b_val[hbi] * sqrt( bgsum_nmsig_2b_err2 / pow(bgsum_nmsig_2b_val,2) + bgsum_nmsb_2b_err2 / pow(bgsum_nmsb_2b_val,2) ) ;
+               Rsigsb_2b_err[hbi] =  Rsigsb_2b_val[hbi] * sqrt( bgsum_nmsig_2b_err2 / ::pow(bgsum_nmsig_2b_val,2) + bgsum_nmsb_2b_err2 / ::pow(bgsum_nmsb_2b_val,2) ) ;
 
                Rsigsb_4b_staterr2[hbi] = 0. ;
                if ( bgsum_nmsig_4b_val > 0. ) { Rsigsb_4b_staterr2[hbi] += Rsigsb_4b_val[hbi] * Rsigsb_4b_val[hbi] / bgsum_nmsig_4b_val ; }
@@ -544,10 +545,10 @@
                if ( Rsigsb_2b_staterr2[hbi] < 0.0001 ) { Rsigsb_2b_staterr2[hbi] = 0.15 ; }
 
                float bgpred_from3b_val = bgsum_nmsb_4b_val * Rsigsb_3b_val[hbi] ;
-               float bgpred_from3b_err = bgpred_from3b_val * sqrt( bgsum_nmsb_4b_err2/pow(bgsum_nmsb_4b_val,2.) + pow( Rsigsb_3b_err[hbi]/Rsigsb_3b_val[hbi],2.) ) ;
+               float bgpred_from3b_err = bgpred_from3b_val * sqrt( bgsum_nmsb_4b_err2/::pow(bgsum_nmsb_4b_val,2.) + ::pow( Rsigsb_3b_err[hbi]/Rsigsb_3b_val[hbi],2.) ) ;
 
                float bgpred_from2b_val = bgsum_nmsb_4b_val * Rsigsb_2b_val[hbi] ;
-               float bgpred_from2b_err = bgpred_from2b_val * sqrt( bgsum_nmsb_4b_err2/pow(bgsum_nmsb_4b_val,2.) + pow( Rsigsb_2b_err[hbi]/Rsigsb_2b_val[hbi],2.) ) ;
+               float bgpred_from2b_err = bgpred_from2b_val * sqrt( bgsum_nmsb_4b_err2/::pow(bgsum_nmsb_4b_val,2.) + ::pow( Rsigsb_2b_err[hbi]/Rsigsb_2b_val[hbi],2.) ) ;
 
                printf( "[%3.0f,%3.0f] %6s |  %6.1f %6.1f   %5.3f +/- %5.3f |  %6.1f %6.1f   %5.3f +/- %5.3f  |  %6.1f %6.1f   %5.3f +/- %5.3f  | %4.1f +/- %4.1f   %4.1f +/- %4.1f  %4.1f +/- %4.1f  |\n",
                   metsiglow, metsighigh,
@@ -646,9 +647,9 @@
          correction_Rsigsb_3b[hbi] = Rsigsb_3b_val[hbi] / wave_Rsigsb_val[hbi] ;
          correction_Rsigsb_2b[hbi] = Rsigsb_2b_val[hbi] / wave_Rsigsb_val[hbi] ;
 
-         syst_Rsigsb_4b[hbi] = sqrt( pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
-         syst_Rsigsb_3b[hbi] = sqrt( pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
-         syst_Rsigsb_2b[hbi] = sqrt( pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  pow( (correction_Rsigsb_2b[hbi]-1.)/2.,2. ) ) ;
+         syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
+         syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
+         syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.)/2.,2. ) ) ;
 
          if ( bins_of_met > 1 && use3b ) {
             printf("  Rsig/sb corrections for METsig bin %d :     4b = %5.3f +/- %5.3f,       3b =  %5.3f +/- %5.3f,      2b =  %5.3f +/- %5.3f\n",
@@ -737,11 +738,106 @@
 
 
 
+
+
+
+    //--- Also prepare a LandS input datacard.  What the hell is a datacard?  Sounds like ancient technology.
+
+      char outfilename_lands[10000] ;
+      sprintf( outfilename_lands, "%s-lands", outfilename ) ;
+
+      printf("\n\n #----------------------------------------------------------------------------\n\n") ;
+      printf("\n\n Creating LandS datacard: %s\n\n\n", outfilename_lands ) ;
+
+      FILE* outfile_lands = fopen( outfilename_lands, "w" ) ;
+
+      int nchan(0) ;
+      int npars(0) ;
+      if ( use3b ) {
+         fprintf( outfile_lands, "## datacard for ABCD using 4b, 3b, and 2b in %d bins of %s\n\n\n", bins_of_met, metvarname ) ;
+         nchan = 3 * bins_of_met ;
+         npars = 6 * bins_of_met ;
+         fprintf( outfile_lands, "---\n" ) ;
+         fprintf( outfile_lands, "imax %d  number of channels (%d bins of met for 4b, 3b, and 2b)\n", nchan, bins_of_met ) ;
+         fprintf( outfile_lands, "jmax 1  number of backgrounds\n" ) ;
+         fprintf( outfile_lands, "kmax %d  number of nuisance parameters (%d bins of met for SIG and SB for 4b, 3b, and 2b (4))\n", npars, bins_of_met ) ;
+         fprintf( outfile_lands, "---\n\n\n\n" ) ;
+         fprintf( outfile_lands, "---\n" ) ;
+         fprintf( outfile_lands, "bin          " ) ;
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "               N4bsb_met%d                N4bsig_met%d                  N3bsb_met%d                N3bsig_met%d                  N2bsb_met%d                N2bsig_met%d ", mbi, mbi, mbi, mbi, mbi, mbi ) ; }
+         fprintf( outfile_lands, "\n" ) ;
+         fprintf( outfile_lands, "Observation  " ) ;
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "                     %4d                       %4d                        %4d                       %4d                        %4d                       %4d ",
+             TMath::Nint( n_4b_msb[mbi]  + sig_strength * smc_4b_msb[mbi]),
+             TMath::Nint( n_4b_msig[mbi] + sig_strength * smc_4b_msig[mbi]),
+             TMath::Nint( n_3b_msb[mbi]  + sig_strength * smc_3b_msb[mbi]),
+             TMath::Nint( n_3b_msig[mbi] + sig_strength * smc_3b_msig[mbi]),
+             TMath::Nint( n_2b_msb[mbi]  + sig_strength * smc_2b_msb[mbi]),
+             TMath::Nint( n_2b_msig[mbi] + sig_strength * smc_2b_msig[mbi]) ) ; }
+         fprintf( outfile_lands, "\n" ) ;
+         fprintf( outfile_lands, "---\n" ) ;
+
+         fprintf( outfile_lands, "bin          " ) ;
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "    N4bsb_met%d N4bsb_met%d    N4bsig_met%d N4bsig_met%d       N3bsb_met%d N3bsb_met%d    N3bsig_met%d N3bsig_met%d       N2bsb_met%d N2bsb_met%d    N2bsig_met%d N2bsig_met%d ", mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi ) ; }
+         fprintf( outfile_lands, "\n" ) ;
+
+         fprintf( outfile_lands, "process      " ) ;
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "        signal       smbg         signal        smbg           signal       smbg         signal        smbg           signal       smbg         signal        smbg " ) ; }
+         fprintf( outfile_lands, "\n" ) ;
+
+         fprintf( outfile_lands, "process      " ) ;
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "             0          1              0           1                0          1              0           1                0          1              0           1 " ) ; }
+         fprintf( outfile_lands, "\n" ) ;
+
+         fprintf( outfile_lands, "rate         " ) ;
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "         %5.1f    %7.1f          %5.1f     %7.1f            %5.1f    %7.1f          %5.1f     %7.1f            %5.1f    %7.1f          %5.1f     %7.1f ",
+               smc_4b_msb[mbi],  n_4b_msb[mbi],
+               smc_4b_msig[mbi], n_4b_msig[mbi],
+               smc_3b_msb[mbi],  n_3b_msb[mbi],
+               smc_3b_msig[mbi], n_3b_msig[mbi],
+               smc_2b_msb[mbi],  n_2b_msb[mbi],
+               smc_2b_msig[mbi], n_2b_msig[mbi]
+              ) ; }
+         fprintf( outfile_lands, "\n" ) ;
+
+
+      } else {
+         fprintf( outfile_lands, "## datacard for ABCD using 4b and 2b in %d bins of %s\n\n\n", bins_of_met, metvarname ) ;
+    //   nchan = 2 * bins_of_met ;
+    //   npars = 4 * bins_of_met ;
+    //   fprintf( outfile_lands, "---\n" ) ;
+    //   fprintf( outfile_lands, "imax %d  number of channels (%d bins of met for 4b and 2b)\n", nchan, bins_of_met ) ;
+    //   fprintf( outfile_lands, "jmax 1  number of backgrounds\n" ) ;
+    //   fprintf( outfile_lands, "kmax %d  number of nuisance parameters (%d bins of met for SIG and SB for 4b and 2b (4))\n", npars, bins_of_met ) ;
+    //   fprintf( outfile_lands, "---\n\n\n\n" ) ;
+    //   fprintf( outfile_lands, "---\n" ) ;
+    //   fprintf( outfile_lands, "bin          " ) ;
+    //   for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "    N4bsb_met%d  N4bsig_met%d      N2bsb_met%d   N2bsig_met%d ", mbi, mbi, mbi, mbi ) ; }
+    //   fprintf( outfile_lands, "\n" ) ;
+    //   fprintf( outfile_lands, "Observation  " ) ;
+    //   for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile_lands, "          %4d         %4d            %4d          %4d ",
+    //       TMath::Nint( n_4b_msb[mbi]  + sig_strength * smc_4b_msb[mbi]),
+    //       TMath::Nint( n_4b_msig[mbi] + sig_strength * smc_4b_msig[mbi]),
+    //       TMath::Nint( n_2b_msb[mbi]  + sig_strength * smc_2b_msb[mbi]),
+    //       TMath::Nint( n_2b_msig[mbi] + sig_strength * smc_2b_msig[mbi]) ) ; }
+    //   fprintf( outfile_lands, "\n" ) ;
+    //   fprintf( outfile_lands, "---\n\n\n\n" ) ;
+      }
+
+
+      fclose( outfile_lands ) ;
+
+      printf("\n\n Created LandS datacard file: %s\n\n", outfilename_lands ) ;
+
+
+
+
+
+     //--- save histograms.
+
       printf("\n\n Saving histograms to outputfiles/gen_input.root\n\n") ;
 
       saveHist( "outputfiles/gen_input.root", "h*" ) ;
-
-
 
 
    } // gen_input_file
