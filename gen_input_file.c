@@ -767,39 +767,39 @@
          fprintf( outfile_lands, "---\n\n\n\n" ) ;
          fprintf( outfile_lands, "---\n" ) ;
          fprintf( outfile_lands, "bin                " ) ;
-         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "               N4bsb_met%d                N4bsig_met%d                  N3bsb_met%d                N3bsig_met%d                  N2bsb_met%d                N2bsig_met%d ", mbi, mbi, mbi, mbi, mbi, mbi ) ; }
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "               N4bsig_met%d                 N4bsb_met%d                  N3bsig_met%d                 N3bsb_met%d                  N2bsig_met%d                 N2bsb_met%d ", mbi, mbi, mbi, mbi, mbi, mbi ) ; }
          fprintf( outfile_lands, "\n" ) ;
          fprintf( outfile_lands, "Observation        " ) ;
-         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "                     %4d                       %4d                        %4d                       %4d                        %4d                       %4d ",
-             TMath::Nint( n_4b_msb[mbi]  + sig_strength * smc_4b_msb[mbi]),
-             TMath::Nint( n_4b_msig[mbi] + sig_strength * smc_4b_msig[mbi]),
-             TMath::Nint( n_3b_msb[mbi]  + sig_strength * smc_3b_msb[mbi]),
-             TMath::Nint( n_3b_msig[mbi] + sig_strength * smc_3b_msig[mbi]),
-             TMath::Nint( n_2b_msb[mbi]  + sig_strength * smc_2b_msb[mbi]),
-             TMath::Nint( n_2b_msig[mbi] + sig_strength * smc_2b_msig[mbi]) ) ; }
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "                      %4d                       %4d                         %4d                       %4d                         %4d                       %4d ",
+             TMath::Nint( n_4b_msig[mbi]  + sig_strength * smc_4b_msig[mbi]),
+             TMath::Nint( n_4b_msb[mbi]   + sig_strength * smc_4b_msb[mbi]),
+             TMath::Nint( n_3b_msig[mbi]  + sig_strength * smc_3b_msig[mbi]),
+             TMath::Nint( n_3b_msb[mbi]   + sig_strength * smc_3b_msb[mbi]),
+             TMath::Nint( n_2b_msig[mbi]  + sig_strength * smc_2b_msig[mbi]),
+             TMath::Nint( n_2b_msb[mbi]   + sig_strength * smc_2b_msb[mbi]) ) ; }
          fprintf( outfile_lands, "\n" ) ;
          fprintf( outfile_lands, "---\n" ) ;
 
          fprintf( outfile_lands, "bin                " ) ;
-         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "    N4bsb_met%d N4bsb_met%d    N4bsig_met%d N4bsig_met%d       N3bsb_met%d N3bsb_met%d    N3bsig_met%d N3bsig_met%d       N2bsb_met%d N2bsb_met%d    N2bsig_met%d N2bsig_met%d ", mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi ) ; }
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "   N4bsig_met%d N4bsig_met%d     N4bsb_met%d  N4bsb_met%d      N3bsig_met%d N3bsig_met%d     N3bsb_met%d  N3bsb_met%d      N2bsig_met%d N2bsig_met%d     N2bsb_met%d  N2bsb_met%d ", mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi, mbi ) ; }
          fprintf( outfile_lands, "\n" ) ;
 
          fprintf( outfile_lands, "process            " ) ;
-         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "        signal       smbg         signal        smbg           signal       smbg         signal        smbg           signal       smbg         signal        smbg " ) ; }
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "        signal        smbg         signal        smbg           signal        smbg         signal        smbg           signal        smbg         signal        smbg " ) ; }
          fprintf( outfile_lands, "\n" ) ;
 
          fprintf( outfile_lands, "process            " ) ;
-         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "             0          1              0           1                0          1              0           1                0          1              0           1 " ) ; }
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "             0           1              0           1                0           1              0           1                0           1              0           1 " ) ; }
          fprintf( outfile_lands, "\n" ) ;
 
          fprintf( outfile_lands, "rate               " ) ;
-         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "         %5.1f    %7.1f          %5.1f     %7.1f            %5.1f    %7.1f          %5.1f     %7.1f            %5.1f    %7.1f          %5.1f     %7.1f ",
-               smc_4b_msb[mbi],  n_4b_msb[mbi],
+         for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "         %5.1f     %7.1f          %5.1f     %7.1f            %5.1f     %7.1f          %5.1f     %7.1f            %5.1f     %7.1f          %5.1f     %7.1f ",
                smc_4b_msig[mbi], n_4b_msig[mbi],
-               smc_3b_msb[mbi],  n_3b_msb[mbi],
+               smc_4b_msb[mbi],  n_4b_msb[mbi],
                smc_3b_msig[mbi], n_3b_msig[mbi],
-               smc_2b_msb[mbi],  n_2b_msb[mbi],
-               smc_2b_msig[mbi], n_2b_msig[mbi]
+               smc_3b_msb[mbi],  n_3b_msb[mbi],
+               smc_2b_msig[mbi], n_2b_msig[mbi],
+               smc_2b_msb[mbi],  n_2b_msb[mbi]
               ) ; }
          fprintf( outfile_lands, "\n" ) ;
          fprintf( outfile_lands, "---\n" ) ;
@@ -810,67 +810,54 @@
             float lands_par_error ;
             float nobs ;
 
-            fprintf( outfile_lands, "c_m%d_4bsig_4bsb  lnU    ", rmbi ) ;
+            fprintf( outfile_lands, "c_m%d_sig_allnb   lnU    ", rmbi ) ;
             nobs = n_4b_msb[rmbi] ;
             lands_par_error = 1. + par_width_NSD ;
             if ( nobs > 0 ) { lands_par_error = 1. + par_width_NSD / sqrt( nobs ) ; }
             for ( int cmbi=1; cmbi<=bins_of_met; cmbi++ ) {
                if ( cmbi == rmbi ) {
-                  fprintf( outfile_lands, "        -       %4.2f              -        %4.2f                -          -              -           -                -          -              -           -      ", lands_par_error, lands_par_error ) ;
+                  fprintf( outfile_lands, "        -        %4.2f              -           -                -        %4.2f              -           -                -        %4.2f              -           -      ", lands_par_error, lands_par_error, lands_par_error ) ;
                } else {
-                  fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+                  fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
                }
             } // cmbi.
             fprintf( outfile_lands, "\n" ) ;
 
-            fprintf( outfile_lands, "c_m%d_4bsig_3bsb  lnU    ", rmbi ) ;
+            fprintf( outfile_lands, "c_m%d_R_4b        lnU    ", rmbi ) ;
+            nobs = n_4b_msb[rmbi] ;
+            lands_par_error = 1. + par_width_NSD ;
+            if ( nobs > 0 ) { lands_par_error = 1. + par_width_NSD / sqrt( nobs ) ; }
+            for ( int cmbi=1; cmbi<=bins_of_met; cmbi++ ) {
+               if ( cmbi == rmbi ) {
+                  fprintf( outfile_lands, "        -        %4.2f              -        %4.2f                -           -              -           -                -           -              -           -      ", lands_par_error, lands_par_error ) ;
+               } else {
+                  fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+               }
+            } // cmbi.
+            fprintf( outfile_lands, "\n" ) ;
+
+            fprintf( outfile_lands, "c_m%d_R_3b        lnU    ", rmbi ) ;
             nobs = n_3b_msb[rmbi] ;
             lands_par_error = 1. + par_width_NSD ;
             if ( nobs > 0 ) { lands_par_error = 1. + par_width_NSD / sqrt( nobs ) ; }
             for ( int cmbi=1; cmbi<=bins_of_met; cmbi++ ) {
                if ( cmbi == rmbi ) {
-                  fprintf( outfile_lands, "        -          -              -        %4.2f                -       %4.2f              -           -                -          -              -           -      ", lands_par_error, lands_par_error ) ;
+                  fprintf( outfile_lands, "        -           -              -           -                -        %4.2f              -        %4.2f                -           -              -           -      ", lands_par_error, lands_par_error ) ;
                } else {
-                  fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+                  fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
                }
             } // cmbi.
             fprintf( outfile_lands, "\n" ) ;
 
-            fprintf( outfile_lands, "c_m%d_4bsig_3bsig lnU    ", rmbi ) ;
-            nobs = n_3b_msig[rmbi] ;
-            lands_par_error = 1. + par_width_NSD ;
-            if ( nobs > 0 ) { lands_par_error = 1. + par_width_NSD / sqrt( nobs ) ; }
-            for ( int cmbi=1; cmbi<=bins_of_met; cmbi++ ) {
-               if ( cmbi == rmbi ) {
-                  fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -        %4.2f                -          -              -           -      ", lands_par_error, lands_par_error ) ;
-               } else {
-                  fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-               }
-            } // cmbi.
-            fprintf( outfile_lands, "\n" ) ;
-
-            fprintf( outfile_lands, "c_m%d_4bsig_2bsb  lnU    ", rmbi ) ;
+            fprintf( outfile_lands, "c_m%d_R_2b        lnU    ", rmbi ) ;
             nobs = n_2b_msb[rmbi] ;
             lands_par_error = 1. + par_width_NSD ;
             if ( nobs > 0 ) { lands_par_error = 1. + par_width_NSD / sqrt( nobs ) ; }
             for ( int cmbi=1; cmbi<=bins_of_met; cmbi++ ) {
                if ( cmbi == rmbi ) {
-                  fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -       %4.2f              -           -      ", lands_par_error, lands_par_error ) ;
+                  fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -        %4.2f              -        %4.2f      ", lands_par_error, lands_par_error ) ;
                } else {
-                  fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-               }
-            } // cmbi.
-            fprintf( outfile_lands, "\n" ) ;
-
-            fprintf( outfile_lands, "c_m%d_4bsig_2bsig lnU    ", rmbi ) ;
-            nobs = n_2b_msig[rmbi] ;
-            lands_par_error = 1. + par_width_NSD ;
-            if ( nobs > 0 ) { lands_par_error = 1. + par_width_NSD / sqrt( nobs ) ; }
-            for ( int cmbi=1; cmbi<=bins_of_met; cmbi++ ) {
-               if ( cmbi == rmbi ) {
-                  fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -        %4.2f      ", lands_par_error, lands_par_error ) ;
-               } else {
-                  fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+                  fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
                }
             } // cmbi.
             fprintf( outfile_lands, "\n" ) ;
@@ -878,63 +865,44 @@
          } // rmbi.
 
          fprintf( outfile_lands, "closure_m1       lnN    " ) ;
-         fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[1]) ) ;
+            fprintf( outfile_lands, "        -           -              -        %4.2f                -           -              -           -                -           -              -           -      ", (1. + syst_Rsigsb_4b[1]) ) ;
          for ( int mbi=2; mbi<=bins_of_met; mbi++ ) {
-            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
          }
          fprintf( outfile_lands, "\n" ) ;
 
          if ( bins_of_met >= 2 ) {
             fprintf( outfile_lands, "closure_m2       lnN    " ) ;
-            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-            fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[2]) ) ;
+            fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+            fprintf( outfile_lands, "        -           -              -        %4.2f                -           -              -           -                -           -              -           -      ", (1. + syst_Rsigsb_4b[2]) ) ;
             for ( int mbi=3; mbi<=bins_of_met; mbi++ ) {
-               fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+               fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
             }
             fprintf( outfile_lands, "\n" ) ;
          }
 
          if ( bins_of_met >= 3 ) {
             fprintf( outfile_lands, "closure_m3       lnN    " ) ;
-            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-            fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[3]) ) ;
+            fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+            fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+            fprintf( outfile_lands, "        -           -              -        %4.2f                -           -              -           -                -           -              -           -      ", (1. + syst_Rsigsb_4b[3]) ) ;
             for ( int mbi=4; mbi<=bins_of_met; mbi++ ) {
-               fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+               fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
             }
             fprintf( outfile_lands, "\n" ) ;
          }
 
          if ( bins_of_met >= 4 ) {
             fprintf( outfile_lands, "closure_m2       lnN    " ) ;
-            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
-            fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[4]) ) ;
+            fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+            fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+            fprintf( outfile_lands, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+            fprintf( outfile_lands, "        -           -              -        %4.2f                -           -              -           -                -           -              -           -      ", (1. + syst_Rsigsb_4b[4]) ) ;
             fprintf( outfile_lands, "\n" ) ;
          }
 
       } else {
          fprintf( outfile_lands, "## datacard for ABCD using 4b and 2b in %d bins of %s\n\n\n", bins_of_met, metvarname ) ;
-    //   nchan = 2 * bins_of_met ;
-    //   npars = 4 * bins_of_met ;
-    //   fprintf( outfile_lands, "---\n" ) ;
-    //   fprintf( outfile_lands, "imax %d  number of channels (%d bins of met for 4b and 2b)\n", nchan, bins_of_met ) ;
-    //   fprintf( outfile_lands, "jmax 1  number of backgrounds\n" ) ;
-    //   fprintf( outfile_lands, "kmax %d  number of nuisance parameters (%d bins of met for SIG and SB for 4b and 2b (4))\n", npars, bins_of_met ) ;
-    //   fprintf( outfile_lands, "---\n\n\n\n" ) ;
-    //   fprintf( outfile_lands, "---\n" ) ;
-    //   fprintf( outfile_lands, "bin          " ) ;
-    //   for ( int mbi=1; mbi<=bins_of_met; mbi++ ) { fprintf( outfile_lands, "    N4bsb_met%d  N4bsig_met%d      N2bsb_met%d   N2bsig_met%d ", mbi, mbi, mbi, mbi ) ; }
-    //   fprintf( outfile_lands, "\n" ) ;
-    //   fprintf( outfile_lands, "Observation  " ) ;
-    //   for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile_lands, "          %4d         %4d            %4d          %4d ",
-    //       TMath::Nint( n_4b_msb[mbi]  + sig_strength * smc_4b_msb[mbi]),
-    //       TMath::Nint( n_4b_msig[mbi] + sig_strength * smc_4b_msig[mbi]),
-    //       TMath::Nint( n_2b_msb[mbi]  + sig_strength * smc_2b_msb[mbi]),
-    //       TMath::Nint( n_2b_msig[mbi] + sig_strength * smc_2b_msig[mbi]) ) ; }
-    //   fprintf( outfile_lands, "\n" ) ;
-    //   fprintf( outfile_lands, "---\n\n\n\n" ) ;
       }
 
 
