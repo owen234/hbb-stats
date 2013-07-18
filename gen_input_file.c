@@ -6,7 +6,7 @@
 #include "histio.c"
 #include "TMath.h"
 
-// hi
+// hi there
 
    int  nbgcomps(3) ;
    char bgcompname[3][100] = { "tt", "znn", "qcd" } ;
