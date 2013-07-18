@@ -876,6 +876,42 @@
 
          } // rmbi.
 
+         fprintf( outfile_lands, "closure_m1       lnN    " ) ;
+         fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[1]) ) ;
+         for ( int mbi=2; mbi<=bins_of_met; mbi++ ) {
+            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+         }
+         fprintf( outfile_lands, "\n" ) ;
+
+         if ( bins_of_met >= 2 ) {
+            fprintf( outfile_lands, "closure_m2       lnN    " ) ;
+            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[2]) ) ;
+            for ( int mbi=3; mbi<=bins_of_met; mbi++ ) {
+               fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            }
+            fprintf( outfile_lands, "\n" ) ;
+         }
+
+         if ( bins_of_met >= 3 ) {
+            fprintf( outfile_lands, "closure_m3       lnN    " ) ;
+            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[3]) ) ;
+            for ( int mbi=4; mbi<=bins_of_met; mbi++ ) {
+               fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            }
+            fprintf( outfile_lands, "\n" ) ;
+         }
+
+         if ( bins_of_met >= 4 ) {
+            fprintf( outfile_lands, "closure_m2       lnN    " ) ;
+            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            fprintf( outfile_lands, "        -          -              -           -                -          -              -           -                -          -              -           -      " ) ;
+            fprintf( outfile_lands, "        -          -              -        %4.2f                -          -              -           -                -          -              -           -      ", (1. + syst_Rsigsb_4b[4]) ) ;
+            fprintf( outfile_lands, "\n" ) ;
+         }
 
       } else {
          fprintf( outfile_lands, "## datacard for ABCD using 4b and 2b in %d bins of %s\n\n\n", bins_of_met, metvarname ) ;
