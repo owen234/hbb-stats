@@ -21,19 +21,19 @@
   root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-nosig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig-nosig-400-4metbin-no3b.log
   root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-nosig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig-nosig-450-4metbin-no3b.log
 
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-200-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-250-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-300-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-350-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-400-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-450-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-200-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-250-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-300-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-350-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-400-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-nosig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-nosig-450-4metbin-no3b.log
 
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-200-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-250-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-300-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-350-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-400-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-450-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-200-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-250-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-300-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-350-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-400-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-nosig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-nosig-450-4metbin-no3b.log
 
 
 
@@ -45,19 +45,19 @@
   root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-withsig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig-withsig-400-4metbin-no3b.log
   root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-withsig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig-withsig-450-4metbin-no3b.log
 
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-200-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-250-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-300-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-350-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-400-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-450-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-200-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-250-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-300-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-350-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-400-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig2012-withsig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-metsig2012-withsig-450-4metbin-no3b.log
 
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-200-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-250-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-300-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-350-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-400-4metbin-no3b.log
-  root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-450-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-200-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-200-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-250-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-250-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-300-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-300-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-350-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-350-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-400-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-400-4metbin-no3b.log
+# root -b -q fitqual_plots.c+\(\"outputfiles/ws-met-withsig-450-4metbin-no3b.root\"\) |& tee logfiles/fitqual-met-withsig-450-4metbin-no3b.log
 
 
 
