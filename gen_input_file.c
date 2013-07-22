@@ -5,11 +5,18 @@
 #include "TSystem.h"
 #include "histio.c"
 #include "TMath.h"
+#include "TString.h"
 
 
-   int  nbgcomps(3) ;
-   char bgcompname[3][100] = { "tt", "znn", "qcd" } ;
-   TChain* bgcompchain[3] ;
+ //----------------
+ //int  nbgcomps(3) ;
+ //char bgcompname[3][100] = { "tt", "znn", "qcd" } ;
+ //TChain* bgcompchain[3] ;
+ //----------------
+   int  nbgcomps(2) ;
+   char bgcompname[2][100] = { "tt", "znn" } ;
+   TChain* bgcompchain[2] ;
+ //----------------
 
    TChain* sigchain ;
 
@@ -38,6 +45,13 @@
                         bool use3b = true
                         ) {
 
+      TString metvarname_nospecial(metvarname) ;
+      metvarname_nospecial.ReplaceAll("/","_over_") ;
+      metvarname_nospecial.ReplaceAll("(","_") ;
+      metvarname_nospecial.ReplaceAll(")","") ;
+      printf("\n\n %s\n\n", metvarname_nospecial.Data() ) ;
+
+
       bool fill_noweight_histograms(false) ;
       ///bool fill_noweight_histograms(true) ;
 
@@ -59,9 +73,19 @@
          met_bin_edges_4bins[2] = 190. ;
          met_bin_edges_4bins[3] = 250. ;
          met_bin_edges_4bins[4] = 10000. ;
+      } else if ( strcmp( metvarname, "MET/sqrt(HT30)" ) == 0 ) {
+         met_bin_edges_4bins[0] = 5.9 ;
+         met_bin_edges_4bins[1] = 7.7 ;
+         met_bin_edges_4bins[2] = 10.8 ;
+         met_bin_edges_4bins[3] = 13.0 ;
+         met_bin_edges_4bins[4] = 10000. ;
       } else {
          printf("\n\n\n *** unrecognized met variable name : %s\n\n", metvarname ) ;
       }
+
+      printf("\n\n  %s bins: ", metvarname ) ;
+      for ( int bi=0; bi<=bins_of_met; bi++ ) { printf("  %.1f  ", met_bin_edges_4bins[bi]) ; }
+      printf("\n\n") ;
 
       if ( bins_of_met == 1 ) {
          for ( int bi=0; bi<=bins_of_met; bi++ ) { met_bin_edges[bi] = met_bin_edges_1bins[bi] ; }
@@ -112,26 +136,28 @@
       bgcompchain[compIndex] -> Add( pathandfile ) ;
       compIndex++ ;
 
-     //--- QCD
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1000to1400_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1820_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-120to170_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v3_AODSIM_UCSB1814_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1400to1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1821_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-170to300_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1815_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1822_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-300to470_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1816_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-470to600_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1817_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-600to800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1818_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-800to1000_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1819_v69-slimskim.root", rtdir ) ;
-      bgcompchain[compIndex] -> Add( pathandfile ) ;
-      compIndex++ ;
+      if ( nbgcomps > 2 ) {
+        //--- QCD
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1000to1400_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1820_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-120to170_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v3_AODSIM_UCSB1814_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1400to1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1821_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-170to300_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1815_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1822_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-300to470_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1816_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-470to600_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1817_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-600to800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1818_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-800to1000_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1819_v69-slimskim.root", rtdir ) ;
+         bgcompchain[compIndex] -> Add( pathandfile ) ;
+         compIndex++ ;
+      }
 
       float signal_weight = 1. ;
 
@@ -263,63 +289,63 @@
 
       for ( int si=0; si<nbgcomps; si++ ) {
 
-         sprintf( hname, "h_%s_4b_msig_bg_%s", metvarname, bgcompname[si] ) ;
+         sprintf( hname, "h_%s_4b_msig_bg_%s", metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( htitle, "%s, 4b, mass signal box, background, %s", metvarname, bgcompname[si] ) ;
          h_4b_msig_bg[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
          h_4b_msig_bg[si] -> Sumw2() ;
 
-         sprintf( hname, "h_%s_3b_msig_bg_%s", metvarname, bgcompname[si] ) ;
+         sprintf( hname, "h_%s_3b_msig_bg_%s", metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( htitle, "%s, 3b, mass signal box, background, %s", metvarname, bgcompname[si] ) ;
          h_3b_msig_bg[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
          h_3b_msig_bg[si] -> Sumw2() ;
 
-         sprintf( hname, "h_%s_2b_msig_bg_%s", metvarname, bgcompname[si] ) ;
+         sprintf( hname, "h_%s_2b_msig_bg_%s", metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( htitle, "%s, 2b, mass signal box, background, %s", metvarname, bgcompname[si] ) ;
          h_2b_msig_bg[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
          h_2b_msig_bg[si] -> Sumw2() ;
 
-         sprintf( hname, "h_%s_4b_msb_bg_%s", metvarname, bgcompname[si] ) ;
+         sprintf( hname, "h_%s_4b_msb_bg_%s", metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( htitle, "%s, 4b, mass sideband, background, %s", metvarname, bgcompname[si] ) ;
          h_4b_msb_bg[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
          h_4b_msb_bg[si] -> Sumw2() ;
 
-         sprintf( hname, "h_%s_3b_msb_bg_%s", metvarname, bgcompname[si] ) ;
+         sprintf( hname, "h_%s_3b_msb_bg_%s", metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( htitle, "%s, 3b, mass sideband, background, %s", metvarname, bgcompname[si] ) ;
          h_3b_msb_bg[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
          h_3b_msb_bg[si] -> Sumw2() ;
 
-         sprintf( hname, "h_%s_2b_msb_bg_%s", metvarname, bgcompname[si] ) ;
+         sprintf( hname, "h_%s_2b_msb_bg_%s", metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( htitle, "%s, 2b, mass sideband, background, %s", metvarname, bgcompname[si] ) ;
          h_2b_msb_bg[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
          h_2b_msb_bg[si] -> Sumw2() ;
 
          if ( fill_noweight_histograms ) {
-            sprintf( hname, "h_%s_4b_msig_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( hname, "h_%s_4b_msig_bg_%s_noweight", metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( htitle, "%s, 4b, mass signal box, background, %s, no weighting", metvarname, bgcompname[si] ) ;
             h_4b_msig_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
             h_4b_msig_bg_noweight[si] -> Sumw2() ;
 
-            sprintf( hname, "h_%s_3b_msig_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( hname, "h_%s_3b_msig_bg_%s_noweight", metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( htitle, "%s, 3b, mass signal box, background, %s, no weighting", metvarname, bgcompname[si] ) ;
             h_3b_msig_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
             h_3b_msig_bg_noweight[si] -> Sumw2() ;
 
-            sprintf( hname, "h_%s_2b_msig_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( hname, "h_%s_2b_msig_bg_%s_noweight", metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( htitle, "%s, 2b, mass signal box, background, %s, no weighting", metvarname, bgcompname[si] ) ;
             h_2b_msig_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
             h_2b_msig_bg_noweight[si] -> Sumw2() ;
 
-            sprintf( hname, "h_%s_4b_msb_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( hname, "h_%s_4b_msb_bg_%s_noweight", metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( htitle, "%s, 4b, mass sideband, background, %s, no weighting", metvarname, bgcompname[si] ) ;
             h_4b_msb_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
             h_4b_msb_bg_noweight[si] -> Sumw2() ;
 
-            sprintf( hname, "h_%s_3b_msb_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( hname, "h_%s_3b_msb_bg_%s_noweight", metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( htitle, "%s, 3b, mass sideband, background, %s, no weighting", metvarname, bgcompname[si] ) ;
             h_3b_msb_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
             h_3b_msb_bg_noweight[si] -> Sumw2() ;
 
-            sprintf( hname, "h_%s_2b_msb_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( hname, "h_%s_2b_msb_bg_%s_noweight", metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( htitle, "%s, 2b, mass sideband, background, %s, no weighting", metvarname, bgcompname[si] ) ;
             h_2b_msb_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
             h_2b_msb_bg_noweight[si] -> Sumw2() ;
@@ -327,32 +353,32 @@
 
       } // si.
 
-      sprintf( hname, "h_%s_4b_msig_smc", metvarname ) ;
+      sprintf( hname, "h_%s_4b_msig_smc", metvarname_nospecial.Data() ) ;
       sprintf( htitle, "%s, 4b, mass signal box, signal MC", metvarname ) ;
       TH1F* h_4b_msig_smc = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
       h_4b_msig_smc -> Sumw2() ;
 
-      sprintf( hname, "h_%s_3b_msig_smc", metvarname ) ;
+      sprintf( hname, "h_%s_3b_msig_smc", metvarname_nospecial.Data() ) ;
       sprintf( htitle, "%s, 3b, mass signal box, signal MC", metvarname ) ;
       TH1F* h_3b_msig_smc = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
       h_3b_msig_smc -> Sumw2() ;
 
-      sprintf( hname, "h_%s_2b_msig_smc", metvarname ) ;
+      sprintf( hname, "h_%s_2b_msig_smc", metvarname_nospecial.Data() ) ;
       sprintf( htitle, "%s, 2b, mass signal box, signal MC", metvarname ) ;
       TH1F* h_2b_msig_smc = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
       h_2b_msig_smc -> Sumw2() ;
 
-      sprintf( hname, "h_%s_4b_msb_smc", metvarname ) ;
+      sprintf( hname, "h_%s_4b_msb_smc", metvarname_nospecial.Data() ) ;
       sprintf( htitle, "%s, 4b, mass sideband, signal MC", metvarname ) ;
       TH1F* h_4b_msb_smc = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
       h_4b_msb_smc -> Sumw2() ;
 
-      sprintf( hname, "h_%s_3b_msb_smc", metvarname ) ;
+      sprintf( hname, "h_%s_3b_msb_smc", metvarname_nospecial.Data() ) ;
       sprintf( htitle, "%s, 3b, mass sideband, signal MC", metvarname ) ;
       TH1F* h_3b_msb_smc = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
       h_3b_msb_smc -> Sumw2() ;
 
-      sprintf( hname, "h_%s_2b_msb_smc", metvarname ) ;
+      sprintf( hname, "h_%s_2b_msb_smc", metvarname_nospecial.Data() ) ;
       sprintf( htitle, "%s, 2b, mass sideband, signal MC", metvarname ) ;
       TH1F* h_2b_msb_smc = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
       h_2b_msb_smc -> Sumw2() ;
@@ -376,21 +402,21 @@
 
          printf("\n\n ++++++++ %s component\n\n", bgcompname[si] ) ;
 
-         sprintf( arg1, "%s>>h_%s_4b_msig_bg_%s", metvarname, metvarname, bgcompname[si] ) ;
+         sprintf( arg1, "%s>>h_%s_4b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssigcuts, btag4cuts, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_4b_msig_bg[si] -> Print("all") ;
 
-         sprintf( arg1, "%s>>h_%s_3b_msig_bg_%s", metvarname, metvarname, bgcompname[si] ) ;
+         sprintf( arg1, "%s>>h_%s_3b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssigcuts, btag3cuts, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_3b_msig_bg[si] -> Print("all") ;
 
-         sprintf( arg1, "%s>>h_%s_2b_msig_bg_%s", metvarname, metvarname, bgcompname[si] ) ;
+         sprintf( arg1, "%s>>h_%s_2b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssigcuts, btag2cuts, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
@@ -398,21 +424,21 @@
          h_2b_msig_bg[si] -> Print("all") ;
 
 
-         sprintf( arg1, "%s>>h_%s_4b_msb_bg_%s", metvarname, metvarname, bgcompname[si] ) ;
+         sprintf( arg1, "%s>>h_%s_4b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssbcuts, btag4cuts, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_4b_msb_bg[si] -> Print("all") ;
 
-         sprintf( arg1, "%s>>h_%s_3b_msb_bg_%s", metvarname, metvarname, bgcompname[si] ) ;
+         sprintf( arg1, "%s>>h_%s_3b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssbcuts, btag3cuts, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_3b_msb_bg[si] -> Print("all") ;
 
-         sprintf( arg1, "%s>>h_%s_2b_msb_bg_%s", metvarname, metvarname, bgcompname[si] ) ;
+         sprintf( arg1, "%s>>h_%s_2b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
          sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssbcuts, btag2cuts, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
@@ -421,21 +447,21 @@
 
          if ( fill_noweight_histograms ) {
 
-            sprintf( arg1, "%s>>h_%s_4b_msig_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( arg1, "%s>>h_%s_4b_msig_bg_%s_noweight", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssigcuts, btag4cuts ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             bgcompchain[si] -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
             h_4b_msig_bg_noweight[si] -> Print("all") ;
 
-            sprintf( arg1, "%s>>h_%s_3b_msig_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( arg1, "%s>>h_%s_3b_msig_bg_%s_noweight", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssigcuts, btag3cuts ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             bgcompchain[si] -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
             h_3b_msig_bg_noweight[si] -> Print("all") ;
 
-            sprintf( arg1, "%s>>h_%s_2b_msig_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( arg1, "%s>>h_%s_2b_msig_bg_%s_noweight", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssigcuts, btag2cuts ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             bgcompchain[si] -> Draw( arg1, allcuts ) ;
@@ -443,21 +469,21 @@
             h_2b_msig_bg_noweight[si] -> Print("all") ;
 
 
-            sprintf( arg1, "%s>>h_%s_4b_msb_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( arg1, "%s>>h_%s_4b_msb_bg_%s_noweight", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssbcuts, btag4cuts ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             bgcompchain[si] -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
             h_4b_msb_bg_noweight[si] -> Print("all") ;
 
-            sprintf( arg1, "%s>>h_%s_3b_msb_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( arg1, "%s>>h_%s_3b_msb_bg_%s_noweight", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssbcuts, btag3cuts ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             bgcompchain[si] -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
             h_3b_msb_bg_noweight[si] -> Print("all") ;
 
-            sprintf( arg1, "%s>>h_%s_2b_msb_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( arg1, "%s>>h_%s_2b_msb_bg_%s_noweight", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
             sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssbcuts, btag2cuts ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             bgcompchain[si] -> Draw( arg1, allcuts ) ;
@@ -472,7 +498,7 @@
       printf("\n\n ++++++++ signal\n\n" ) ;
 
       printf("\n\n 4b, mass sig\n\n") ; fflush(stdout) ;
-      sprintf( arg1, "%s>>h_%s_4b_msig_smc", metvarname, metvarname ) ;
+      sprintf( arg1, "%s>>h_%s_4b_msig_smc", metvarname, metvarname_nospecial.Data() ) ;
       sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssigcuts, btag4cuts, signal_weight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
@@ -480,7 +506,7 @@
       h_4b_msig_smc -> Print("all") ;
 
       printf("\n\n 3b, mass sig\n\n") ; fflush(stdout) ;
-      sprintf( arg1, "%s>>h_%s_3b_msig_smc", metvarname, metvarname ) ;
+      sprintf( arg1, "%s>>h_%s_3b_msig_smc", metvarname, metvarname_nospecial.Data() ) ;
       sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssigcuts, btag3cuts, signal_weight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
@@ -488,7 +514,7 @@
       h_3b_msig_smc -> Print("all") ;
 
       printf("\n\n 2b, mass sig\n\n") ; fflush(stdout) ;
-      sprintf( arg1, "%s>>h_%s_2b_msig_smc", metvarname, metvarname ) ;
+      sprintf( arg1, "%s>>h_%s_2b_msig_smc", metvarname, metvarname_nospecial.Data() ) ;
       sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssigcuts, btag2cuts, signal_weight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
@@ -498,7 +524,7 @@
 
 
       printf("\n\n 4b, mass sb\n\n") ; fflush(stdout) ;
-      sprintf( arg1, "%s>>h_%s_4b_msb_smc", metvarname, metvarname ) ;
+      sprintf( arg1, "%s>>h_%s_4b_msb_smc", metvarname, metvarname_nospecial.Data() ) ;
       sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssbcuts, btag4cuts, signal_weight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
@@ -506,7 +532,7 @@
       h_4b_msb_smc -> Print("all") ;
 
       printf("\n\n 3b, mass sb\n\n") ; fflush(stdout) ;
-      sprintf( arg1, "%s>>h_%s_3b_msb_smc", metvarname, metvarname ) ;
+      sprintf( arg1, "%s>>h_%s_3b_msb_smc", metvarname, metvarname_nospecial.Data() ) ;
       sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssbcuts, btag3cuts, signal_weight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
@@ -514,7 +540,7 @@
       h_3b_msb_smc -> Print("all") ;
 
       printf("\n\n 2b, mass sb\n\n") ; fflush(stdout) ;
-      sprintf( arg1, "%s>>h_%s_2b_msb_smc", metvarname, metvarname ) ;
+      sprintf( arg1, "%s>>h_%s_2b_msb_smc", metvarname, metvarname_nospecial.Data() ) ;
       sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssbcuts, btag2cuts, signal_weight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;

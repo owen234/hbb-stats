@@ -10,6 +10,12 @@
   mkdir -p logfiles
   mkdir -p outputfiles
 
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-200-4metbin-no3b.txt\",200,0.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-nosig-200-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-250-4metbin-no3b.txt\",250,0.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-nosig-250-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-300-4metbin-no3b.txt\",300,0.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-nosig-300-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-350-4metbin-no3b.txt\",350,0.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-nosig-350-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-400-4metbin-no3b.txt\",400,0.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-nosig-400-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-450-4metbin-no3b.txt\",450,0.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-nosig-450-4metbin-no3b.log
 
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-200-4metbin-no3b.txt\",200,0.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-nosig-200-4metbin-no3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-250-4metbin-no3b.txt\",250,0.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-nosig-250-4metbin-no3b.log
@@ -18,21 +24,30 @@
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-400-4metbin-no3b.txt\",400,0.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-nosig-400-4metbin-no3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-450-4metbin-no3b.txt\",450,0.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-nosig-450-4metbin-no3b.log
 
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-200-4metbin-no3b.txt\",200,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-200-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-250-4metbin-no3b.txt\",250,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-250-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-300-4metbin-no3b.txt\",300,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-300-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-350-4metbin-no3b.txt\",350,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-350-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-400-4metbin-no3b.txt\",400,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-400-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-450-4metbin-no3b.txt\",450,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-450-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-200-4metbin-no3b.txt\",200,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-200-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-250-4metbin-no3b.txt\",250,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-250-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-300-4metbin-no3b.txt\",300,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-300-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-350-4metbin-no3b.txt\",350,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-350-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-400-4metbin-no3b.txt\",400,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-400-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-nosig-450-4metbin-no3b.txt\",450,0.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-nosig-450-4metbin-no3b.log
 
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-200-4metbin-no3b.txt\",200,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-200-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-250-4metbin-no3b.txt\",250,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-250-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-300-4metbin-no3b.txt\",300,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-300-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-350-4metbin-no3b.txt\",350,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-350-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-400-4metbin-no3b.txt\",400,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-400-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-450-4metbin-no3b.txt\",450,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-450-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-200-4metbin-no3b.txt\",200,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-200-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-250-4metbin-no3b.txt\",250,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-250-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-300-4metbin-no3b.txt\",300,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-300-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-350-4metbin-no3b.txt\",350,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-350-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-400-4metbin-no3b.txt\",400,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-400-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-nosig-450-4metbin-no3b.txt\",450,0.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-nosig-450-4metbin-no3b.log
 
 
+
+
+
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-200-4metbin-no3b.txt\",200,1.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-withsig-200-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-250-4metbin-no3b.txt\",250,1.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-withsig-250-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-300-4metbin-no3b.txt\",300,1.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-withsig-300-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-350-4metbin-no3b.txt\",350,1.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-withsig-350-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-400-4metbin-no3b.txt\",400,1.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-withsig-400-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-450-4metbin-no3b.txt\",450,1.,4,0.,\"MET\/sqrt\(HT30\)\",0\) |& tee logfiles/gen-input-metovsqrtht-withsig-450-4metbin-no3b.log
 
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-200-4metbin-no3b.txt\",200,1.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-withsig-200-4metbin-no3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-250-4metbin-no3b.txt\",250,1.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-withsig-250-4metbin-no3b.log
@@ -41,19 +56,19 @@
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-400-4metbin-no3b.txt\",400,1.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-withsig-400-4metbin-no3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-450-4metbin-no3b.txt\",450,1.,4,0.,\"METsig\",0\) |& tee logfiles/gen-input-metsig-withsig-450-4metbin-no3b.log
 
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-200-4metbin-no3b.txt\",200,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-200-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-250-4metbin-no3b.txt\",250,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-250-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-300-4metbin-no3b.txt\",300,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-300-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-350-4metbin-no3b.txt\",350,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-350-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-400-4metbin-no3b.txt\",400,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-400-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-450-4metbin-no3b.txt\",450,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-450-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-200-4metbin-no3b.txt\",200,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-200-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-250-4metbin-no3b.txt\",250,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-250-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-300-4metbin-no3b.txt\",300,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-300-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-350-4metbin-no3b.txt\",350,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-350-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-400-4metbin-no3b.txt\",400,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-400-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig2012-withsig-450-4metbin-no3b.txt\",450,1.,4,0.,\"METsig_2012\",0\) |& tee logfiles/gen-input-metsig2012-withsig-450-4metbin-no3b.log
 
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-200-4metbin-no3b.txt\",200,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-200-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-250-4metbin-no3b.txt\",250,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-250-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-300-4metbin-no3b.txt\",300,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-300-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-350-4metbin-no3b.txt\",350,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-350-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-400-4metbin-no3b.txt\",400,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-400-4metbin-no3b.log
-# root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-450-4metbin-no3b.txt\",450,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-450-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-200-4metbin-no3b.txt\",200,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-200-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-250-4metbin-no3b.txt\",250,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-250-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-300-4metbin-no3b.txt\",300,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-300-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-350-4metbin-no3b.txt\",350,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-350-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-400-4metbin-no3b.txt\",400,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-400-4metbin-no3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-met-withsig-450-4metbin-no3b.txt\",450,1.,4,0.,\"MET\",0\) |& tee logfiles/gen-input-met-withsig-450-4metbin-no3b.log
 
 
 
