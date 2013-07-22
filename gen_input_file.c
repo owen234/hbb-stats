@@ -38,6 +38,9 @@
                         bool use3b = true
                         ) {
 
+      bool fill_noweight_histograms(false) ;
+      ///bool fill_noweight_histograms(true) ;
+
       if ( strcmp( metvarname, "METsig" ) == 0 ) {
          met_bin_edges_4bins[0] =  30. ;
          met_bin_edges_4bins[1] =  50. ;
@@ -247,6 +250,14 @@
       TH1F* h_3b_msb_bg[10] ;
       TH1F* h_2b_msb_bg[10] ;
 
+      TH1F* h_4b_msig_bg_noweight[10] ;
+      TH1F* h_3b_msig_bg_noweight[10] ;
+      TH1F* h_2b_msig_bg_noweight[10] ;
+
+      TH1F* h_4b_msb_bg_noweight[10] ;
+      TH1F* h_3b_msb_bg_noweight[10] ;
+      TH1F* h_2b_msb_bg_noweight[10] ;
+
       char hname[1000] ;
       char htitle[1000] ;
 
@@ -281,6 +292,38 @@
          sprintf( htitle, "%s, 2b, mass sideband, background, %s", metvarname, bgcompname[si] ) ;
          h_2b_msb_bg[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
          h_2b_msb_bg[si] -> Sumw2() ;
+
+         if ( fill_noweight_histograms ) {
+            sprintf( hname, "h_%s_4b_msig_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( htitle, "%s, 4b, mass signal box, background, %s, no weighting", metvarname, bgcompname[si] ) ;
+            h_4b_msig_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
+            h_4b_msig_bg_noweight[si] -> Sumw2() ;
+
+            sprintf( hname, "h_%s_3b_msig_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( htitle, "%s, 3b, mass signal box, background, %s, no weighting", metvarname, bgcompname[si] ) ;
+            h_3b_msig_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
+            h_3b_msig_bg_noweight[si] -> Sumw2() ;
+
+            sprintf( hname, "h_%s_2b_msig_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( htitle, "%s, 2b, mass signal box, background, %s, no weighting", metvarname, bgcompname[si] ) ;
+            h_2b_msig_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
+            h_2b_msig_bg_noweight[si] -> Sumw2() ;
+
+            sprintf( hname, "h_%s_4b_msb_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( htitle, "%s, 4b, mass sideband, background, %s, no weighting", metvarname, bgcompname[si] ) ;
+            h_4b_msb_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
+            h_4b_msb_bg_noweight[si] -> Sumw2() ;
+
+            sprintf( hname, "h_%s_3b_msb_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( htitle, "%s, 3b, mass sideband, background, %s, no weighting", metvarname, bgcompname[si] ) ;
+            h_3b_msb_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
+            h_3b_msb_bg_noweight[si] -> Sumw2() ;
+
+            sprintf( hname, "h_%s_2b_msb_bg_%s_noweight", metvarname, bgcompname[si] ) ;
+            sprintf( htitle, "%s, 2b, mass sideband, background, %s, no weighting", metvarname, bgcompname[si] ) ;
+            h_2b_msb_bg_noweight[si] = new TH1F( hname, htitle, bins_of_met, met_bin_edges ) ;
+            h_2b_msb_bg_noweight[si] -> Sumw2() ;
+         } // fill_noweight_histograms ?
 
       } // si.
 
@@ -375,6 +418,53 @@
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_2b_msb_bg[si] -> Print("all") ;
+
+         if ( fill_noweight_histograms ) {
+
+            sprintf( arg1, "%s>>h_%s_4b_msig_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssigcuts, btag4cuts ) ;
+            printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
+            bgcompchain[si] -> Draw( arg1, allcuts ) ;
+            can->Update() ; can->Draw() ;
+            h_4b_msig_bg_noweight[si] -> Print("all") ;
+
+            sprintf( arg1, "%s>>h_%s_3b_msig_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssigcuts, btag3cuts ) ;
+            printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
+            bgcompchain[si] -> Draw( arg1, allcuts ) ;
+            can->Update() ; can->Draw() ;
+            h_3b_msig_bg_noweight[si] -> Print("all") ;
+
+            sprintf( arg1, "%s>>h_%s_2b_msig_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssigcuts, btag2cuts ) ;
+            printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
+            bgcompchain[si] -> Draw( arg1, allcuts ) ;
+            can->Update() ; can->Draw() ;
+            h_2b_msig_bg_noweight[si] -> Print("all") ;
+
+
+            sprintf( arg1, "%s>>h_%s_4b_msb_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssbcuts, btag4cuts ) ;
+            printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
+            bgcompchain[si] -> Draw( arg1, allcuts ) ;
+            can->Update() ; can->Draw() ;
+            h_4b_msb_bg_noweight[si] -> Print("all") ;
+
+            sprintf( arg1, "%s>>h_%s_3b_msb_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssbcuts, btag3cuts ) ;
+            printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
+            bgcompchain[si] -> Draw( arg1, allcuts ) ;
+            can->Update() ; can->Draw() ;
+            h_3b_msb_bg_noweight[si] -> Print("all") ;
+
+            sprintf( arg1, "%s>>h_%s_2b_msb_bg_%s_noweight", metvarname, metvarname, bgcompname[si] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s))", allcommoncuts, masssbcuts, btag2cuts ) ;
+            printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
+            bgcompchain[si] -> Draw( arg1, allcuts ) ;
+            can->Update() ; can->Draw() ;
+            h_2b_msb_bg_noweight[si] -> Print("all") ;
+
+         } // fill_noweight_histograms ?
 
 
       } // si.
@@ -602,6 +692,58 @@
       } // hbi.
 
       printf("\n\n\n") ;
+
+
+
+
+
+     //-- print out no-weight tables, if the histograms were filled.
+      if ( fill_noweight_histograms ) {
+
+          for ( int si=0; si<nbgcomps; si++ ) {
+
+             printf("\n\n\n") ;
+
+             printf("\n\n\n") ;
+             printf("=============================================================================================================================\n") ;
+             printf(" METsig    comp  |   4bSB   4bSIG     4bSIG/4bSB    |   3bSB   3bSIG     3bSIG/3bSB     |   2bSB   2bSIG     2bSIG/2bSB     |\n") ;
+             printf("=============================================================================================================================\n") ;
+             fflush(stdout) ;
+             for ( int hbi=1; hbi<=bins_of_met; hbi++ ) {
+                float metsiglow  = h_4b_msig_smc->GetXaxis()->GetBinLowEdge( hbi ) ;
+                float metsighigh = h_4b_msig_smc->GetXaxis()->GetBinLowEdge( hbi+1 ) ;
+                if ( hbi==bins_of_met ) metsighigh = 999. ;
+                float n4bsb  = h_4b_msb_bg_noweight[si]  -> GetBinContent(hbi) ;
+                float n4bsig = h_4b_msig_bg_noweight[si] -> GetBinContent(hbi) ;
+                float n3bsb  = h_3b_msb_bg_noweight[si]  -> GetBinContent(hbi) ;
+                float n3bsig = h_3b_msig_bg_noweight[si] -> GetBinContent(hbi) ;
+                float n2bsb  = h_2b_msb_bg_noweight[si]  -> GetBinContent(hbi) ;
+                float n2bsig = h_2b_msig_bg_noweight[si] -> GetBinContent(hbi) ;
+                float r4bval = 0. ;  float r4berr = 0. ;
+                float r3bval = 0. ;  float r3berr = 0. ;
+                float r2bval = 0. ;  float r2berr = 0. ;
+                if ( n4bsb > 0 ) { r4bval = n4bsig / n4bsb ;  if ( n4bsig > 0 ) { r4berr = r4bval * sqrt( 1./n4bsig + 1./n4bsb ) ; } }
+                if ( n3bsb > 0 ) { r3bval = n3bsig / n3bsb ;  if ( n3bsig > 0 ) { r3berr = r3bval * sqrt( 1./n3bsig + 1./n3bsb ) ; } }
+                if ( n2bsb > 0 ) { r2bval = n2bsig / n2bsb ;  if ( n2bsig > 0 ) { r2berr = r2bval * sqrt( 1./n2bsig + 1./n2bsb ) ; } }
+
+                printf( "[%3.0f,%3.0f] %6s |  %6.0f %6.0f   %5.3f +/- %5.3f |  %6.0f %6.0f   %5.3f +/- %5.3f  |  %6.0f %6.0f   %5.3f +/- %5.3f  |\n",
+                   metsiglow, metsighigh,
+                   bgcompname[si],
+                   n4bsb, n4bsig, r4bval, r4berr,
+                   n3bsb, n3bsig, r3bval, r3berr,
+                   n2bsb, n2bsig, r2bval, r2berr
+                 ) ;
+
+             } // hbi.
+             printf("=============================================================================================================================\n") ;
+
+             printf("\n\n\n") ;
+
+          } // si.
+
+      } // fill_noweight_histograms ?
+
+
 
 
 
