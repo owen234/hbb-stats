@@ -42,8 +42,10 @@
                         int bins_of_met = 4,
                         float min_met = 50.,
                         const char* metvarname = "METsig",
-                        bool use3b = true
+                        bool use3b = true,
+                        bool usePUweight = true
                         ) {
+
 
       TString metvarname_nospecial(metvarname) ;
       metvarname_nospecial.ReplaceAll("/","_over_") ;
@@ -52,8 +54,8 @@
       printf("\n\n %s\n\n", metvarname_nospecial.Data() ) ;
 
 
-      bool fill_noweight_histograms(false) ;
-      ///bool fill_noweight_histograms(true) ;
+      ///bool fill_noweight_histograms(false) ;
+      bool fill_noweight_histograms(true) ;
 
       if ( strcmp( metvarname, "METsig" ) == 0 ) {
          met_bin_edges_4bins[0] =  30. ;
@@ -111,6 +113,9 @@
       /////char rtdir[10000] = "/data/cms/hadronic-susy-bjets/hbb/reduced-trees-may23-2013" ;
       ///char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july08-2013" ;
       char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july11-2013-pt20" ;
+      //char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july22-2013-nobeta" ;
+
+      printf("\n\n\n   Reduced tree directory: %s\n\n\n", rtdir ) ;
 
       int compIndex(0) ;
 
@@ -161,50 +166,64 @@
 
       float signal_weight = 1. ;
 
+   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   // if ( sigmass == 200 ) {
+   //    sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-200_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1807_v69-slimskim.root", rtdir ) ;
+   //    sigchain = new TChain("reducedTree") ;
+   //    sigchain -> Add( pathandfile ) ;
+   //    signal_weight = 1.91e-6 ;
+   // } else if ( sigmass == 250 ) {
+   //    sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-250_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1809_v69-slimskim.root", rtdir ) ;
+   //    sigchain = new TChain("reducedTree") ;
+   //    sigchain -> Add( pathandfile ) ;
+   //    signal_weight = 7.68e-7 ;
+   // } else if ( sigmass == 300 ) {
+   //    sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-300_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1810_v69-slimskim.root", rtdir ) ;
+   //    sigchain = new TChain("reducedTree") ;
+   //    sigchain -> Add( pathandfile ) ;
+   //    signal_weight = 3.49e-7 ;
+   // } else if ( sigmass == 350 ) {
+   //    sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-350_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1811_v69-slimskim.root", rtdir ) ;
+   //    sigchain = new TChain("reducedTree") ;
+   //    sigchain -> Add( pathandfile ) ;
+   //    signal_weight = 1.74e-7 ;
+   // } else if ( sigmass == 400 ) {
+   //    sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-400_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1812_v69-slimskim.root", rtdir ) ;
+   //    sigchain = new TChain("reducedTree") ;
+   //    sigchain -> Add( pathandfile ) ;
+   //    signal_weight = 9.25e-8 ;
+   // } else if ( sigmass == 450 ) {
+   //    sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-450_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1808_v69-slimskim.root", rtdir ) ;
+   //    sigchain = new TChain("reducedTree") ;
+   //    sigchain -> Add( pathandfile ) ;
+   //    signal_weight = 5.13e-8 ;
+   // }
+   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    //-- See our twiki for an explanation of the weight factors.
+    //    https://twiki.cern.ch/twiki/bin/view/CMS/SusyEWHHbbbb2013
+    //
+      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1_TChihh_v69-slimskim.root", rtdir ) ;
+      sigchain = new TChain("reducedTree") ;
+      sigchain -> Add( pathandfile ) ;
       if ( sigmass == 200 ) {
-
-         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-200_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1807_v69-slimskim.root", rtdir ) ;
-         sigchain = new TChain("reducedTree") ;
-         sigchain -> Add( pathandfile ) ;
-         signal_weight = 1.91e-6 ;
-
+         signal_weight = 4.6847e-07  ;
       } else if ( sigmass == 250 ) {
-
-         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-250_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1809_v69-slimskim.root", rtdir ) ;
-         sigchain = new TChain("reducedTree") ;
-         sigchain -> Add( pathandfile ) ;
-         signal_weight = 7.68e-7 ;
-
+         signal_weight = 7.1769e-07  ;
       } else if ( sigmass == 300 ) {
-
-         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-300_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1810_v69-slimskim.root", rtdir ) ;
-         sigchain = new TChain("reducedTree") ;
-         sigchain -> Add( pathandfile ) ;
-         signal_weight = 3.49e-7 ;
-
+         signal_weight = 2.9629e-07  ;
       } else if ( sigmass == 350 ) {
-
-         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-350_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1811_v69-slimskim.root", rtdir ) ;
-         sigchain = new TChain("reducedTree") ;
-         sigchain -> Add( pathandfile ) ;
-         signal_weight = 1.74e-7 ;
-
+         signal_weight = 2.4135e-07  ;
       } else if ( sigmass == 400 ) {
-
-         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-400_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1812_v69-slimskim.root", rtdir ) ;
-         sigchain = new TChain("reducedTree") ;
-         sigchain -> Add( pathandfile ) ;
-         signal_weight = 9.25e-8 ;
-
+         signal_weight = 1.8760e-07  ;
       } else if ( sigmass == 450 ) {
-
-         sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.SMS-HbbHbb_mHiggsino-450_mLSP-1_8TeV-Pythia6Z_jgsmith_UCSB1808_v69-slimskim.root", rtdir ) ;
-         sigchain = new TChain("reducedTree") ;
-         sigchain -> Add( pathandfile ) ;
-         signal_weight = 5.13e-8 ;
-
+         signal_weight = 1.0555e-07  ;
+      } else {
+         printf("\n\n\n *** signal mass not supported.  %d\n\n\n", sigmass ) ;
+         return ;
       }
 
+   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 
@@ -398,26 +417,33 @@
       char arg1[1000] ;
       char allcuts[10000] ;
 
+      char puweight[100] ;
+      if ( usePUweight ) {
+         sprintf( puweight, "*PUweight" ) ;
+      } else {
+         sprintf( puweight, "" ) ;
+      }
+
       for ( int si=0; si<nbgcomps; si++ ) {
 
          printf("\n\n ++++++++ %s component\n\n", bgcompname[si] ) ;
 
          sprintf( arg1, "%s>>h_%s_4b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssigcuts, btag4cuts, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssigcuts, btag4cuts, puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_4b_msig_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_3b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssigcuts, btag3cuts, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssigcuts, btag3cuts, puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_3b_msig_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_2b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssigcuts, btag2cuts, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssigcuts, btag2cuts, puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -425,21 +451,21 @@
 
 
          sprintf( arg1, "%s>>h_%s_4b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssbcuts, btag4cuts, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssbcuts, btag4cuts, puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_4b_msb_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_3b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssbcuts, btag3cuts, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssbcuts, btag3cuts, puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_3b_msb_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_2b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3*PUweight*%.0f", allcommoncuts, masssbcuts, btag2cuts, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssbcuts, btag2cuts, puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -499,7 +525,7 @@
 
       printf("\n\n 4b, mass sig\n\n") ; fflush(stdout) ;
       sprintf( arg1, "%s>>h_%s_4b_msig_smc", metvarname, metvarname_nospecial.Data() ) ;
-      sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssigcuts, btag4cuts, signal_weight, dataIntLumiIPB ) ;
+      sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag4cuts, sigmass, signal_weight, puweight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
       can->Update() ; can->Draw() ;
@@ -507,7 +533,7 @@
 
       printf("\n\n 3b, mass sig\n\n") ; fflush(stdout) ;
       sprintf( arg1, "%s>>h_%s_3b_msig_smc", metvarname, metvarname_nospecial.Data() ) ;
-      sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssigcuts, btag3cuts, signal_weight, dataIntLumiIPB ) ;
+      sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag3cuts, sigmass, signal_weight, puweight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
       can->Update() ; can->Draw() ;
@@ -515,7 +541,7 @@
 
       printf("\n\n 2b, mass sig\n\n") ; fflush(stdout) ;
       sprintf( arg1, "%s>>h_%s_2b_msig_smc", metvarname, metvarname_nospecial.Data() ) ;
-      sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssigcuts, btag2cuts, signal_weight, dataIntLumiIPB ) ;
+      sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag2cuts, sigmass, signal_weight, puweight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
       can->Update() ; can->Draw() ;
@@ -525,7 +551,7 @@
 
       printf("\n\n 4b, mass sb\n\n") ; fflush(stdout) ;
       sprintf( arg1, "%s>>h_%s_4b_msb_smc", metvarname, metvarname_nospecial.Data() ) ;
-      sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssbcuts, btag4cuts, signal_weight, dataIntLumiIPB ) ;
+      sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag4cuts, sigmass, signal_weight, puweight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
       can->Update() ; can->Draw() ;
@@ -533,7 +559,7 @@
 
       printf("\n\n 3b, mass sb\n\n") ; fflush(stdout) ;
       sprintf( arg1, "%s>>h_%s_3b_msb_smc", metvarname, metvarname_nospecial.Data() ) ;
-      sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssbcuts, btag3cuts, signal_weight, dataIntLumiIPB ) ;
+      sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag3cuts, sigmass, signal_weight, puweight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
       can->Update() ; can->Draw() ;
@@ -541,7 +567,7 @@
 
       printf("\n\n 2b, mass sb\n\n") ; fflush(stdout) ;
       sprintf( arg1, "%s>>h_%s_2b_msb_smc", metvarname, metvarname_nospecial.Data() ) ;
-      sprintf( allcuts, "((%s)&&(%s)&&(%s))*%g*PUweight*%.0f", allcommoncuts, masssbcuts, btag2cuts, signal_weight, dataIntLumiIPB ) ;
+      sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag2cuts, sigmass, signal_weight, puweight, dataIntLumiIPB ) ;
       printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
       sigchain -> Draw( arg1, allcuts ) ;
       can->Update() ; can->Draw() ;
