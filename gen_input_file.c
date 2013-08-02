@@ -241,7 +241,6 @@
       sprintf( triggercuts, "(passMC_DiCentralPFJet30_PFMET80_BTagCSV07==1||passMC_PFMET150==1)" ) ;
 
       char njetcuts[10000] ;
-      ////////////////////sprintf( njetcuts, "njets30>=4&&njets30<=5" ) ;
       sprintf( njetcuts, "njets20>=4&&njets20<=5" ) ;
 
       char skimcuts[10000] ;
@@ -258,11 +257,12 @@
 
       char btag4cuts[10000] ;
       sprintf( btag4cuts, "%s", "CSVbest2>0.898&&CSVbest3>0.679&&CSVbest4>0.244" ) ;
-      //--- try making minDeltaPhi30 cut only for 2b and 3b.
+
       char btag3cuts[10000] ;
-      sprintf( btag3cuts, "%s", "CSVbest2>0.898&&CSVbest3>0.679&&CSVbest4<0.244&&minDeltaPhi30>0.3" ) ;
+      sprintf( btag3cuts, "%s", "CSVbest2>0.898&&CSVbest3>0.679&&CSVbest4<0.244" ) ;
+
       char btag2cuts[10000] ;
-      sprintf( btag2cuts, "%s", "CSVbest2>0.898&&CSVbest3<0.679&&minDeltaPhi30>0.3" ) ;
+      sprintf( btag2cuts, "%s", "CSVbest2>0.898&&CSVbest3<0.679" ) ;
 
       char leptonveto[10000] ;
       sprintf( leptonveto, "%s", "nMuons==0&&nElectrons==0&&nIsoTracks15_005_03==0&&nTausLoose==0" ) ;
@@ -270,15 +270,14 @@
       char drmaxcut[10000] ;
       sprintf( drmaxcut, "%s", "deltaRmax_hh<2.2" ) ;
 
-    //--- try this only for 2b and 3b
-    //char mindphicut[10000] ;
-    //sprintf( mindphicut, "%s", "minDeltaPhi30>0.3" ) ;
+      char mindphicut[10000] ;
+      sprintf( mindphicut, "%s", "minDeltaPhi20>0.3" ) ;
 
       char jet2ptcut[10000] ;
       sprintf( jet2ptcut, "%s", "jetpt2>50" ) ;
 
       char allcommoncuts[10000] ;
-      sprintf( allcommoncuts, "(%s)&&(%s)&&(%s)&&(%s)", skimcuts, leptonveto, drmaxcut, jet2ptcut ) ;
+      sprintf( allcommoncuts, "(%s)&&(%s)&&(%s)&&(%s)&&(%s)", skimcuts, leptonveto, drmaxcut, jet2ptcut, mindphicut ) ;
 
 
 
