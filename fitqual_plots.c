@@ -153,46 +153,46 @@
 
 
          sprintf( hname, "h_bg_%db_msig_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sig, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
          TH1F* hist_bg_msig = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
          hist_bg_msig -> SetFillColor( kBlue-9 ) ;
          labelBins( hist_bg_msig ) ;
 
          sprintf( hname, "h_bg_%db_msb_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sb, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sb, %db", nb_lookup[nbi] ) ;
          TH1F* hist_bg_msb = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
          hist_bg_msb -> SetFillColor( kBlue-9 ) ;
          labelBins( hist_bg_msb ) ;
 
          sprintf( hname, "h_sig_%db_msig_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sig, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
          TH1F* hist_sig_msig = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
          hist_sig_msig -> SetFillColor( kMagenta+2 ) ;
          labelBins( hist_sig_msig ) ;
 
          sprintf( hname, "h_sig_%db_msb_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sb, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sb, %db", nb_lookup[nbi] ) ;
          TH1F* hist_sig_msb = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
          hist_sig_msb -> SetFillColor( kMagenta+2 ) ;
          labelBins( hist_sig_msb ) ;
 
          sprintf( hname, "h_all_%db_msig_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sig, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
          TH1F* hist_all_msig = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
 
          sprintf( hname, "h_all_%db_msb_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sb, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sb, %db", nb_lookup[nbi] ) ;
          TH1F* hist_all_msb = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
 
          sprintf( hname, "h_data_%db_msig_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sig, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
          TH1F* hist_data_msig = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
          hist_data_msig -> SetLineWidth(2) ;
          hist_data_msig -> SetMarkerStyle(20) ;
          labelBins( hist_data_msig ) ;
 
          sprintf( hname, "h_data_%db_msb_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sb, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sb, %db", nb_lookup[nbi] ) ;
          TH1F* hist_data_msb = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
          hist_data_msb -> SetLineWidth(2) ;
          hist_data_msb -> SetMarkerStyle(20) ;
@@ -239,7 +239,7 @@
          cfq1->cd( pad ) ;
 
          sprintf( hname, "h_stack_%db_msig_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sig, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
          THStack* hstack_msig = new THStack( hname, htitle ) ;
          hstack_msig -> Add( hist_bg_msig ) ;
          hstack_msig -> Add( hist_sig_msig ) ;
@@ -258,7 +258,7 @@
          cfq1->cd( pad ) ;
 
          sprintf( hname, "h_stack_%db_msb_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sig, %db, MET", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
          THStack* hstack_msb = new THStack( hname, htitle ) ;
          hstack_msb -> Add( hist_bg_msb ) ;
          hstack_msb -> Add( hist_sig_msb ) ;
@@ -279,10 +279,10 @@
 
 
 
-      TH1F* hist_R_msigmsb = new TH1F( "h_R_msigmsb", "R msig/msb vs met bin", bins_of_met, 0.5, 0.5+bins_of_met ) ;
+      TH1F* hist_R_msigmsb = new TH1F( "h_R_msigmsb", "Fit SIG/SB ratio vs S bin", bins_of_met, 0.5, 0.5+bins_of_met ) ;
       hist_R_msigmsb -> SetLineWidth(2) ;
       hist_R_msigmsb -> SetMarkerStyle(20) ;
-      hist_R_msigmsb -> SetYTitle("R msig/msb") ;
+      hist_R_msigmsb -> SetYTitle("Fit SIG/SB ratio") ;
       labelBins( hist_R_msigmsb ) ;
 
 
@@ -340,7 +340,8 @@
       TAxis* xaxis = hist->GetXaxis() ;
       for ( int mbi=0; mbi<hist->GetNbinsX(); mbi++ ) {
          char label[1000] ;
-         sprintf( label, "MET%d", mbi+1 ) ;
+         ///sprintf( label, "MET%d", mbi+1 ) ;
+         sprintf( label, "S bin %d", mbi+1 ) ;
          xaxis->SetBinLabel( mbi+1, label ) ;
       } // mbi.
    }

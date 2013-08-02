@@ -218,6 +218,8 @@
          signal_weight = 1.8760e-07  ;
       } else if ( sigmass == 450 ) {
          signal_weight = 1.0555e-07  ;
+      } else if ( sigmass == 500 ) {
+         signal_weight = 1.4492e-07  ;
       } else {
          printf("\n\n\n *** signal mass not supported.  %d\n\n\n", sigmass ) ;
          return ;

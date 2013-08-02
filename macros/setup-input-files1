@@ -20,6 +20,7 @@
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-350-4metbin-w3b.txt\",350,0.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-nosig-350-4metbin-w3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-400-4metbin-w3b.txt\",400,0.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-nosig-400-4metbin-w3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-450-4metbin-w3b.txt\",450,0.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-nosig-450-4metbin-w3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-nosig-500-4metbin-w3b.txt\",500,0.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-nosig-500-4metbin-w3b.log
 
 # root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-200-4metbin-w3b.txt\",200,0.,4,0.,\"MET\/sqrt\(HT30\)\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metovsqrtht-nosig-200-4metbin-w3b.log
 # root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-nosig-250-4metbin-w3b.txt\",250,0.,4,0.,\"MET\/sqrt\(HT30\)\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metovsqrtht-nosig-250-4metbin-w3b.log
@@ -50,6 +51,7 @@
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-350-4metbin-w3b.txt\",350,1.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-withsig-350-4metbin-w3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-400-4metbin-w3b.txt\",400,1.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-withsig-400-4metbin-w3b.log
   root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-450-4metbin-w3b.txt\",450,1.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-withsig-450-4metbin-w3b.log
+  root -b -q gen_input_file.c+\(\"outputfiles/input-metsig-withsig-500-4metbin-w3b.txt\",500,1.,4,0.,\"METsig\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metsig-withsig-500-4metbin-w3b.log
 
 # root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-200-4metbin-w3b.txt\",200,1.,4,0.,\"MET\/sqrt\(HT30\)\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metovsqrtht-withsig-200-4metbin-w3b.log
 # root -b -q gen_input_file.c+\(\"outputfiles/input-metovsqrtht-withsig-250-4metbin-w3b.txt\",250,1.,4,0.,\"MET\/sqrt\(HT30\)\",$use_3b,$do_puweight\) |& tee logfiles/gen-input-metovsqrtht-withsig-250-4metbin-w3b.log

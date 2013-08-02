@@ -19,6 +19,7 @@
   root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-nosig-350-4metbin-w3b.txt\",\"outputfiles/ws-metsig-nosig-350-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-nosig-350-4metbin-w3b.log
   root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-nosig-400-4metbin-w3b.txt\",\"outputfiles/ws-metsig-nosig-400-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-nosig-400-4metbin-w3b.log
   root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-nosig-450-4metbin-w3b.txt\",\"outputfiles/ws-metsig-nosig-450-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-nosig-450-4metbin-w3b.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-nosig-500-4metbin-w3b.txt\",\"outputfiles/ws-metsig-nosig-500-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-nosig-500-4metbin-w3b.log
 
 # root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metovsqrtht-nosig-200-4metbin-w3b.txt\",\"outputfiles/ws-metovsqrtht-nosig-200-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metovsqrtht-nosig-200-4metbin-w3b.log
 # root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metovsqrtht-nosig-250-4metbin-w3b.txt\",\"outputfiles/ws-metovsqrtht-nosig-250-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metovsqrtht-nosig-250-4metbin-w3b.log
@@ -49,6 +50,7 @@
   root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-withsig-350-4metbin-w3b.txt\",\"outputfiles/ws-metsig-withsig-350-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-withsig-350-4metbin-w3b.log
   root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-withsig-400-4metbin-w3b.txt\",\"outputfiles/ws-metsig-withsig-400-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-withsig-400-4metbin-w3b.log
   root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-withsig-450-4metbin-w3b.txt\",\"outputfiles/ws-metsig-withsig-450-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-withsig-450-4metbin-w3b.log
+  root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metsig-withsig-500-4metbin-w3b.txt\",\"outputfiles/ws-metsig-withsig-500-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metsig-withsig-500-4metbin-w3b.log
 
 # root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metovsqrtht-withsig-200-4metbin-w3b.txt\",\"outputfiles/ws-metovsqrtht-withsig-200-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metovsqrtht-withsig-200-4metbin-w3b.log
 # root -b -q build_hbb_workspace1.c+\(\"outputfiles/input-metovsqrtht-withsig-250-4metbin-w3b.txt\",\"outputfiles/ws-metovsqrtht-withsig-250-4metbin-w3b.root\"\) |& tee logfiles/build-ws-metovsqrtht-withsig-250-4metbin-w3b.log
