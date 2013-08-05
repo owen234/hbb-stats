@@ -372,6 +372,8 @@ void StandardHypoTestDemo(const char* infile = "",
       
    }
 
+   float nsigma[5] ;
+
    // look at expected significances 
    // found median of S+B distribution
    if (calcType != 2) { 
@@ -395,6 +397,7 @@ void StandardHypoTestDemo(const char* infile = "",
          std::cout << " Expected p -value and significance at " << sig << " sigma = " 
                    << htExp.NullPValue() << " significance " << htExp.Significance() << " sigma " << std::endl; 
          
+         nsigma[i] = htExp.Significance() ;
       }
    }
    else { 
@@ -406,8 +409,12 @@ void StandardHypoTestDemo(const char* infile = "",
          std::cout << " Expected p -value and significance at " << sig << " sigma = " 
                    << pval << " significance " << ROOT::Math::normal_quantile_c(pval,1) << " sigma " << std::endl; 
          
+         nsigma[i] = ROOT::Math::normal_quantile_c(pval,1) ;
       }
    }
+
+   printf("\n\n  owen: (-2s,-1s,m,1s,2s)  %.2f  %.2f  %.2f  %.2f  %.2f\n\n",
+         nsigma[0], nsigma[1], nsigma[2], nsigma[3], nsigma[4] ) ;
 
 }
 

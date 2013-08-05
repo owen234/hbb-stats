@@ -206,7 +206,13 @@
       sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1_TChihh_v69-slimskim.root", rtdir ) ;
       sigchain = new TChain("reducedTree") ;
       sigchain -> Add( pathandfile ) ;
-      if ( sigmass == 200 ) {
+      if ( sigmass == 130 ) {
+         signal_weight = 2.3045e-05  ;
+      } else if ( sigmass == 150 ) {
+         signal_weight = 1.2294e-06  ;
+      } else if ( sigmass == 175 ) {
+         signal_weight = 7.8243e-07  ;
+      } else if ( sigmass == 200 ) {
          signal_weight = 4.6847e-07  ;
       } else if ( sigmass == 250 ) {
          signal_weight = 7.1769e-07  ;

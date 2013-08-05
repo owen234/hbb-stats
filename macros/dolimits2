@@ -1,12 +1,13 @@
 
 
- set ntoy = 10000
- set minmu = 0.30
- set maxmu = 4.00
- set npoints = 20
+ set ntoy =  5000
+ set minmu = 0.10
+ set maxmu = 3.10
+ set npoints = 30
 
   #-- toys
 
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-175-4metbin-w3b.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-175-4metbin-w3b.log
    root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-200-4metbin-w3b.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-200-4metbin-w3b.log
    root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-250-4metbin-w3b.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-250-4metbin-w3b.log
    root -b -q rundemo.c\(\"outputfiles/ws-metsig-nosig-300-4metbin-w3b.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-300-4metbin-w3b.log
