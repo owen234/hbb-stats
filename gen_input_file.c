@@ -848,9 +848,25 @@
          correction_Rsigsb_3b[hbi] = Rsigsb_3b_val[hbi] / wave_Rsigsb_val[hbi] ;
          correction_Rsigsb_2b[hbi] = Rsigsb_2b_val[hbi] / wave_Rsigsb_val[hbi] ;
 
+    /// //-- no syst.
+    ///  syst_Rsigsb_4b[hbi] = 0. ;
+    ///  syst_Rsigsb_3b[hbi] = 0. ;
+    ///  syst_Rsigsb_2b[hbi] = 0. ;
+
+    /// //-- aggressive: mcstat only
+    ///  syst_Rsigsb_4b[hbi] =  (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+    ///  syst_Rsigsb_3b[hbi] =  (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+    ///  syst_Rsigsb_2b[hbi] =  (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+
+        //-- nominal: mcstat + 1/2 correction
          syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
          syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
          syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.)/2.,2. ) ) ;
+
+    /// //-- nominal: mcstat + full correction
+    ///  syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.),2. ) ) ;
+    ///  syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.),2. ) ) ;
+    ///  syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.),2. ) ) ;
 
          if ( bins_of_met > 1 && use3b ) {
             printf("  Rsig/sb corrections for METsig bin %d :     4b = %5.3f +/- %5.3f,       3b =  %5.3f +/- %5.3f,      2b =  %5.3f +/- %5.3f\n",
