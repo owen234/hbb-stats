@@ -37,7 +37,7 @@
 
   //===========================================================================================
 
-   void build_hbb_workspace1( const char* infile = "outputfiles/input-file.txt", const char* outfile = "outputfiles/ws.root", bool use3b = true ) {
+   void build_hbb_workspace1( const char* infile = "outputfiles/input-file.txt", const char* outfile = "outputfiles/ws.root", bool use3b = true, bool combine_top_metbins = false ) {
 
 
     //-------------------------------------------------------------------------
@@ -124,13 +124,29 @@
             rv_smc_msb[nbi][mbi] -> setVal( TMath::Nint(fileVal) ) ;
             rv_smc_msb[nbi][mbi] -> setConstant( kTRUE ) ;
 
-            float corrVal, corrSyst ;
-            sprintf( pname, "Rsigsb_syst_%db_met%d", nbi+2, mbi+1 ) ;
-            if ( !getFileValue( infile, pname, corrSyst ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
-            sprintf( pname, "Rsigsb_corr_%db_met%d", nbi+2, mbi+1 ) ;
-            if ( !getFileValue( infile, pname, corrVal  ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
+            if ( (!combine_top_metbins) || mbi==0 ) {
 
-            rv_Rsigsb_corr[nbi][mbi] = makeLognormalConstraint( pname, corrVal, corrSyst ) ;
+               float corrVal, corrSyst ;
+               sprintf( pname, "Rsigsb_syst_%db_met%d", nbi+2, mbi+1 ) ;
+               if ( !getFileValue( infile, pname, corrSyst ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
+               sprintf( pname, "Rsigsb_corr_%db_met%d", nbi+2, mbi+1 ) ;
+               if ( !getFileValue( infile, pname, corrVal  ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
+               rv_Rsigsb_corr[nbi][mbi] = makeLognormalConstraint( pname, corrVal, corrSyst ) ;
+
+            } else {
+
+               if ( mbi==1 ) {
+                  float corrVal, corrSyst ;
+                  sprintf( pname, "Rsigsb_syst_%db_metbins234", nbi+2 ) ;
+                  if ( !getFileValue( infile, pname, corrSyst ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
+                  sprintf( pname, "Rsigsb_corr_%db_metbins234", nbi+2 ) ;
+                  if ( !getFileValue( infile, pname, corrVal  ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
+                  rv_Rsigsb_corr[nbi][mbi] = makeLognormalConstraint( pname, corrVal, corrSyst ) ;
+               } else {
+                  rv_Rsigsb_corr[nbi][mbi] = rv_Rsigsb_corr[nbi][1] ;
+               }
+
+            }
 
 
          } // mbi.
@@ -159,11 +175,27 @@
 
       for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
 
-         sprintf( pname, "R_msigmsb_met%d", mbi+1 ) ;
-         printf( "  %s\n", pname ) ;
-         rv_R_msigmsb[mbi] = new RooRealVar( pname, pname, R_msigmsb_initialval, 0., 3. ) ;
-         rv_R_msigmsb[mbi] -> setConstant( kFALSE ) ;
-         rv_R_msigmsb[mbi] -> Print() ;
+         if ( (!combine_top_metbins) || mbi==0 ) {
+
+            sprintf( pname, "R_msigmsb_met%d", mbi+1 ) ;
+            printf( "  %s\n", pname ) ;
+            rv_R_msigmsb[mbi] = new RooRealVar( pname, pname, R_msigmsb_initialval, 0., 3. ) ;
+            rv_R_msigmsb[mbi] -> setConstant( kFALSE ) ;
+            rv_R_msigmsb[mbi] -> Print() ;
+
+         } else {
+
+            if ( mbi==1 ) {
+               sprintf( pname, "R_msigmsb_metbins234" ) ;
+               printf( "  %s\n", pname ) ;
+               rv_R_msigmsb[mbi] = new RooRealVar( pname, pname, R_msigmsb_initialval, 0., 3. ) ;
+               rv_R_msigmsb[mbi] -> setConstant( kFALSE ) ;
+               rv_R_msigmsb[mbi] -> Print() ;
+            } else {
+               rv_R_msigmsb[mbi] = rv_R_msigmsb[1] ;
+            }
+
+         }
 
       } // mbi.
 

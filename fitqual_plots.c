@@ -289,7 +289,16 @@
       for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
          sprintf( pname, "R_msigmsb_met%d", mbi+1 ) ;
          RooRealVar* rrv_R = ws->var( pname ) ;
-         if ( rrv_R == 0x0 ) { printf("\n\n *** Can't find %s in ws.\n\n", pname ) ; return ; }
+         if ( rrv_R == 0x0 ) {
+            printf("\n\n *** Can't find %s in ws.\n\n", pname ) ;
+            sprintf( pname, "R_msigmsb_metbins234" ) ;
+            printf("\n Looking for combined parameter: %s\n", pname ) ;
+            rrv_R = ws->var( pname ) ;
+            if ( rrv_R == 0x0 ) {
+               printf("\n\n *** Can't find %s in ws.  I give up.\n\n", pname ) ;
+               return ;
+            }
+         }
          hist_R_msigmsb -> SetBinContent( mbi+1, rrv_R -> getVal() ) ;
          hist_R_msigmsb -> SetBinError( mbi+1, rrv_R -> getError() ) ;
       } // mbi.

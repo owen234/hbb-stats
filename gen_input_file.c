@@ -615,6 +615,24 @@
       float Rsigsb_3b_staterr2[50] ;
       float Rsigsb_2b_staterr2[50] ;
 
+     //-- these metbinsum variables are for the top N-1 met bins.
+
+      float bgsum_nmsig_4b_metbinsum_val(0.) ;
+      float bgsum_nmsig_3b_metbinsum_val(0.) ;
+      float bgsum_nmsig_2b_metbinsum_val(0.) ;
+
+      float bgsum_nmsb_4b_metbinsum_val(0.) ;
+      float bgsum_nmsb_3b_metbinsum_val(0.) ;
+      float bgsum_nmsb_2b_metbinsum_val(0.) ;
+
+      float bgsum_nmsig_4b_metbinsum_err2(0.) ;
+      float bgsum_nmsig_3b_metbinsum_err2(0.) ;
+      float bgsum_nmsig_2b_metbinsum_err2(0.) ;
+
+      float bgsum_nmsb_4b_metbinsum_err2(0.) ;
+      float bgsum_nmsb_3b_metbinsum_err2(0.) ;
+      float bgsum_nmsb_2b_metbinsum_err2(0.) ;
+
 
       printf("\n\n\n") ;
       printf("============================================================================================================================================================================\n") ;
@@ -667,6 +685,20 @@
                bgsum_nmsb_4b_err2 += ::pow( nmsb_4b_err, 2.) ;
                bgsum_nmsb_3b_err2 += ::pow( nmsb_3b_err, 2.) ;
                bgsum_nmsb_2b_err2 += ::pow( nmsb_2b_err, 2.) ;
+               if ( hbi > 1 ) {
+                  bgsum_nmsig_4b_metbinsum_val += nmsig_4b_val ;
+                  bgsum_nmsig_3b_metbinsum_val += nmsig_3b_val ;
+                  bgsum_nmsig_2b_metbinsum_val += nmsig_2b_val ;
+                  bgsum_nmsig_4b_metbinsum_err2 += ::pow( nmsig_4b_err, 2.) ;
+                  bgsum_nmsig_3b_metbinsum_err2 += ::pow( nmsig_3b_err, 2.) ;
+                  bgsum_nmsig_2b_metbinsum_err2 += ::pow( nmsig_2b_err, 2.) ;
+                  bgsum_nmsb_4b_metbinsum_val += nmsb_4b_val ;
+                  bgsum_nmsb_3b_metbinsum_val += nmsb_3b_val ;
+                  bgsum_nmsb_2b_metbinsum_val += nmsb_2b_val ;
+                  bgsum_nmsb_4b_metbinsum_err2 += ::pow( nmsb_4b_err, 2.) ;
+                  bgsum_nmsb_3b_metbinsum_err2 += ::pow( nmsb_3b_err, 2.) ;
+                  bgsum_nmsb_2b_metbinsum_err2 += ::pow( nmsb_2b_err, 2.) ;
+               }
             }
 
             if ( si == (nbgcomps-1) ) {
@@ -752,6 +784,37 @@
 
       printf("\n\n\n") ;
 
+     //-- Compute ratios for the combination of the top N-1 met bins.
+
+      float Rsigsb_4b_metbinsum_val =  bgsum_nmsig_4b_metbinsum_val / bgsum_nmsb_4b_metbinsum_val ;
+      float Rsigsb_4b_metbinsum_err =  Rsigsb_4b_metbinsum_val * sqrt( bgsum_nmsig_4b_metbinsum_err2 / ::pow(bgsum_nmsig_4b_metbinsum_val,2) + bgsum_nmsb_4b_metbinsum_err2 / ::pow(bgsum_nmsb_4b_metbinsum_val,2) ) ;
+      float Rsigsb_3b_metbinsum_val =  bgsum_nmsig_3b_metbinsum_val / bgsum_nmsb_3b_metbinsum_val ;
+      float Rsigsb_3b_metbinsum_err =  Rsigsb_3b_metbinsum_val * sqrt( bgsum_nmsig_3b_metbinsum_err2 / ::pow(bgsum_nmsig_3b_metbinsum_val,2) + bgsum_nmsb_3b_metbinsum_err2 / ::pow(bgsum_nmsb_3b_metbinsum_val,2) ) ;
+      float Rsigsb_2b_metbinsum_val =  bgsum_nmsig_2b_metbinsum_val / bgsum_nmsb_2b_metbinsum_val ;
+      float Rsigsb_2b_metbinsum_err =  Rsigsb_2b_metbinsum_val * sqrt( bgsum_nmsig_2b_metbinsum_err2 / ::pow(bgsum_nmsig_2b_metbinsum_val,2) + bgsum_nmsb_2b_metbinsum_err2 / ::pow(bgsum_nmsb_2b_metbinsum_val,2) ) ;
+
+      float Rsigsb_4b_metbinsum_staterr2 = 0. ;
+      if ( bgsum_nmsig_4b_metbinsum_val > 0. ) { Rsigsb_4b_metbinsum_staterr2 += Rsigsb_4b_metbinsum_val * Rsigsb_4b_metbinsum_val / bgsum_nmsig_4b_metbinsum_val ; }
+      if ( bgsum_nmsb_4b_metbinsum_val  > 0. ) { Rsigsb_4b_metbinsum_staterr2 += Rsigsb_4b_metbinsum_val * Rsigsb_4b_metbinsum_val / bgsum_nmsb_4b_metbinsum_val ; }
+      if ( Rsigsb_4b_metbinsum_staterr2 < 0.0001 ) { Rsigsb_4b_metbinsum_staterr2 = 0.15 ; }
+
+      float Rsigsb_3b_metbinsum_staterr2 = 0. ;
+      if ( bgsum_nmsig_3b_metbinsum_val > 0. ) { Rsigsb_3b_metbinsum_staterr2 += Rsigsb_3b_metbinsum_val * Rsigsb_3b_metbinsum_val / bgsum_nmsig_3b_metbinsum_val ; }
+      if ( bgsum_nmsb_3b_metbinsum_val  > 0. ) { Rsigsb_3b_metbinsum_staterr2 += Rsigsb_3b_metbinsum_val * Rsigsb_3b_metbinsum_val / bgsum_nmsb_3b_metbinsum_val ; }
+      if ( Rsigsb_3b_metbinsum_staterr2 < 0.0001 ) { Rsigsb_3b_metbinsum_staterr2 = 0.15 ; }
+
+      float Rsigsb_2b_metbinsum_staterr2 = 0. ;
+      if ( bgsum_nmsig_2b_metbinsum_val > 0. ) { Rsigsb_2b_metbinsum_staterr2 += Rsigsb_2b_metbinsum_val * Rsigsb_2b_metbinsum_val / bgsum_nmsig_2b_metbinsum_val ; }
+      if ( bgsum_nmsb_2b_metbinsum_val  > 0. ) { Rsigsb_2b_metbinsum_staterr2 += Rsigsb_2b_metbinsum_val * Rsigsb_2b_metbinsum_val / bgsum_nmsb_2b_metbinsum_val ; }
+      if ( Rsigsb_2b_metbinsum_staterr2 < 0.0001 ) { Rsigsb_2b_metbinsum_staterr2 = 0.15 ; }
+
+      printf("\n\n\n") ;
+      printf("  SIG/SB ratios from top %d %s bins.\n", bins_of_met-1, metvarname ) ;
+      printf("   R SIG/SB, 4b : %.3f +/- %.3f MC stats (%.3f expected data stat err)\n", Rsigsb_4b_metbinsum_val, Rsigsb_4b_metbinsum_err, sqrt(Rsigsb_4b_metbinsum_staterr2) ) ;
+      printf("   R SIG/SB, 3b : %.3f +/- %.3f MC stats (%.3f expected data stat err)\n", Rsigsb_3b_metbinsum_val, Rsigsb_3b_metbinsum_err, sqrt(Rsigsb_3b_metbinsum_staterr2) ) ;
+      printf("   R SIG/SB, 2b : %.3f +/- %.3f MC stats (%.3f expected data stat err)\n", Rsigsb_2b_metbinsum_val, Rsigsb_2b_metbinsum_err, sqrt(Rsigsb_2b_metbinsum_staterr2) ) ;
+      printf("\n\n\n") ;
+
 
 
 
@@ -821,16 +884,40 @@
 
       printf("\n\n") ;
       float wave_Rsigsb_val[50] ;
+      float wave_Rsigsb_err[50] ;
       for ( int hbi=1; hbi<=bins_of_met; hbi++ ) {
          if ( bins_of_met > 1 && use3b ) {
             wave_Rsigsb_val[hbi] =  ( Rsigsb_2b_val[hbi] / Rsigsb_2b_staterr2[hbi] + Rsigsb_3b_val[hbi] / Rsigsb_3b_staterr2[hbi] + Rsigsb_4b_val[hbi] / Rsigsb_4b_staterr2[hbi] ) /
                                     (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_3b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ;
+            wave_Rsigsb_err[hbi] = sqrt( 1. / (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_3b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ) ;
          } else {
             wave_Rsigsb_val[hbi] =  ( Rsigsb_2b_val[hbi] / Rsigsb_2b_staterr2[hbi] + Rsigsb_4b_val[hbi] / Rsigsb_4b_staterr2[hbi] ) /
                                     (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ;
+            wave_Rsigsb_err[hbi] = sqrt( 1. / (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ) ;
          }
-         printf(" expected sqrt(N) weighted Rsig/sb ave for METsig bin %d :  %5.3f\n", hbi, wave_Rsigsb_val[hbi] ) ;
+         printf(" expected sqrt(N) weighted Rsig/sb ave for METsig bin %d :  %5.3f +/- %5.3f\n", hbi, wave_Rsigsb_val[hbi], wave_Rsigsb_err[hbi] ) ;
       } // hbi
+
+      //
+      //  Add combination of top N-1 met bins, in case we want to use that.
+      //
+      float wave_Rsigsb_metbinsum_val(0.) ;
+      float wave_Rsigsb_metbinsum_err(0.) ;
+
+      if ( bins_of_met > 1 && use3b ) {
+         wave_Rsigsb_metbinsum_val =  (  Rsigsb_2b_metbinsum_val / Rsigsb_2b_metbinsum_staterr2 + Rsigsb_3b_metbinsum_val / Rsigsb_3b_metbinsum_staterr2 + Rsigsb_4b_metbinsum_val / Rsigsb_4b_metbinsum_staterr2 ) /
+                                      (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_3b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ;
+         wave_Rsigsb_metbinsum_err = sqrt( 1. / (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_3b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ) ;
+      } else {
+         wave_Rsigsb_metbinsum_val =  (  Rsigsb_2b_metbinsum_val / Rsigsb_2b_metbinsum_staterr2 + Rsigsb_4b_metbinsum_val / Rsigsb_4b_metbinsum_staterr2 ) /
+                                      (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ;
+         wave_Rsigsb_metbinsum_err = sqrt( 1. / (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ) ;
+      }
+      printf("\n") ;
+      printf(" expected sqrt(N) weighted Rsig/sb ave for higest %d METsig bins:  %5.3f +/- %5.3f\n", bins_of_met-1, wave_Rsigsb_metbinsum_val, wave_Rsigsb_metbinsum_err ) ;
+      printf("\n") ;
+
+
 
       float correction_Rsigsb_4b[50] ;
       float correction_Rsigsb_3b[50] ;
@@ -883,7 +970,28 @@
 
       } // hbi.
 
+      float correction_Rsigsb_4b_metbinsum = Rsigsb_4b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+      float correction_Rsigsb_3b_metbinsum = Rsigsb_3b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+      float correction_Rsigsb_2b_metbinsum = Rsigsb_2b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
 
+      float syst_Rsigsb_4b_metbinsum = sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.)/2., 2. ) ) ;
+      float syst_Rsigsb_3b_metbinsum = sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.)/2., 2. ) ) ;
+      float syst_Rsigsb_2b_metbinsum = sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.)/2., 2. ) ) ;
+
+      printf("\n") ;
+      if ( bins_of_met > 1 && use3b ) {
+         printf("  Rsig/sb corrections for top %d METsig bins :     4b = %5.3f +/- %5.3f,       3b =  %5.3f +/- %5.3f,      2b =  %5.3f +/- %5.3f\n",
+               bins_of_met-1,
+               correction_Rsigsb_4b_metbinsum, syst_Rsigsb_4b_metbinsum,
+               correction_Rsigsb_3b_metbinsum, syst_Rsigsb_3b_metbinsum,
+               correction_Rsigsb_2b_metbinsum, syst_Rsigsb_2b_metbinsum ) ;
+      } else {
+         printf("  Rsig/sb corrections for top %d METsig bins :     4b = %5.3f +/- %5.3f,       2b =  %5.3f +/- %5.3f\n",
+               bins_of_met-1,
+               correction_Rsigsb_4b_metbinsum, syst_Rsigsb_4b_metbinsum,
+               correction_Rsigsb_2b_metbinsum, syst_Rsigsb_2b_metbinsum ) ;
+      }
+      printf("\n") ;
 
 
 
@@ -946,11 +1054,44 @@
       }
 
 
+      char metbinsumstring[100] ;
+      if ( bins_of_met == 4 ) { sprintf( metbinsumstring, "234" ) ; }
+
+      fprintf( outfile, "Rsigsb_corr_4b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_4b_metbinsum ) ;
+      fprintf( outfile, "Rsigsb_syst_4b_metbins%s   %5.3f\n", metbinsumstring, syst_Rsigsb_4b_metbinsum ) ;
+      if ( bins_of_met > 1 && use3b ) {
+         fprintf( outfile, "Rsigsb_corr_3b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_3b_metbinsum ) ;
+         fprintf( outfile, "Rsigsb_syst_3b_metbins%s   %5.3f\n", metbinsumstring, syst_Rsigsb_3b_metbinsum ) ;
+      }
+      fprintf( outfile, "Rsigsb_corr_2b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_2b_metbinsum ) ;
+      fprintf( outfile, "Rsigsb_syst_2b_metbins%s   %5.3f\n", metbinsumstring, syst_Rsigsb_2b_metbinsum ) ;
+
+
+
+     //-- give list of shape systematic files here.
+      fprintf( outfile, "list_of_shape_systs   JES  PDF  btag\n" ) ;
+      fprintf( outfile, "shape_syst_JES    test-input-files1/test-syst-file1.txt\n") ;
+      fprintf( outfile, "shape_syst_PDF    test-input-files1/test-syst-file1.txt\n") ;
+      fprintf( outfile, "shape_syst_btag   test-input-files1/test-syst-file1.txt\n") ;
+
+
+
 
       fclose( outfile ) ;
 
 
       printf("\n\n Created likelihood input file: %s\n\n", outfilename ) ;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
