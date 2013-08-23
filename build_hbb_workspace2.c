@@ -33,7 +33,15 @@
    RooArgSet* allNuisances ;
    RooArgSet* allNuisancePdfs ;
 
+   RooRealVar* rv_smc_msig[bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
+   RooRealVar* rv_smc_msb[bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
+
+   RooAbsReal* rv_smc_msig_mcstat_syst[bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
+   RooAbsReal* rv_smc_msb_mcstat_syst[bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
+
    int n_shape_systs(0) ;
+
+   int syst_type(0) ;
 
   //--- prototypes here.
 
@@ -48,19 +56,22 @@
                         RooWorkspace& workspace
                          ) ;
 
-
+   bool readSignalCounts( const char* susy_counts_file, float sig_mass ) ;
 
   //===========================================================================================
 
    void build_hbb_workspace2( const char* infile = "outputfiles/input-file.txt",
                               const char* outfile = "outputfiles/ws.root",
+                              float sig_mass = 250.,
                               bool use3b = true,
                               bool combine_top_metbins = false,
-                              int syst_type = 2 // 1 = Gaussian, 2 = log-normal
+                              int arg_syst_type = 2 // 1 = Gaussian, 2 = log-normal
                              ) {
 
 
     //-------------------------------------------------------------------------
+
+      syst_type = arg_syst_type ;
 
      //-- Create workspace and other RooStats things.
 
@@ -86,6 +97,7 @@
       char formula[1000] ;
 
 
+
       sprintf( pname, "bins_of_met" ) ;
       if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
       bins_of_met = TMath::Nint( fileVal ) ;
@@ -94,6 +106,19 @@
       RooRealVar bom( "bins_of_met", "bins_of_met", bins_of_met, 0., 1000. ) ;
       bom.setConstant(kTRUE) ;
       workspace.import(bom) ;
+
+
+
+     //-- get signal input file and look for requested signal mass.
+      char susy_counts_filename[10000] ;
+      if ( !getFileStringValue( infile, "signal_counts_file", susy_counts_filename ) ) {
+         printf("\n\n *** Can't find input susy counts file: signal_counts_file line of %s.\n\n", infile ) ;
+         return ;
+      }
+      if ( !readSignalCounts( susy_counts_filename, sig_mass ) ) {
+         printf("\n\n *** Can't find signal mass of %.0f in %s\n\n", sig_mass, susy_counts_filename ) ;
+         return ;
+      }
 
 
       //-- save bins_of_nb in the workspace for convenience.
@@ -106,9 +131,6 @@
 
       RooRealVar* rv_N_msig[bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
       RooRealVar* rv_N_msb[bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
-
-      RooRealVar* rv_smc_msig[bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
-      RooRealVar* rv_smc_msb[bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
 
       RooAbsReal* rv_Rsigsb_corr[bins_of_nb][max_bins_of_met]  ;
 
@@ -131,18 +153,6 @@
             rv_N_msb[nbi][mbi] -> setVal( TMath::Nint(fileVal) ) ;
             rv_N_msb[nbi][mbi] -> setConstant( kTRUE ) ;
             observedParametersList -> add( *rv_N_msb[nbi][mbi] ) ;
-
-            sprintf( pname, "smc_%db_msig_met%d", nbi+2, mbi+1 ) ;
-            if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
-            rv_smc_msig[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
-            rv_smc_msig[nbi][mbi] -> setVal( TMath::Nint(fileVal) ) ;
-            rv_smc_msig[nbi][mbi] -> setConstant( kTRUE ) ;
-
-            sprintf( pname, "smc_%db_msb_met%d", nbi+2, mbi+1 ) ;
-            if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
-            rv_smc_msb[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
-            rv_smc_msb[nbi][mbi] -> setVal( TMath::Nint(fileVal) ) ;
-            rv_smc_msb[nbi][mbi] -> setConstant( kTRUE ) ;
 
             if ( (!combine_top_metbins) || mbi==0 ) {
 
@@ -322,16 +332,16 @@
             RooFormulaVar* rfv_shape_syst_prod_msb = new RooFormulaVar( pname, syst_prod_eqn, shapeSystProdSet_msb ) ;
 
 
-            sprintf( formula, "@0 * @1 * @2" ) ;
+            sprintf( formula, "@0 * @1 * @2 * @3" ) ;
             sprintf( pname, "mu_sig_%db_msig_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
-            rv_mu_sig_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msig, *rv_smc_msig[nbi][mbi] ) ) ;
+            rv_mu_sig_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msig, *rv_smc_msig_mcstat_syst[nbi][mbi], *rv_smc_msig[nbi][mbi] ) ) ;
             rv_mu_sig_msig[nbi][mbi] -> Print() ;
 
-            sprintf( formula, "@0 * @1 * @2" ) ;
+            sprintf( formula, "@0 * @1 * @2 * @3" ) ;
             sprintf( pname, "mu_sig_%db_msb_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
-            rv_mu_sig_msb[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msb, *rv_smc_msb[nbi][mbi] ) ) ;
+            rv_mu_sig_msb[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msb, *rv_smc_msb_mcstat_syst[nbi][mbi], *rv_smc_msb[nbi][mbi] ) ) ;
             rv_mu_sig_msb[nbi][mbi] -> Print() ;
 
 
@@ -1003,6 +1013,133 @@
 
 
  //===============================================================================================================
+
+   bool readSignalCounts( const char* susy_counts_file, float sig_mass ) {
+
+      ifstream infp ;
+      infp.open( susy_counts_file ) ;
+      if ( !infp.good() ) {
+         printf("\n\n *** Problem opening input file: %s.\n\n", susy_counts_file ) ;
+         return false ;
+      }
+
+      int ArraySize = 2 + bins_of_met * bins_of_nb * 2 * 2 ; // 2 (sig vs sb) * 2 (vals and errs).
+
+      char command[10000] ;
+      sprintf(command, "tail -1 %s | awk '{print NF}' | grep -q %d", susy_counts_file, ArraySize ) ;
+      int returnStat = gSystem->Exec(command ) ;
+      if ( returnStat !=0 ) {
+         printf("\n\n\n *** setSusyScanPoint : expecting %d fields per line in input file %s.  Found ", ArraySize, susy_counts_file ) ; cout << flush ;
+         sprintf( command, "tail -1 %s | awk '{print NF}'", susy_counts_file ) ;
+         gSystem->Exec(command ) ; cout << flush ;
+         printf("\n\n") ;
+         return false ;
+      }
+
+      float ArrayContent[ArraySize] ;
+
+      bool found(false) ;
+
+      while ( infp.good() ) {
+
+         TString line ;
+         line.ReadLine( infp ) ;
+         TObjArray* tokens = line.Tokenize(" ") ;
+         printf(" number of fields : %d\n", tokens->GetEntries() ) ;
+         if ( tokens->GetEntries() != ArraySize ) continue ;
+
+         for ( int i = 0 ; infp && i < ArraySize; ++ i ) {
+            TObjString* str = (TObjString*) (tokens->At(i)) ;
+            sscanf( (str->GetString()).Data(), "%f", &(ArrayContent[i]) )  ;
+         }
+         printf( " 1st column: %.0f\n", ArrayContent[0] ) ;
+
+         if ( TMath::Nint( fabs( ArrayContent[0] - sig_mass ) ) == 0 ) {
+
+            printf("  found mass point %.0f in file %s\n", sig_mass, susy_counts_file ) ;
+
+            found = true ;
+
+            break ;
+
+         }
+
+      } // still reading input file?
+
+      if ( !found ) { printf("\n\n *** Did not find mass point %.0f in %s.\n\n", sig_mass, susy_counts_file ) ; return false ; }
+
+      float smc_msig_val[bins_of_nb][max_bins_of_met] ;
+      float smc_msb_val[bins_of_nb][max_bins_of_met] ;
+
+      float smc_msig_err[bins_of_nb][max_bins_of_met] ;
+      float smc_msb_err[bins_of_nb][max_bins_of_met] ;
+
+      for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+            smc_msig_val[nbi][mbi] = ArrayContent[ 2 + (               nbi)*(bins_of_met) + mbi ] ;
+            smc_msb_val[nbi][mbi]  = ArrayContent[ 2 + (1*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
+            smc_msig_err[nbi][mbi] = ArrayContent[ 2 + (2*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
+            smc_msb_err[nbi][mbi]  = ArrayContent[ 2 + (3*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
+         } // mbi.
+      } // nbi.
+
+      printf("\n\n\n") ;
+      printf("=====================================================================================================================================\n") ;
+      printf("  METsig   |        4bSB              4bSIG         |       3bSB              3bSIG         |        2bSB              2bSIG        |\n") ;
+      printf("=====================================================================================================================================\n") ;
+      fflush(stdout) ;
+      for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         printf(" met bin %d : ", mbi+1 ) ;
+         for ( int nbi=(bins_of_nb-1); nbi>=0; nbi-- ) {
+            printf( "  %6.1f +/- %4.1f,  %6.1f +/- %4.1f    |",
+                 smc_msb_val[nbi][mbi] , smc_msb_val[nbi][mbi]  * smc_msb_err[nbi][mbi],
+                 smc_msig_val[nbi][mbi], smc_msig_val[nbi][mbi] * smc_msig_err[nbi][mbi] ) ;
+         } // nbi.
+         printf("\n") ;
+      } // mbi.
+      printf("=====================================================================================================================================\n") ;
+
+
+      for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+
+            char pname[1000] ;
+
+            sprintf( pname, "smc_%db_msig_met%d", nbi+2, mbi+1 ) ;
+            rv_smc_msig[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
+            rv_smc_msig[nbi][mbi] -> setVal( smc_msig_val[nbi][mbi] ) ;
+            rv_smc_msig[nbi][mbi] -> setConstant( kTRUE ) ;
+
+            sprintf( pname, "smc_%db_msb_met%d", nbi+2, mbi+1 ) ;
+            rv_smc_msb[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
+            rv_smc_msb[nbi][mbi] -> setVal( smc_msig_val[nbi][mbi] ) ;
+            rv_smc_msb[nbi][mbi] -> setConstant( kTRUE ) ;
+
+            if ( syst_type == 1 ) {
+               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%db", mbi+1, nbi+2 ) ;
+               rv_smc_msig_mcstat_syst[nbi][mbi] = makeGaussianConstraint( pname, 1.0, smc_msig_err[nbi][mbi] ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%db", mbi+1, nbi+2 ) ;
+               rv_smc_msb_mcstat_syst[nbi][mbi] = makeGaussianConstraint( pname, 1.0, smc_msb_err[nbi][mbi] ) ;
+            } else if ( syst_type == 2 ) {
+               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%db", mbi+1, nbi+2 ) ;
+               rv_smc_msig_mcstat_syst[nbi][mbi] = makeLognormalConstraint( pname, 1.0, smc_msig_err[nbi][mbi] ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%db", mbi+1, nbi+2 ) ;
+               rv_smc_msb_mcstat_syst[nbi][mbi] = makeLognormalConstraint( pname, 1.0, smc_msb_err[nbi][mbi] ) ;
+            } else {
+               printf("\n\n *** I don't know how to do syst_type %d\n\n", syst_type ) ; return false ;
+            }
+
+         } // mbi.
+      } // nbi.
+
+      return true ;
+
+
+   } // readSignalCounts.
+
+ //===============================================================================================================
+
+
 
 
 

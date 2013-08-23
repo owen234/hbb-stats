@@ -22,7 +22,7 @@
 
   //================================================================================================
 
-   void gen_sig_input_file( const char* outfilename = "outputfiles/susy-input-file.txt",
+   void gen_sig_input_file( const char* outfilename = "outputfiles/susy-signal-counts.txt",
                             const char* metvarname = "METsig",
                             bool usePUweight = false
                            ) {
@@ -444,41 +444,51 @@
 
          printf(" Mgl = %.0f ----------------------------\n", sigmass[spi] ) ;
 
-         for ( int hbi=1; hbi<=bins_of_met; hbi++ ) {
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
 
-            float metsiglow  = h_4b_msig[0]->GetXaxis()->GetBinLowEdge( hbi ) ;
-            float metsighigh = h_4b_msig[0]->GetXaxis()->GetBinLowEdge( hbi+1 ) ;
-            if ( hbi==bins_of_met ) metsighigh = 999. ;
+            float metsiglow  = h_4b_msig[0]->GetXaxis()->GetBinLowEdge( mbi+1 ) ;
+            float metsighigh = h_4b_msig[0]->GetXaxis()->GetBinLowEdge( mbi+2 ) ;
+            if ( mbi==bins_of_met-1 ) metsighigh = 999. ;
 
 
-            smc_4b_msig_val[spi][hbi] = h_4b_msig[spi]->GetBinContent(hbi) ;
-            smc_3b_msig_val[spi][hbi] = h_3b_msig[spi]->GetBinContent(hbi) ;
-            smc_2b_msig_val[spi][hbi] = h_2b_msig[spi]->GetBinContent(hbi) ;
+            smc_4b_msig_val[spi][mbi] = h_4b_msig[spi]->GetBinContent(mbi+1) ;
+            smc_3b_msig_val[spi][mbi] = h_3b_msig[spi]->GetBinContent(mbi+1) ;
+            smc_2b_msig_val[spi][mbi] = h_2b_msig[spi]->GetBinContent(mbi+1) ;
 
-            smc_4b_msb_val[spi][hbi] = h_4b_msb[spi]->GetBinContent(hbi) ;
-            smc_3b_msb_val[spi][hbi] = h_3b_msb[spi]->GetBinContent(hbi) ;
-            smc_2b_msb_val[spi][hbi] = h_2b_msb[spi]->GetBinContent(hbi) ;
+            smc_4b_msb_val[spi][mbi] = h_4b_msb[spi]->GetBinContent(mbi+1) ;
+            smc_3b_msb_val[spi][mbi] = h_3b_msb[spi]->GetBinContent(mbi+1) ;
+            smc_2b_msb_val[spi][mbi] = h_2b_msb[spi]->GetBinContent(mbi+1) ;
 
-            smc_4b_msig_err[spi][hbi] = h_4b_msig[spi]->GetBinError(hbi) ;
-            smc_3b_msig_err[spi][hbi] = h_3b_msig[spi]->GetBinError(hbi) ;
-            smc_2b_msig_err[spi][hbi] = h_2b_msig[spi]->GetBinError(hbi) ;
+           //-- define error as fractional error on yield.
 
-            smc_4b_msb_err[spi][hbi] = h_4b_msb[spi]->GetBinError(hbi) ;
-            smc_3b_msb_err[spi][hbi] = h_3b_msb[spi]->GetBinError(hbi) ;
-            smc_2b_msb_err[spi][hbi] = h_2b_msb[spi]->GetBinError(hbi) ;
+            smc_4b_msig_err[spi][mbi] = 1. ;
+            smc_3b_msig_err[spi][mbi] = 1. ;
+            smc_2b_msig_err[spi][mbi] = 1. ;
+
+            smc_4b_msb_err[spi][mbi]  = 1. ;
+            smc_3b_msb_err[spi][mbi]  = 1. ;
+            smc_2b_msb_err[spi][mbi]  = 1. ;
+
+            if ( smc_4b_msig_val[spi][mbi] > 0. ) { smc_4b_msig_err[spi][mbi] = ( h_4b_msig[spi]->GetBinError(mbi+1) ) / ( smc_4b_msig_val[spi][mbi] )  ; }
+            if ( smc_3b_msig_val[spi][mbi] > 0. ) { smc_3b_msig_err[spi][mbi] = ( h_3b_msig[spi]->GetBinError(mbi+1) ) / ( smc_3b_msig_val[spi][mbi] )  ; }
+            if ( smc_2b_msig_val[spi][mbi] > 0. ) { smc_2b_msig_err[spi][mbi] = ( h_2b_msig[spi]->GetBinError(mbi+1) ) / ( smc_2b_msig_val[spi][mbi] )  ; }
+
+            if ( smc_4b_msb_val[spi][mbi] > 0. ) { smc_4b_msb_err[spi][mbi] = ( h_4b_msb[spi]->GetBinError(mbi+1) ) / ( smc_4b_msb_val[spi][mbi] )  ; }
+            if ( smc_3b_msb_val[spi][mbi] > 0. ) { smc_3b_msb_err[spi][mbi] = ( h_3b_msb[spi]->GetBinError(mbi+1) ) / ( smc_3b_msb_val[spi][mbi] )  ; }
+            if ( smc_2b_msb_val[spi][mbi] > 0. ) { smc_2b_msb_err[spi][mbi] = ( h_2b_msb[spi]->GetBinError(mbi+1) ) / ( smc_2b_msb_val[spi][mbi] )  ; }
 
 
             printf( "%4.0f   [%3.0f,%3.0f] |  %6.1f +/- %4.1f,  %6.1f +/- %4.1f    |  %6.1f +/- %4.1f,  %6.1f +/- %4.1f     |  %6.1f +/- %4.1f,  %6.1f +/- %4.1f     |\n",
                sigmass[spi], metsiglow, metsighigh,
-               smc_4b_msb_val[spi][hbi], smc_4b_msb_err[spi][hbi],
-               smc_4b_msig_val[spi][hbi], smc_4b_msig_err[spi][hbi],
-               smc_3b_msb_val[spi][hbi], smc_3b_msb_err[spi][hbi],
-               smc_3b_msig_val[spi][hbi], smc_3b_msig_err[spi][hbi],
-               smc_2b_msb_val[spi][hbi], smc_2b_msb_err[spi][hbi],
-               smc_2b_msig_val[spi][hbi], smc_2b_msig_err[spi][hbi]
+               smc_4b_msb_val[spi][mbi]  , smc_4b_msb_val[spi][mbi]  * smc_4b_msb_err[spi][mbi],
+               smc_4b_msig_val[spi][mbi] , smc_4b_msig_val[spi][mbi] * smc_4b_msig_err[spi][mbi],
+               smc_3b_msb_val[spi][mbi]  , smc_3b_msb_val[spi][mbi]  * smc_3b_msb_err[spi][mbi],
+               smc_3b_msig_val[spi][mbi] , smc_3b_msig_val[spi][mbi] * smc_3b_msig_err[spi][mbi],
+               smc_2b_msb_val[spi][mbi]  , smc_2b_msb_val[spi][mbi]  * smc_2b_msb_err[spi][mbi],
+               smc_2b_msig_val[spi][mbi] , smc_2b_msig_val[spi][mbi] * smc_2b_msig_err[spi][mbi]
              ) ;
 
-         } // hbi.
+         } // mbi.
 
       } // spi.
 
@@ -563,7 +573,9 @@
       FILE* outfile = fopen( outfilename, "w" ) ;
 
       fprintf( outfile, "met_variable  %s\n", metvarname ) ;
-      fprintf( outfile, "bins_of_met  %d\n", bins_of_met ) ;
+      fprintf( outfile, "bins_of_met  %d  ", bins_of_met ) ;
+      for ( int mbi=0; mbi<=bins_of_met; mbi++ ) { fprintf( outfile, "   %.2f   ", met_bin_edges[mbi] ) ; }
+      fprintf( outfile, "\n" ) ;
 
       for ( int spi=0; spi<nsigpoints; spi++ ) {
 
@@ -577,13 +589,13 @@
          for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_3b_msb_val[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
          for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_4b_msb_val[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
 
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_2b_msig_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_3b_msig_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_4b_msig_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %5.3f ", smc_2b_msig_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %5.3f ", smc_3b_msig_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %5.3f ", smc_4b_msig_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
 
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_2b_msb_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_3b_msb_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %7.2f ", smc_4b_msb_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %5.3f ", smc_2b_msb_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %5.3f ", smc_3b_msb_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
+         for ( int mbi=0; mbi<bins_of_met; mbi++ ) { fprintf( outfile, " %5.3f ", smc_4b_msb_err[spi][mbi] ) ; } fprintf( outfile, "    " ) ;
 
          fprintf( outfile, "\n" ) ;
 

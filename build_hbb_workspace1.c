@@ -115,13 +115,13 @@
             sprintf( pname, "smc_%db_msig_met%d", nbi+2, mbi+1 ) ;
             if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
             rv_smc_msig[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
-            rv_smc_msig[nbi][mbi] -> setVal( TMath::Nint(fileVal) ) ;
+            rv_smc_msig[nbi][mbi] -> setVal( fileVal ) ;
             rv_smc_msig[nbi][mbi] -> setConstant( kTRUE ) ;
 
             sprintf( pname, "smc_%db_msb_met%d", nbi+2, mbi+1 ) ;
             if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
             rv_smc_msb[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
-            rv_smc_msb[nbi][mbi] -> setVal( TMath::Nint(fileVal) ) ;
+            rv_smc_msb[nbi][mbi] -> setVal( fileVal ) ;
             rv_smc_msb[nbi][mbi] -> setConstant( kTRUE ) ;
 
             if ( (!combine_top_metbins) || mbi==0 ) {
