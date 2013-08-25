@@ -39,7 +39,7 @@
 
    void gen_input_file2( const char* outfilename = "outputfiles/input-file.txt",
                         int bins_of_met = 4,
-                        float min_met = 50.,
+                        float min_met = 0.,
                         const char* metvarname = "METsig",
                         bool use3b = true,
                         bool usePUweight = true
@@ -881,10 +881,12 @@
       fprintf( outfile, "signal_counts_file  test-input-files1/susy-signal-counts.txt\n" ) ;
 
      //-- give list of shape systematic files here.
-      fprintf( outfile, "list_of_shape_systs   JES  PDF  btag\n" ) ;
-      fprintf( outfile, "shape_syst_JES    test-input-files1/test-syst-file1.txt\n") ;
-      fprintf( outfile, "shape_syst_PDF    test-input-files1/test-syst-file1.txt\n") ;
-      fprintf( outfile, "shape_syst_btag   test-input-files1/test-syst-file1.txt\n") ;
+   // fprintf( outfile, "list_of_shape_systs   JES  PDF  btag\n" ) ;
+   // fprintf( outfile, "shape_syst_JES    test-input-files1/test-syst-file1.txt\n") ;
+   // fprintf( outfile, "shape_syst_PDF    test-input-files1/test-syst-file1.txt\n") ;
+   // fprintf( outfile, "shape_syst_btag   test-input-files1/test-syst-file1.txt\n") ;
+      fprintf( outfile, "list_of_shape_systs   ALL\n" ) ;
+      fprintf( outfile, "shape_syst_ALL    test-input-files1/test-syst-file1.txt\n") ;
 
 
 
