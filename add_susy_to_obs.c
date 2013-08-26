@@ -91,22 +91,25 @@
 
             sprintf( pname, "N_%db_msig_met%d", nbi+2, mbi+1 ) ;
             getFileValue( infile, pname, inval ) ;
-            newval = inval + smc_msig_val[nbi][mbi] ;
-            printf("  %s : adding %6.1f susy counts to %6.1f BG counts.\n", pname, smc_msig_val[nbi][mbi], inval ) ;
+            newval = inval + susy_signal_strength * smc_msig_val[nbi][mbi] ;
+            printf("  %s : adding %6.1f susy counts to %6.1f BG counts.\n", pname, susy_signal_strength * smc_msig_val[nbi][mbi], inval ) ;
             updateFileValue( newoutfilename, pname, newval ) ;
 
             sprintf( pname, "N_%db_msb_met%d", nbi+2, mbi+1 ) ;
             getFileValue( infile, pname, inval ) ;
-            newval = inval + smc_msb_val[nbi][mbi] ;
-            printf("  %s : adding %6.1f susy counts to %6.1f BG counts.\n", pname, smc_msb_val[nbi][mbi], inval ) ;
+            newval = inval + susy_signal_strength * smc_msb_val[nbi][mbi] ;
+            printf("  %s : adding %6.1f susy counts to %6.1f BG counts.\n", pname, susy_signal_strength * smc_msb_val[nbi][mbi], inval ) ;
             updateFileValue( newoutfilename, pname, newval ) ;
 
          } // mbi.
       } // nbi.
 
 
-      sprintf( command, "echo \"EMBEDDED_SUSY_SIGNAL %.0f %s\" >> %s", sig_mass, susy_counts_filename, newoutfilename ) ;
+      sprintf( command, "echo \"EMBEDDED_SUSY_SIGNAL %.0f , signal-strength %.1f , %s\" >> %s", 
+                sig_mass, susy_signal_strength, susy_counts_filename, newoutfilename ) ;
       gSystem -> Exec( command ) ;
+
+      printf("\n\n Created embed input file: %s\n\n\n", newoutfilename ) ;
 
 
    } // add_susy_to_obs.
