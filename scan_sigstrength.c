@@ -21,7 +21,7 @@
   using namespace RooFit;
   using namespace RooStats;
 
-   void scan_sigstrength( const char* wsfile = "outputfiles/ws.root", double scanLow = 0., double scanHigh = 2.0, int nScanPoints = 40, double ymax = 9.  ) {
+   void scan_sigstrength( const char* wsfile = "outputfiles/ws.root", double scanLow = 0., double scanHigh = 3.0, int nScanPoints = 40, double ymax = 9.  ) {
 
       gStyle->SetOptStat(0) ;
 
