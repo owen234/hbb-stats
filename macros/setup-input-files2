@@ -1,0 +1,65 @@
+
+#
+#  Source this file from the parent directory (one below this one).  That is, do this
+#
+#    source macros/setup-input-files2
+#
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+  set do_puweight = 1
+  set use_3b = 1
+
+
+  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,1\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst1.log
+  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,2\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst2.log
+  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,3\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst3.log
+  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,4\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst4.log
+
+  root -b -q gen_sig_input_file.c+\(\"outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\",\"METsig\",$do_puweight\)     |& tee logfiles/gen-sig-input-metsig-4metbin-w3b-wpu.log
+
+
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",175.,1.\) |& tee logfiles/add-susy-to-obs-175-csyst1.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",200.,1.\) |& tee logfiles/add-susy-to-obs-200-csyst1.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",250.,1.\) |& tee logfiles/add-susy-to-obs-250-csyst1.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",300.,1.\) |& tee logfiles/add-susy-to-obs-300-csyst1.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",350.,1.\) |& tee logfiles/add-susy-to-obs-350-csyst1.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",400.,1.\) |& tee logfiles/add-susy-to-obs-400-csyst1.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",450.,1.\) |& tee logfiles/add-susy-to-obs-450-csyst1.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",500.,1.\) |& tee logfiles/add-susy-to-obs-500-csyst1.log
+
+
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",175.,1.\) |& tee logfiles/add-susy-to-obs-175-csyst2.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",200.,1.\) |& tee logfiles/add-susy-to-obs-200-csyst2.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",250.,1.\) |& tee logfiles/add-susy-to-obs-250-csyst2.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",300.,1.\) |& tee logfiles/add-susy-to-obs-300-csyst2.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",350.,1.\) |& tee logfiles/add-susy-to-obs-350-csyst2.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",400.,1.\) |& tee logfiles/add-susy-to-obs-400-csyst2.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",450.,1.\) |& tee logfiles/add-susy-to-obs-450-csyst2.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",500.,1.\) |& tee logfiles/add-susy-to-obs-500-csyst2.log
+
+
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",175.,1.\) |& tee logfiles/add-susy-to-obs-175-csyst3.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",200.,1.\) |& tee logfiles/add-susy-to-obs-200-csyst3.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",250.,1.\) |& tee logfiles/add-susy-to-obs-250-csyst3.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",300.,1.\) |& tee logfiles/add-susy-to-obs-300-csyst3.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",350.,1.\) |& tee logfiles/add-susy-to-obs-350-csyst3.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",400.,1.\) |& tee logfiles/add-susy-to-obs-400-csyst3.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",450.,1.\) |& tee logfiles/add-susy-to-obs-450-csyst3.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",500.,1.\) |& tee logfiles/add-susy-to-obs-500-csyst3.log
+
+
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",175.,1.\) |& tee logfiles/add-susy-to-obs-175-csyst4.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",200.,1.\) |& tee logfiles/add-susy-to-obs-200-csyst4.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",250.,1.\) |& tee logfiles/add-susy-to-obs-250-csyst4.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",300.,1.\) |& tee logfiles/add-susy-to-obs-300-csyst4.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",350.,1.\) |& tee logfiles/add-susy-to-obs-350-csyst4.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",400.,1.\) |& tee logfiles/add-susy-to-obs-400-csyst4.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",450.,1.\) |& tee logfiles/add-susy-to-obs-450-csyst4.log
+  root -b -q add_susy_to_obs.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",500.,1.\) |& tee logfiles/add-susy-to-obs-500-csyst4.log
+
+
+

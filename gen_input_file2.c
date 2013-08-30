@@ -42,7 +42,8 @@
                         float min_met = 0.,
                         const char* metvarname = "METsig",
                         bool use3b = true,
-                        bool usePUweight = true
+                        bool usePUweight = true,
+                        int  closure_syst_option = 1
                         ) {
 
 
@@ -752,25 +753,46 @@
          correction_Rsigsb_3b[hbi] = Rsigsb_3b_val[hbi] / wave_Rsigsb_val[hbi] ;
          correction_Rsigsb_2b[hbi] = Rsigsb_2b_val[hbi] / wave_Rsigsb_val[hbi] ;
 
-    /// //-- no syst.
-    ///  syst_Rsigsb_4b[hbi] = 0. ;
-    ///  syst_Rsigsb_3b[hbi] = 0. ;
-    ///  syst_Rsigsb_2b[hbi] = 0. ;
+         if ( closure_syst_option == 1 ) {
 
-    /// //-- aggressive: mcstat only
-    ///  syst_Rsigsb_4b[hbi] =  (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]) ;
-    ///  syst_Rsigsb_3b[hbi] =  (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]) ;
-    ///  syst_Rsigsb_2b[hbi] =  (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+           //-- nominal: mcstat + 1/2 correction
+            syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
+            syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
+            syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.)/2.,2. ) ) ;
 
-        //-- nominal: mcstat + 1/2 correction
-         syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
-         syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
-         syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.)/2.,2. ) ) ;
+         } else if ( closure_syst_option == 2 ) {
 
-    /// //-- nominal: mcstat + full correction
-    ///  syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.),2. ) ) ;
-    ///  syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.),2. ) ) ;
-    ///  syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.),2. ) ) ;
+           //-- no syst.
+            syst_Rsigsb_4b[hbi] = 0. ;
+            syst_Rsigsb_3b[hbi] = 0. ;
+            syst_Rsigsb_2b[hbi] = 0. ;
+
+         } else if ( closure_syst_option == 3 ) {
+
+           //-- aggressive: mcstat only
+            syst_Rsigsb_4b[hbi] =  (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+            syst_Rsigsb_3b[hbi] =  (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+            syst_Rsigsb_2b[hbi] =  (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+
+         } else if ( closure_syst_option == 4 ) {
+
+           //-- nominal: mcstat + full correction
+            syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.),2. ) ) ;
+            syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.),2. ) ) ;
+            syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.),2. ) ) ;
+
+         } else {
+
+            printf("\n\n\n *** Unknown value for closure_syst_option argument.  Supported values are:\n\n" ) ;
+            printf("   1  MC stat error + 1/2 non-closure in quadrature.\n") ;
+            printf("   2  No closure syst.\n") ;
+            printf("   3  MC stat error only.\n") ;
+            printf("   4  MC stat error + full non-closure in quadrature.\n") ;
+            printf("\n\n\n") ;
+
+            return ;
+
+         }
 
          if ( bins_of_met > 1 && use3b ) {
             printf("  Rsig/sb corrections for METsig bin %d :     4b = %5.3f +/- %5.3f,       3b =  %5.3f +/- %5.3f,      2b =  %5.3f +/- %5.3f\n",
@@ -787,13 +809,57 @@
 
       } // hbi.
 
-      float correction_Rsigsb_4b_metbinsum = Rsigsb_4b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
-      float correction_Rsigsb_3b_metbinsum = Rsigsb_3b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
-      float correction_Rsigsb_2b_metbinsum = Rsigsb_2b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+      float correction_Rsigsb_4b_metbinsum  =  Rsigsb_4b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+      float correction_Rsigsb_3b_metbinsum  =  Rsigsb_3b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+      float correction_Rsigsb_2b_metbinsum  =  Rsigsb_2b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
 
-      float syst_Rsigsb_4b_metbinsum = sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.)/2., 2. ) ) ;
-      float syst_Rsigsb_3b_metbinsum = sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.)/2., 2. ) ) ;
-      float syst_Rsigsb_2b_metbinsum = sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.)/2., 2. ) ) ;
+      float syst_Rsigsb_4b_metbinsum(0.) ;
+      float syst_Rsigsb_3b_metbinsum(0.) ;
+      float syst_Rsigsb_2b_metbinsum(0.) ;
+
+      if ( closure_syst_option == 1 ) {
+
+        //-- nominal: mcstat + 1/2 correction
+         syst_Rsigsb_4b_metbinsum  =  sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.)/2., 2. ) ) ;
+         syst_Rsigsb_3b_metbinsum  =  sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.)/2., 2. ) ) ;
+         syst_Rsigsb_2b_metbinsum  =  sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.)/2., 2. ) ) ;
+
+      } else if ( closure_syst_option == 2 ) {
+
+        //-- no syst.
+         syst_Rsigsb_4b_metbinsum  =  0. ;
+         syst_Rsigsb_3b_metbinsum  =  0. ;
+         syst_Rsigsb_2b_metbinsum  =  0. ;
+
+      } else if ( closure_syst_option == 3 ) {
+
+        //-- aggressive: mcstat only
+         syst_Rsigsb_4b_metbinsum  =  Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val ;
+         syst_Rsigsb_3b_metbinsum  =  Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val ;
+         syst_Rsigsb_2b_metbinsum  =  Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val ;
+
+      } else if ( closure_syst_option == 4 ) {
+
+        //-- nominal: mcstat + full correction
+         syst_Rsigsb_4b_metbinsum  =  sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.), 2. ) ) ;
+         syst_Rsigsb_3b_metbinsum  =  sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.), 2. ) ) ;
+         syst_Rsigsb_2b_metbinsum  =  sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.), 2. ) ) ;
+
+      } else {
+
+         printf("\n\n\n *** Unknown value for closure_syst_option argument.  Supported values are:\n\n" ) ;
+         printf("   1  MC stat error + 1/2 non-closure in quadrature.\n") ;
+         printf("   2  No closure syst.\n") ;
+         printf("   3  MC stat error only.\n") ;
+         printf("   4  MC stat error + full non-closure in quadrature.\n") ;
+         printf("\n\n\n") ;
+
+         return ;
+
+      }
+
+
+
 
       printf("\n") ;
       if ( bins_of_met > 1 && use3b ) {
@@ -878,7 +944,7 @@
 
 
      //-- give location of signal counts file
-      fprintf( outfile, "signal_counts_file  test-input-files1/susy-signal-counts.txt\n" ) ;
+      fprintf( outfile, "signal_counts_file  outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\n" ) ;
 
      //-- give list of shape systematic files here.
    // fprintf( outfile, "list_of_shape_systs   JES  PDF  btag\n" ) ;

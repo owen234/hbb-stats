@@ -320,6 +320,7 @@
 
       scan_sigstrength( wsfile ) ;
 
+
       tt_title -> DrawTextNDC( 0.85, 0.25, plottitle ) ;
 
 
@@ -337,6 +338,15 @@
       histfile.ReplaceAll("ws-","fitqual-") ;
 
       saveHist( histfile, "h*" ) ;
+
+      TGraph* gr_scan = (TGraph*) gDirectory -> FindObject( "sig_strength_PL_scan" ) ;
+      cout << " scan graph pointer: " << gr_scan << endl << flush ;
+
+      if ( gr_scan != 0x0 ) {
+         TFile rf( histfile, "update" ) ;
+         gr_scan -> Write() ;
+         rf.Close() ;
+      }
 
 
 

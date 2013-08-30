@@ -1,0 +1,29 @@
+
+   set use3b = 1
+   set syst_type = 2
+
+
+   foreach sigmass ( 175 200 250 300 350 400 450 500 )
+
+      foreach csyst ( 1 2 3 4 )
+
+         echo sigmass $sigmass , csyst $csyst
+
+         set combine_top_metbins = 0
+
+         root -b -q build_hbb_workspace2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst$csyst.txt\",\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass.root\",$sigmass,$use3b,$combine_top_metbins,$syst_type\) |& tee logfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass.log
+
+         root -b -q build_hbb_workspace2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst$csyst-susy-0$sigmass-embedded-sigstrength-1.0.txt\",\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass.root\",$sigmass,$use3b,$combine_top_metbins,$syst_type\) |& tee logfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass.log
+
+         set combine_top_metbins = 1
+
+         root -b -q build_hbb_workspace2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst$csyst.txt\",\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst${csyst}mb-nosignal-sigmass-$sigmass.root\",$sigmass,$use3b,$combine_top_metbins,$syst_type\) |& tee logfiles/ws-metsig-4metbin-w3b-wpu-csyst${csyst}mb-nosignal-sigmass-$sigmass.log
+
+         root -b -q build_hbb_workspace2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst$csyst-susy-0$sigmass-embedded-sigstrength-1.0.txt\",\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst${csyst}mb-withsignal-sigmass-$sigmass.root\",$sigmass,$use3b,$combine_top_metbins,$syst_type\) |& tee logfiles/ws-metsig-4metbin-w3b-wpu-csyst${csyst}mb-withsignal-sigmass-$sigmass.log
+
+      end
+
+   end
+
+
+
