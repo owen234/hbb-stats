@@ -29,6 +29,8 @@
 
       const int bins_of_met = 4 ;
 
+      int lsp_mass(1) ;
+
       TString metvarname_nospecial(metvarname) ;
       metvarname_nospecial.ReplaceAll("/","_over_") ;
       metvarname_nospecial.ReplaceAll("(","_") ;
@@ -88,17 +90,20 @@
       printf("\n\n Setting up reduced tree chains.\n\n" ) ;
 
 
-      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july11-2013-pt20" ;
+      //// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july11-2013-pt20" ;
+      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-sept17-2013-v71-1s" ;
 
       printf("\n\n\n   Reduced tree directory: %s\n\n\n", rtdir ) ;
 
       char pathandfile[10000] ;
 
-
-
-      //sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1_TChihh_v69-slimskim.root", rtdir ) ;
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1-PU_S10-TChihh_v69-slimskim.root", rtdir ) ;
       sigchain = new TChain("reducedTree") ;
+
+      //// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1_TChihh_v69-slimskim.root", rtdir ) ;
+      //// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1-PU_S10-TChihh_v69-slimskim.root", rtdir ) ;
+      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to325_mLSP-1to195_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1872_v71-skim-slimskim.root", rtdir ) ;
+      sigchain -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-350to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1871_v71-skim-slimskim.root", rtdir ) ;
       sigchain -> Add( pathandfile ) ;
 
       const int max_sig_points(100) ;
@@ -124,7 +129,7 @@
       sigmass[nsigpoints] = 400. ;  signal_weight[nsigpoints] = 1.8760e-07 ;  nsigpoints++ ;
       sigmass[nsigpoints] = 425. ;  signal_weight[nsigpoints] = 1.4117e-07 ;  nsigpoints++ ;
       sigmass[nsigpoints] = 450. ;  signal_weight[nsigpoints] = 1.0555e-07 ;  nsigpoints++ ;
-  //  sigmass[nsigpoints] = 475. ;  signal_weight[nsigpoints] = 1.8952e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 475. ;  signal_weight[nsigpoints] = 1.8952e-07 ;  nsigpoints++ ;
       sigmass[nsigpoints] = 500. ;  signal_weight[nsigpoints] = 1.4492e-07 ;  nsigpoints++ ;
 
 
@@ -231,7 +236,7 @@
          h_4b_msig[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)*%g%s*%.0f", allcommoncuts, masssigcuts, btag4cuts, sigmass[spi], signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag4cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -245,7 +250,7 @@
          h_3b_msig[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)*%g%s*%.0f", allcommoncuts, masssigcuts, btag3cuts, sigmass[spi], signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag3cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -259,7 +264,7 @@
          h_2b_msig[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)*%g%s*%.0f", allcommoncuts, masssigcuts, btag2cuts, sigmass[spi], signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag2cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -276,7 +281,7 @@
          h_4b_msb[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)*%g%s*%.0f", allcommoncuts, masssbcuts, btag4cuts, sigmass[spi], signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag4cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -290,7 +295,7 @@
          h_3b_msb[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)*%g%s*%.0f", allcommoncuts, masssbcuts, btag3cuts, sigmass[spi], signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag3cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -304,7 +309,7 @@
          h_2b_msb[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)*%g%s*%.0f", allcommoncuts, masssbcuts, btag2cuts, sigmass[spi], signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag2cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -324,7 +329,7 @@
             h_4b_msig_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)", allcommoncuts, masssigcuts, btag4cuts, sigmass[spi] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag4cuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -338,7 +343,7 @@
             h_3b_msig_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)", allcommoncuts, masssigcuts, btag3cuts, sigmass[spi] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag3cuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -352,7 +357,7 @@
             h_2b_msig_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)", allcommoncuts, masssigcuts, btag2cuts, sigmass[spi] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag2cuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -369,7 +374,7 @@
             h_4b_msb_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)", allcommoncuts, masssbcuts, btag4cuts, sigmass[spi] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag4cuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -383,7 +388,7 @@
             h_3b_msb_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)", allcommoncuts, masssbcuts, btag3cuts, sigmass[spi] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag3cuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -397,7 +402,7 @@
             h_2b_msb_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f)", allcommoncuts, masssbcuts, btag2cuts, sigmass[spi] ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag2cuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;

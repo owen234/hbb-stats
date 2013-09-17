@@ -14,10 +14,10 @@
   set use_3b = 1
 
 
-  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,1\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst1.log
-  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,2\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst2.log
-  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,3\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst3.log
-  root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,4\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst4.log
+# root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst1.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,1\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst1.log
+# root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst2.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,2\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst2.log
+# root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst3.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,3\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst3.log
+# root -b -q gen_input_file2.c+\(\"outputfiles/input-metsig-4metbin-w3b-wpu-csyst4.txt\",4,0.,\"METsig\",$use_3b,$do_puweight,4\) |& tee logfiles/gen-input2-metsig-4metbin-w3b-wpu-csyst4.log
 
   root -b -q gen_sig_input_file.c+\(\"outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\",\"METsig\",$do_puweight\)     |& tee logfiles/gen-sig-input-metsig-4metbin-w3b-wpu.log
 
