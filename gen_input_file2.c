@@ -251,7 +251,8 @@
       sprintf( drmaxcut, "%s", "deltaRmax_hh<2.2" ) ;
 
       char mindphicut[10000] ;
-      sprintf( mindphicut, "%s", "minDeltaPhi20>0.3" ) ;
+      ///////// sprintf( mindphicut, "%s", "minDeltaPhi20>0.3" ) ;
+      sprintf( mindphicut, "%s", "((METsig>50&&minDeltaPhi20>0.3)||(METsig<50&&minDeltaPhi20>0.5))" ) ;
 
       char jet2ptcut[10000] ;
       sprintf( jet2ptcut, "%s", "jetpt2>50" ) ;

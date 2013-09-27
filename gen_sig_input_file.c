@@ -99,12 +99,15 @@
 
       sigchain = new TChain("reducedTree") ;
 
-      //// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1_TChihh_v69-slimskim.root", rtdir ) ;
-      //// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1-PU_S10-TChihh_v69-slimskim.root", rtdir ) ;
-      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to325_mLSP-1to195_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1872_v71-skim-slimskim.root", rtdir ) ;
+     //--- old (private prod) signal MC.
+      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1-PU_S10-TChihh_v69-slimskim.root", rtdir ) ;
       sigchain -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-350to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1871_v71-skim-slimskim.root", rtdir ) ;
-      sigchain -> Add( pathandfile ) ;
+
+ /// //--- new (official) signal MC.
+ ///  sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to325_mLSP-1to195_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1872_v71-skim-slimskim.root", rtdir ) ;
+ ///  sigchain -> Add( pathandfile ) ;
+ ///  sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-350to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1871_v71-skim-slimskim.root", rtdir ) ;
+ ///  sigchain -> Add( pathandfile ) ;
 
       const int max_sig_points(100) ;
       float signal_weight[max_sig_points] ;
@@ -181,7 +184,8 @@
       sprintf( drmaxcut, "%s", "deltaRmax_hh<2.2" ) ;
 
       char mindphicut[10000] ;
-      sprintf( mindphicut, "%s", "minDeltaPhi20>0.3" ) ;
+      //// sprintf( mindphicut, "%s", "minDeltaPhi20>0.3" ) ;
+      sprintf( mindphicut, "%s", "((METsig>50&&minDeltaPhi20>0.3)||(METsig<50&&minDeltaPhi20>0.5))" ) ;
 
       char jet2ptcut[10000] ;
       sprintf( jet2ptcut, "%s", "jetpt2>50" ) ;
