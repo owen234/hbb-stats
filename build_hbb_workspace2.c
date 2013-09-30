@@ -28,6 +28,7 @@
    const int bins_of_nb(3) ;
    const int max_bins_of_met(50) ;
    int       bins_of_met ;
+   int       first_met_bin_array_index(0) ;
 
    RooArgSet* globalObservables ;
    RooArgSet* allNuisances ;
@@ -65,7 +66,8 @@
                               float sig_mass = 250.,
                               bool use3b = true,
                               bool combine_top_metbins = false,
-                              int arg_syst_type = 2 // 1 = Gaussian, 2 = log-normal
+                              int arg_syst_type = 2, // 1 = Gaussian, 2 = log-normal
+                              bool drop_first_met_bin = false
                              ) {
 
 
@@ -107,6 +109,16 @@
       bom.setConstant(kTRUE) ;
       workspace.import(bom) ;
 
+      if ( !drop_first_met_bin ) {
+         first_met_bin_array_index = 0 ;
+      } else {
+         first_met_bin_array_index = 1 ;
+      }
+      RooRealVar fmbai( "first_met_bin_array_index", "first_met_bin_array_index", first_met_bin_array_index, -1, 2 ) ;
+      fmbai.setConstant(kTRUE) ;
+      workspace.import(fmbai) ;
+
+
 
 
      //-- get signal input file and look for requested signal mass.
@@ -138,7 +150,7 @@
 
          if ( (!use3b) && nbi==1 ) continue ;
 
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             sprintf( pname, "N_%db_msig_met%d", nbi+2, mbi+1 ) ;
             if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
@@ -237,7 +249,7 @@
 
       RooRealVar* rv_R_msigmsb[50] ;
 
-      for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+      for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
          if ( (!combine_top_metbins) || mbi==0 ) {
 
@@ -287,7 +299,7 @@
 
          if ( (!use3b) && nbi==1 ) continue ;
 
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             sprintf( pname, "mu_bg_%db_msb_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
@@ -364,7 +376,7 @@
 
          if ( (!use3b) && nbi==1 ) continue ;
 
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             sprintf( formula, "@0 + @1" ) ;
 
@@ -399,7 +411,7 @@
 
          if ( (!use3b) && nbi==1 ) continue ;
 
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             sprintf( pname, "pdf_%db_msig_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
@@ -941,7 +953,7 @@
       double maxSyst_msb(0.) ;
 
       for ( int nbi=0; nbi<3; nbi++ ) {
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
             syst_msig[nbi][mbi] = ArrayContent[ 2  +  nbi * (bins_of_met)  +  mbi ] ;
             syst_msb[nbi][mbi]  = ArrayContent[ 2  +  nbi * (bins_of_met)  +  mbi  + (bins_of_met*3) ] ;
             if ( syst_msig[nbi][mbi] > maxSyst_msig ) maxSyst_msig = syst_msig[nbi][mbi] ;
@@ -955,7 +967,7 @@
       printf(" ====== Shape systematics for %s, sig observables\n", systname ) ;
       for ( int nbi=0; nbi<3; nbi++ ) {
          printf("  %s, sig, %db :   ", systname, nbi+2 ) ;
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
             printf("  %6.3f  ", syst_msig[nbi][mbi] ) ;
          } // mbi.
          printf("\n") ;
@@ -965,7 +977,7 @@
       printf(" ====== Shape systematics for %s, sb observables\n", systname ) ;
       for ( int nbi=0; nbi<3; nbi++ ) {
          printf("  %s, sb,  %db :   ", systname, nbi+2 ) ;
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
             printf("  %6.3f  ", syst_msb[nbi][mbi] ) ;
          } // mbi.
          printf("\n") ;
@@ -977,7 +989,7 @@
 
 
       for ( int nbi=0; nbi<3; nbi++ ) {
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
                char pname[100] ;
                bool changeSign ;
@@ -1075,7 +1087,7 @@
       float smc_msb_err[bins_of_nb][max_bins_of_met] ;
 
       for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
             smc_msig_val[nbi][mbi] = ArrayContent[ 2 + (               nbi)*(bins_of_met) + mbi ] ;
             smc_msb_val[nbi][mbi]  = ArrayContent[ 2 + (1*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
             smc_msig_err[nbi][mbi] = ArrayContent[ 2 + (2*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
@@ -1088,7 +1100,7 @@
       printf("  METsig   |        4bSB              4bSIG         |       3bSB              3bSIG         |        2bSB              2bSIG        |\n") ;
       printf("=====================================================================================================================================\n") ;
       fflush(stdout) ;
-      for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+      for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
          printf(" met bin %d : ", mbi+1 ) ;
          for ( int nbi=(bins_of_nb-1); nbi>=0; nbi-- ) {
             printf( "  %6.1f +/- %4.1f,  %6.1f +/- %4.1f    |",
@@ -1101,7 +1113,7 @@
 
 
       for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             char pname[1000] ;
 

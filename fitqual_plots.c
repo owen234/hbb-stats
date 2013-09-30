@@ -33,6 +33,8 @@
   using namespace RooFit;
   using namespace RooStats;
 
+  int first_met_bin_array_index(0) ;
+
 
    void labelBins( TH1F* hist ) ;
 
@@ -63,6 +65,13 @@
 
       int bins_of_met = TMath::Nint( ws->var("bins_of_met")->getVal()  ) ;
       printf("\n\n Bins of MET : %d\n\n", bins_of_met ) ;
+
+      first_met_bin_array_index = TMath::Nint( ws->var("first_met_bin_array_index")->getVal()  ) ;
+      if ( first_met_bin_array_index == 0 ) {
+         printf(" Using first MET bin.\n" ) ;
+      } else {
+         printf(" *** NOT Using first MET bin.\n" ) ;
+      }
 
       int bins_of_nb = TMath::Nint( ws->var("bins_of_nb")->getVal()  ) ;
       printf("\n\n Bins of nb : %d\n\n", bins_of_nb ) ;
@@ -121,7 +130,7 @@
       TIterator* obsIter = dsras->createIterator() ;
       while ( RooRealVar* obs = (RooRealVar*) obsIter->Next() ) {
          for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
-            for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+            for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
                sprintf( pname, "N_%db_msig_met%d", nb_lookup[nbi], mbi+1 ) ;
                if ( strcmp( obs->GetName(), pname ) == 0 ) { obs_N_msig[nbi][mbi] = TMath::Nint( obs -> getVal() ) ; }
                sprintf( pname, "N_%db_msb_met%d", nb_lookup[nbi], mbi+1 ) ;
@@ -134,7 +143,7 @@
       printf("\n\n") ;
       for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
          printf(" nb=%d :  ", nb_lookup[nbi] ) ;
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
             printf("  sig=%3d, sb=%3d  |", obs_N_msig[nbi][mbi], obs_N_msb[nbi][mbi] ) ;
          } // mbi.
          printf("\n") ;
@@ -198,7 +207,7 @@
          hist_data_msb -> SetMarkerStyle(20) ;
          labelBins( hist_data_msb ) ;
 
-         for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
 
 
@@ -286,7 +295,7 @@
       labelBins( hist_R_msigmsb ) ;
 
 
-      for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
+      for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
          sprintf( pname, "R_msigmsb_met%d", mbi+1 ) ;
          RooRealVar* rrv_R = ws->var( pname ) ;
          if ( rrv_R == 0x0 ) {
@@ -357,7 +366,7 @@
 
    void labelBins( TH1F* hist ) {
       TAxis* xaxis = hist->GetXaxis() ;
-      for ( int mbi=0; mbi<hist->GetNbinsX(); mbi++ ) {
+      for ( int mbi=first_met_bin_array_index; mbi<hist->GetNbinsX(); mbi++ ) {
          char label[1000] ;
          ///sprintf( label, "MET%d", mbi+1 ) ;
          sprintf( label, "S bin %d", mbi+1 ) ;

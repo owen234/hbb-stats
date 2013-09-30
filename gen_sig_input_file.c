@@ -91,7 +91,7 @@
 
 
       //// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july11-2013-pt20" ;
-      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-sept17-2013-v71-1s" ;
+      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-sept17-2013-v71-1s" ;
 
       printf("\n\n\n   Reduced tree directory: %s\n\n\n", rtdir ) ;
 
@@ -100,14 +100,14 @@
       sigchain = new TChain("reducedTree") ;
 
      //--- old (private prod) signal MC.
-      sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1-PU_S10-TChihh_v69-slimskim.root", rtdir ) ;
-      sigchain -> Add( pathandfile ) ;
+ ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.HiggsinoNLSP_chargino130_to_500_bino1-PU_S10-TChihh_v69-slimskim.root", rtdir ) ;
+ ///  sigchain -> Add( pathandfile ) ;
 
- /// //--- new (official) signal MC.
- ///  sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to325_mLSP-1to195_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1872_v71-skim-slimskim.root", rtdir ) ;
- ///  sigchain -> Add( pathandfile ) ;
- ///  sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-350to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1871_v71-skim-slimskim.root", rtdir ) ;
- ///  sigchain -> Add( pathandfile ) ;
+     //--- new (official) signal MC.
+      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to325_mLSP-1to195_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1872_v71-skim.root", rtdir ) ;
+      sigchain -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-350to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1871_v71-skim.root", rtdir ) ;
+      sigchain -> Add( pathandfile ) ;
 
       const int max_sig_points(100) ;
       float signal_weight[max_sig_points] ;
@@ -118,22 +118,45 @@
     //-- See our twiki for an explanation of the weight factors.
     //    https://twiki.cern.ch/twiki/bin/view/CMS/SusyEWHHbbbb2013
     //
-      sigmass[nsigpoints] = 130. ;  signal_weight[nsigpoints] = 2.3045e-05 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 150. ;  signal_weight[nsigpoints] = 1.2294e-06 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 175. ;  signal_weight[nsigpoints] = 7.8243e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 200. ;  signal_weight[nsigpoints] = 4.6847e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 225. ;  signal_weight[nsigpoints] = 3.2248e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 250. ;  signal_weight[nsigpoints] = 7.1769e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 275. ;  signal_weight[nsigpoints] = 5.6463e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 300. ;  signal_weight[nsigpoints] = 2.9629e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 325. ;  signal_weight[nsigpoints] = 2.7941e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 350. ;  signal_weight[nsigpoints] = 2.4135e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 375. ;  signal_weight[nsigpoints] = 2.9794e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 400. ;  signal_weight[nsigpoints] = 1.8760e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 425. ;  signal_weight[nsigpoints] = 1.4117e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 450. ;  signal_weight[nsigpoints] = 1.0555e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 475. ;  signal_weight[nsigpoints] = 1.8952e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 500. ;  signal_weight[nsigpoints] = 1.4492e-07 ;  nsigpoints++ ;
+    //+++ This table is for the private production signal MC in the HiggsinoNLSP file
+    //
+  /// sigmass[nsigpoints] = 130. ;  signal_weight[nsigpoints] = 2.3045e-05 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 150. ;  signal_weight[nsigpoints] = 1.2294e-06 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 175. ;  signal_weight[nsigpoints] = 7.8243e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 200. ;  signal_weight[nsigpoints] = 4.6847e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 225. ;  signal_weight[nsigpoints] = 3.2248e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 250. ;  signal_weight[nsigpoints] = 7.1769e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 275. ;  signal_weight[nsigpoints] = 5.6463e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 300. ;  signal_weight[nsigpoints] = 2.9629e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 325. ;  signal_weight[nsigpoints] = 2.7941e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 350. ;  signal_weight[nsigpoints] = 2.4135e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 375. ;  signal_weight[nsigpoints] = 2.9794e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 400. ;  signal_weight[nsigpoints] = 1.8760e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 425. ;  signal_weight[nsigpoints] = 1.4117e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 450. ;  signal_weight[nsigpoints] = 1.0555e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 475. ;  signal_weight[nsigpoints] = 1.8952e-07 ;  nsigpoints++ ;
+  /// sigmass[nsigpoints] = 500. ;  signal_weight[nsigpoints] = 1.4492e-07 ;  nsigpoints++ ;
+
+
+
+
+    //+++ This table is for the official production files in SMS-TChiHH_2b2b files.
+      sigmass[nsigpoints] = 130. ;  signal_weight[nsigpoints] = 2.1319e-05 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 150. ;  signal_weight[nsigpoints] = 7.1267e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 175. ;  signal_weight[nsigpoints] = 8.0680e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 200. ;  signal_weight[nsigpoints] = 4.9270e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 225. ;  signal_weight[nsigpoints] = 3.1318e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 250. ;  signal_weight[nsigpoints] = 5.0604e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 275. ;  signal_weight[nsigpoints] = 3.4774e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 300. ;  signal_weight[nsigpoints] = 2.3687e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 325. ;  signal_weight[nsigpoints] = 1.6850e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 350. ;  signal_weight[nsigpoints] = 2.1626e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 375. ;  signal_weight[nsigpoints] = 1.6090e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 400. ;  signal_weight[nsigpoints] = 1.1710e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 425. ;  signal_weight[nsigpoints] = 0.8738e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 450. ;  signal_weight[nsigpoints] = 0.6714e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 475. ;  signal_weight[nsigpoints] = 0.5033e-07 ;  nsigpoints++ ;
+      sigmass[nsigpoints] = 500. ;  signal_weight[nsigpoints] = 0.3873e-07 ;  nsigpoints++ ;
 
 
    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -146,9 +169,9 @@
       printf("\n\n Setting up cuts.\n\n") ;
 
      //--- These are included in the skim definition of doSlimSkim.c.  Doesn't hurt to apply them here.
-
+     //
       char basiccuts[10000] ;
-      sprintf( basiccuts, "cutPV==1&&passCleaning==1&&buggyEvent==0" ) ;
+      sprintf( basiccuts, "cutPV==1&&passCleaning==1&&buggyEvent==0&& MET/caloMET<2 && maxTOBTECjetDeltaMult<40" ) ;
 
       char triggercuts[10000] ;
       sprintf( triggercuts, "(passMC_DiCentralPFJet30_PFMET80_BTagCSV07==1||passMC_PFMET150==1)" ) ;
@@ -162,23 +185,9 @@
 
      //--- These are beyond the skim selection.
 
-      char masssigcuts[10000] ;
-      sprintf( masssigcuts, "%s", "abs(higgsMbb1MassDiff-higgsMbb2MassDiff)<20&&((0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)>100)&&(0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)<140))" ) ;
-
-      char masssbcuts[10000] ;
-      sprintf( masssbcuts, "%s", "!(abs(higgsMbb1MassDiff-higgsMbb2MassDiff)<30&&((0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)>90)&&(0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)<150)))" ) ;
-
-      char btag4cuts[10000] ;
-      sprintf( btag4cuts, "%s", "CSVbest2>0.898&&CSVbest3>0.679&&CSVbest4>0.244" ) ;
-
-      char btag3cuts[10000] ;
-      sprintf( btag3cuts, "%s", "CSVbest2>0.898&&CSVbest3>0.679&&CSVbest4<0.244" ) ;
-
-      char btag2cuts[10000] ;
-      sprintf( btag2cuts, "%s", "CSVbest2>0.898&&CSVbest3<0.679" ) ;
-
       char leptonveto[10000] ;
-      sprintf( leptonveto, "%s", "nMuons==0&&nElectrons==0&&nIsoTracks15_005_03==0&&nTausLoose==0" ) ;
+      /// sprintf( leptonveto, "%s", "nMuons==0&&nElectrons==0&&nIsoTracks15_005_03==0&&nTausLoose==0" ) ;
+      sprintf( leptonveto, "%s", "nMuons==0&&nElectrons==0&&nIsoPFcands10_010==0&&nTausLoose==0" ) ;
 
       char drmaxcut[10000] ;
       sprintf( drmaxcut, "%s", "deltaRmax_hh<2.2" ) ;
@@ -189,6 +198,23 @@
 
       char jet2ptcut[10000] ;
       sprintf( jet2ptcut, "%s", "jetpt2>50" ) ;
+
+
+
+      char masssigcuts[10000] ;
+      sprintf( masssigcuts, "%s", "abs(higgsMbb1MassDiff-higgsMbb2MassDiff)<20&&((0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)>100)&&(0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)<140))" ) ;
+
+      char masssbcuts[10000] ;
+      sprintf( masssbcuts, "%s", "!(abs(higgsMbb1MassDiff-higgsMbb2MassDiff)<30&&((0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)>90)&&(0.5*(higgsMbb1MassDiff+higgsMbb2MassDiff)<150)))" ) ;
+
+      char btag4bcuts[10000] ;
+      sprintf( btag4bcuts, "%s", "CSVbest2>0.898&&CSVbest3>0.679&&CSVbest4>0.244" ) ;
+
+      char btag3bcuts[10000] ;
+      sprintf( btag3bcuts, "%s", "CSVbest2>0.898&&CSVbest3>0.679&&CSVbest4<0.244" ) ;
+
+      char btag2bcuts[10000] ;
+      sprintf( btag2bcuts, "%s", "CSVbest2>0.898&&CSVbest3<0.679" ) ;
 
       char allcommoncuts[10000] ;
       sprintf( allcommoncuts, "(%s)&&(%s)&&(%s)&&(%s)&&(%s)", skimcuts, leptonveto, drmaxcut, jet2ptcut, mindphicut ) ;
@@ -240,7 +266,7 @@
          h_4b_msig[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag4cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag4bcuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -254,7 +280,7 @@
          h_3b_msig[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag3cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag3bcuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -268,7 +294,7 @@
          h_2b_msig[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag2cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssigcuts, btag2bcuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -285,7 +311,7 @@
          h_4b_msb[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag4cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag4bcuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -299,7 +325,7 @@
          h_3b_msb[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag3cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag3bcuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -313,7 +339,7 @@
          h_2b_msb[spi] -> Sumw2() ;
 
          sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag2cuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)*%g%s*%.0f", allcommoncuts, masssbcuts, btag2bcuts, sigmass[spi], lsp_mass, signal_weight[spi], puweight, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          sigchain -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -333,7 +359,7 @@
             h_4b_msig_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag4cuts, sigmass[spi], lsp_mass ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag4bcuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -347,7 +373,7 @@
             h_3b_msig_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag3cuts, sigmass[spi], lsp_mass ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag3bcuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -361,7 +387,7 @@
             h_2b_msig_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag2cuts, sigmass[spi], lsp_mass ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssigcuts, btag2bcuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -378,7 +404,7 @@
             h_4b_msb_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag4cuts, sigmass[spi], lsp_mass ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag4bcuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -392,7 +418,7 @@
             h_3b_msb_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag3cuts, sigmass[spi], lsp_mass ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag3bcuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;
@@ -406,7 +432,7 @@
             h_2b_msb_nw[spi] -> Sumw2() ;
 
             sprintf( arg1, "%s>>%s", metvarname, hname ) ;
-            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag2cuts, sigmass[spi], lsp_mass ) ;
+            sprintf( allcuts, "((%s)&&(%s)&&(%s)&&m0==%.0f&&m12==%d)", allcommoncuts, masssbcuts, btag2bcuts, sigmass[spi], lsp_mass ) ;
             printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
             sigchain -> Draw( arg1, allcuts ) ;
             can->Update() ; can->Draw() ;

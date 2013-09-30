@@ -8,13 +8,25 @@
 
          echo sigmass $sigmass , csyst $csyst
 
-         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass.log
 
-         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass.log
+
+         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass-withMSB1.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass-withMSB1.log
+
+         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass-withMSB1.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass-withMSB1.log
+
+
+
+         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass-dropMSB1.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass-dropMSB1.log
+
+         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass-dropMSB1.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass-dropMSB1.log
+
+
 
        # root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst${csyst}mb-nosignal-sigmass-$sigmass.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst${csyst}mb-nosignal-sigmass-$sigmass.log
 
        # root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst${csyst}mb-withsignal-sigmass-$sigmass.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst${csyst}mb-withsignal-sigmass-$sigmass.log
+
+
 
       end
 
