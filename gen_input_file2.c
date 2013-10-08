@@ -114,7 +114,8 @@
       ///// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july08-2013" ;
       ///// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july11-2013-pt20" ;
       ///// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-sept17-2013-v71-1s" ;
-      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-sept17-2013-v71-1s" ;
+      ///// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-sept17-2013-v71-1s" ;
+      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-slim-oct08-2013-v71-5b" ;
 
       printf("\n\n\n   Reduced tree directory: %s\n\n\n", rtdir ) ;
 
@@ -130,9 +131,9 @@
   /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.TTJets_FullLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v2_AODSIM_UCSB1799_v69-slimskim.root", rtdir ) ;
   /// bgcompchain[compIndex] -> Add( pathandfile ) ;
 
-      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_SemiLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v1_AODSIM_UCSB1884ra2b_v71s-skim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_SemiLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v1_AODSIM_UCSB1884ra2b_v71s-slimskim.root", rtdir, namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_FullLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v2_AODSIM_UCSB1883ra2b_v71s-skim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_FullLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v2_AODSIM_UCSB1883ra2b_v71s-slimskim.root", rtdir, namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
       compIndex++ ;
 
@@ -148,15 +149,15 @@
   /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1835_v69-slimskim.root", rtdir ) ;
   /// bgcompchain[compIndex] -> Add( pathandfile ) ;
 
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_100_HT_200_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1887ra2b_v71s-skim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_100_HT_200_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1887ra2b_v71s-slimskim.root", rtdir, namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1888ra2b_v71s-skim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1888ra2b_v71s-slimskim.root", rtdir, namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1889ra2b_v71s-skim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1889ra2b_v71s-slimskim.root", rtdir, namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1890ra2b_v71s-skim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1890ra2b_v71s-slimskim.root", rtdir, namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1891ra2b_v71s-skim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1891ra2b_v71s-slimskim.root", rtdir, namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
       compIndex++ ;
 
@@ -181,26 +182,26 @@
     ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-800to1000_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1819_v69-slimskim.root", rtdir ) ;
     ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
 
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1000to1400_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1903ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1000to1400_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1903ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-120to170_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v3_AODSIM_UCSB1897ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-120to170_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v3_AODSIM_UCSB1897ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1400to1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1904ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1400to1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1904ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-170to300_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1898ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-170to300_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1898ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1905ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1905ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-300to470_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1899ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-300to470_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1899ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-470to600_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1900ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-470to600_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1900ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-600to800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1901ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-600to800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1901ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-800to1000_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1902ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-800to1000_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1902ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
         //--- ttbar, hadronic (grouped with QCD)
-         sprintf( pathandfile, "%s/reducedTree.%s.TTJets_HadronicMGDecays_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A_ext-v1_AODSIM_UCSB1880ra2b_v71s-skim.root", rtdir, namestub ) ;
+         sprintf( pathandfile, "%s/reducedTree.%s.TTJets_HadronicMGDecays_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A_ext-v1_AODSIM_UCSB1880ra2b_v71s-slimskim.root", rtdir, namestub ) ;
          bgcompchain[compIndex] -> Add( pathandfile ) ;
 
          compIndex++ ;
@@ -243,8 +244,8 @@
       sprintf( drmaxcut, "%s", "deltaRmax_hh<2.2" ) ;
 
       char mindphicut[10000] ;
-      ///////// sprintf( mindphicut, "%s", "minDeltaPhi20>0.3" ) ;
-      sprintf( mindphicut, "%s", "((METsig>50&&minDeltaPhi20>0.3)||(METsig<50&&minDeltaPhi20>0.5))" ) ;
+      //// sprintf( mindphicut, "%s", "((METsig>50&&minDeltaPhi20>0.3)||(METsig<50&&minDeltaPhi20>0.5))" ) ;
+      sprintf( mindphicut, "%s", "((METsig>50&&minDeltaPhi20_eta5_noIdAll_nobeta>0.3)||(METsig<50&&minDeltaPhi20_eta5_noIdAll_nobeta>0.5))" ) ;
 
       char jet2ptcut[10000] ;
       sprintf( jet2ptcut, "%s", "jetpt2>50" ) ;
