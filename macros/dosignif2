@@ -1,14 +1,15 @@
 
  set ntoy = 50000
 
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-175-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-175-4metbin-w3b.log
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-200-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-200-4metbin-w3b.log
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-250-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-250-4metbin-w3b.log
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-300-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-300-4metbin-w3b.log
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-350-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-350-4metbin-w3b.log
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-400-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-400-4metbin-w3b.log
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-450-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-450-4metbin-w3b.log
-   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-withsig-500-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-500-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-175-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-175-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-200-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-200-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-250-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-250-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-300-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-300-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-350-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-350-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-400-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-400-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-450-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-450-4metbin-w3b.log
+   root -b -q rundemosignif.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-withsignal-sigmass-500-withMSB1.root\",0,$ntoy\)   |& tee logfiles/signif-metsig-withsig-500-4metbin-w3b.log
+
 
  # root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-200-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-met-withsig-200-4metbin-w3b.log
  # root -b -q rundemosignif.c\(\"outputfiles/ws-met-withsig-250-4metbin-w3b.root\",0,$ntoy\)   |& tee logfiles/signif-met-withsig-250-4metbin-w3b.log

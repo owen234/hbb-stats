@@ -246,23 +246,6 @@
 
          } // mbi.
 
-         cfq1->cd( pad ) ;
-
-         sprintf( hname, "h_stack_%db_msig_met", nb_lookup[nbi] ) ;
-         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
-         THStack* hstack_msig = new THStack( hname, htitle ) ;
-         hstack_msig -> Add( hist_bg_msig ) ;
-         hstack_msig -> Add( hist_sig_msig ) ;
-
-         hist_data_msig -> Draw("e") ;
-         hstack_msig -> Draw("same") ;
-         hist_data_msig -> Draw("same e") ;
-         hist_data_msig -> Draw("same axis") ;
-
-         tt_title -> DrawTextNDC( 0.85, 0.85, plottitle ) ;
-
-         pad++ ;
-
 
 
          cfq1->cd( pad ) ;
@@ -277,6 +260,26 @@
          hstack_msb -> Draw("same") ;
          hist_data_msb -> Draw("same e") ;
          hist_data_msb -> Draw("same axis") ;
+
+         tt_title -> DrawTextNDC( 0.85, 0.85, plottitle ) ;
+
+         pad++ ;
+
+
+
+
+         cfq1->cd( pad ) ;
+
+         sprintf( hname, "h_stack_%db_msig_met", nb_lookup[nbi] ) ;
+         sprintf( htitle, "mass sig, %db", nb_lookup[nbi] ) ;
+         THStack* hstack_msig = new THStack( hname, htitle ) ;
+         hstack_msig -> Add( hist_bg_msig ) ;
+         hstack_msig -> Add( hist_sig_msig ) ;
+
+         hist_data_msig -> Draw("e") ;
+         hstack_msig -> Draw("same") ;
+         hist_data_msig -> Draw("same e") ;
+         hist_data_msig -> Draw("same axis") ;
 
          tt_title -> DrawTextNDC( 0.85, 0.85, plottitle ) ;
 

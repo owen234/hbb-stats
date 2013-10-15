@@ -451,7 +451,8 @@ RooStats::HypoTestInvTool::AnalyzeResult( HypoTestInverterResult * r,
    std::cout << " expected limit (+2 sig) " << r->GetExpectedUpperLimit(2) << std::endl;
   
 
-   printf("\n\n  owen: (-2s,-1s,m,1s,2s)  %5.2f   %5.2f   %5.2f   %5.2f   %5.2f\n\n",
+   printf("\n\n  owen:(obs,-2s,-1s,m,1s,2s)    %5.2f       %5.2f   %5.2f   %5.2f   %5.2f   %5.2f\n\n",
+      upperLimit,
       r->GetExpectedUpperLimit(-2),
       r->GetExpectedUpperLimit(-1),
       r->GetExpectedUpperLimit(0),
