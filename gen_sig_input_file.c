@@ -11,7 +11,8 @@
 
    TChain* sigchain ;
 
-   float dataIntLumiIPB(20000.) ;
+   /////float dataIntLumiIPB(20000.) ;
+   float dataIntLumiIPB(19399.) ;
 
    float met_bin_edges_4bins[5] ;
 
