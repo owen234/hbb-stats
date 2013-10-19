@@ -1006,6 +1006,9 @@
       fprintf( outfile, "shape_syst_ALL    test-input-files1/test-syst-file1.txt\n") ;
 
 
+     //-- give location of btag SF syst file.
+      fprintf( outfile, "btag_SF_frac_matrix_file      test-input-files1/test-transfer-fraction-matrix.txt" ) ;
+
 
 
       fclose( outfile ) ;
