@@ -17,6 +17,7 @@
 #include "RooStats/ModelConfig.h"
 
 #include "RooPosDefCorrGauss.h"
+#include "RooAsymAbsProd.h"
 
 #include "getFileValue.c"
 
@@ -36,11 +37,11 @@
    RooArgSet* allNuisances ;
    RooArgSet* allNuisancePdfs ;
 
-   RooRealVar* rv_smc_msig[bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
-   RooRealVar* rv_smc_msb[bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
+   RooRealVar* rv_smc_msig[bins_of_nb+1][max_bins_of_met] ; // first index is number of btags, second is met bin.
+   RooRealVar* rv_smc_msb[bins_of_nb+1][max_bins_of_met]  ; // first index is number of btags, second is met bin.
 
-   RooAbsReal* rv_smc_msig_mcstat_syst[bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
-   RooAbsReal* rv_smc_msb_mcstat_syst[bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
+   RooAbsReal* rv_smc_msig_mcstat_syst[bins_of_nb+1][max_bins_of_met] ; // first index is number of btags, second is met bin.
+   RooAbsReal* rv_smc_msb_mcstat_syst[bins_of_nb+1][max_bins_of_met]  ; // first index is number of btags, second is met bin.
 
    int n_shape_systs(0) ;
 
@@ -59,10 +60,7 @@
                         RooWorkspace& workspace
                          ) ;
 
-   float btagsf_frac_p1s[4][4] ;
-   float btagsf_frac_m1s[4][4] ;
-
-   bool readBtagSFFracMatrix( const char* infracfile, const char* postfix, float fracmatrix_p1s[4][4], float fracmatrix_m1s[4][4] ) ;
+   bool setupBtagSFFracMatrix( const char* infracfile, const char* postfix, RooWorkspace& workspace ) ;
 
    bool readSignalCounts( const char* susy_counts_file, float sig_mass ) ;
 
@@ -235,16 +233,22 @@
       } // ssi.
 
 
+
+
+
      //-- Read in the btag SF systematic transfer fraction matrices
       char btag_sf_frac_file[10000] ;
       if ( !getFileStringValue( infile, "btag_SF_frac_matrix_file", btag_sf_frac_file ) ) {
          printf("\n\n *** Can't find btag SF transfer fraction matrix file name btag_SF_frac_matrix_file in %s\n\n", infile ) ;
          return ;
       }
-      if ( !readBtagSFFracMatrix( btag_sf_frac_file, "SIGSB_METsigAll", btagsf_frac_p1s, btagsf_frac_m1s ) ) {
+      if ( !setupBtagSFFracMatrix( btag_sf_frac_file, "SIGSB_METsigAll", workspace ) ) {
          printf("\n\n *** Problem reading in btag SF transfer matrix from %s\n\n", btag_sf_frac_file ) ;
          return ;
       }
+
+
+
 
      //-- Finished reading input from file.
 
@@ -364,13 +368,13 @@
             sprintf( formula, "@0 * @1 * @2 * @3" ) ;
             sprintf( pname, "mu_sig_%db_msig_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
-            rv_mu_sig_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msig, *rv_smc_msig_mcstat_syst[nbi][mbi], *rv_smc_msig[nbi][mbi] ) ) ;
+            rv_mu_sig_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msig, *rv_smc_msig_mcstat_syst[nbi+1][mbi], *rv_smc_msig[nbi+1][mbi] ) ) ;
             rv_mu_sig_msig[nbi][mbi] -> Print() ;
 
             sprintf( formula, "@0 * @1 * @2 * @3" ) ;
             sprintf( pname, "mu_sig_%db_msb_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
-            rv_mu_sig_msb[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msb, *rv_smc_msb_mcstat_syst[nbi][mbi], *rv_smc_msb[nbi][mbi] ) ) ;
+            rv_mu_sig_msb[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msb, *rv_smc_msb_mcstat_syst[nbi+1][mbi], *rv_smc_msb[nbi+1][mbi] ) ) ;
             rv_mu_sig_msb[nbi][mbi] -> Print() ;
 
 
@@ -1052,7 +1056,7 @@
          return false ;
       }
 
-      int ArraySize = 2 + bins_of_met * bins_of_nb * 2 * 2 ; // 2 (sig vs sb) * 2 (vals and errs).
+      int ArraySize = 2 + bins_of_met * (bins_of_nb+1) * 2 * 2 ; // 2 (sig vs sb) * 2 (vals and errs).
 
       char command[10000] ;
       sprintf(command, "tail -1 %s | awk '{print NF}' | grep -q %d", susy_counts_file, ArraySize ) ;
@@ -1097,29 +1101,29 @@
 
       if ( !found ) { printf("\n\n *** Did not find mass point %.0f in %s.\n\n", sig_mass, susy_counts_file ) ; return false ; }
 
-      float smc_msig_val[bins_of_nb][max_bins_of_met] ;
-      float smc_msb_val[bins_of_nb][max_bins_of_met] ;
+      float smc_msig_val[bins_of_nb+1][max_bins_of_met] ;
+      float smc_msb_val[bins_of_nb+1][max_bins_of_met] ;
 
-      float smc_msig_err[bins_of_nb][max_bins_of_met] ;
-      float smc_msb_err[bins_of_nb][max_bins_of_met] ;
+      float smc_msig_err[bins_of_nb+1][max_bins_of_met] ;
+      float smc_msb_err[bins_of_nb+1][max_bins_of_met] ;
 
-      for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
+      for ( int nbi=0; nbi<(bins_of_nb+1); nbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
-            smc_msig_val[nbi][mbi] = ArrayContent[ 2 + (               nbi)*(bins_of_met) + mbi ] ;
-            smc_msb_val[nbi][mbi]  = ArrayContent[ 2 + (1*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
-            smc_msig_err[nbi][mbi] = ArrayContent[ 2 + (2*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
-            smc_msb_err[nbi][mbi]  = ArrayContent[ 2 + (3*bins_of_nb + nbi)*(bins_of_met) + mbi ] ;
+            smc_msig_val[nbi][mbi] = ArrayContent[ 2 + (                   nbi)*(bins_of_met) + mbi ] ;
+            smc_msb_val[nbi][mbi]  = ArrayContent[ 2 + (1*(bins_of_nb+1) + nbi)*(bins_of_met) + mbi ] ;
+            smc_msig_err[nbi][mbi] = ArrayContent[ 2 + (2*(bins_of_nb+1) + nbi)*(bins_of_met) + mbi ] ;
+            smc_msb_err[nbi][mbi]  = ArrayContent[ 2 + (3*(bins_of_nb+1) + nbi)*(bins_of_met) + mbi ] ;
          } // mbi.
       } // nbi.
 
       printf("\n\n\n") ;
-      printf("=====================================================================================================================================\n") ;
-      printf("  METsig   |        4bSB              4bSIG         |       3bSB              3bSIG         |        2bSB              2bSIG        |\n") ;
-      printf("=====================================================================================================================================\n") ;
+      printf("=============================================================================================================================================================================\n") ;
+      printf("  METsig   |        4bSB              4bSIG         |       3bSB              3bSIG         |        2bSB              2bSIG        |        NTSB              NTSIG        |\n") ;
+      printf("=============================================================================================================================================================================\n") ;
       fflush(stdout) ;
       for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
          printf(" met bin %d : ", mbi+1 ) ;
-         for ( int nbi=(bins_of_nb-1); nbi>=0; nbi-- ) {
+         for ( int nbi=(bins_of_nb); nbi>=0; nbi-- ) {
             printf( "  %6.1f +/- %4.1f,  %6.1f +/- %4.1f    |",
                  smc_msb_val[nbi][mbi] , smc_msb_val[nbi][mbi]  * smc_msb_err[nbi][mbi],
                  smc_msig_val[nbi][mbi], smc_msig_val[nbi][mbi] * smc_msig_err[nbi][mbi] ) ;
@@ -1129,30 +1133,30 @@
       printf("=====================================================================================================================================\n") ;
 
 
-      for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
+      for ( int nbi=0; nbi<bins_of_nb+1; nbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             char pname[1000] ;
 
-            sprintf( pname, "smc_%db_msig_met%d", nbi+2, mbi+1 ) ;
+            sprintf( pname, "smc_%s_msig_met%d", btag_catname[nbi], mbi+1 ) ;
             rv_smc_msig[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
             rv_smc_msig[nbi][mbi] -> setVal( smc_msig_val[nbi][mbi] ) ;
             rv_smc_msig[nbi][mbi] -> setConstant( kTRUE ) ;
 
-            sprintf( pname, "smc_%db_msb_met%d", nbi+2, mbi+1 ) ;
+            sprintf( pname, "smc_%s_msb_met%d", btag_catname[nbi], mbi+1 ) ;
             rv_smc_msb[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
             rv_smc_msb[nbi][mbi] -> setVal( smc_msig_val[nbi][mbi] ) ;
             rv_smc_msb[nbi][mbi] -> setConstant( kTRUE ) ;
 
             if ( syst_type == 1 ) {
-               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%db", mbi+1, nbi+2 ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[nbi] ) ;
                rv_smc_msig_mcstat_syst[nbi][mbi] = makeGaussianConstraint( pname, 1.0, smc_msig_err[nbi][mbi] ) ;
-               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%db", mbi+1, nbi+2 ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[nbi] ) ;
                rv_smc_msb_mcstat_syst[nbi][mbi] = makeGaussianConstraint( pname, 1.0, smc_msb_err[nbi][mbi] ) ;
             } else if ( syst_type == 2 ) {
-               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%db", mbi+1, nbi+2 ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[nbi] ) ;
                rv_smc_msig_mcstat_syst[nbi][mbi] = makeLognormalConstraint( pname, 1.0, smc_msig_err[nbi][mbi] ) ;
-               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%db", mbi+1, nbi+2 ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[nbi] ) ;
                rv_smc_msb_mcstat_syst[nbi][mbi] = makeLognormalConstraint( pname, 1.0, smc_msb_err[nbi][mbi] ) ;
             } else {
                printf("\n\n *** I don't know how to do syst_type %d\n\n", syst_type ) ; return false ;
@@ -1168,8 +1172,12 @@
 
  //===============================================================================================================
 
-   bool readBtagSFFracMatrix( const char* infracfile, const char* postfix, float fracmatrix_p1s[4][4], float fracmatrix_m1s[4][4] ) {
+   bool setupBtagSFFracMatrix( const char* infracfile, const char* postfix, RooWorkspace& workspace ) {
 
+        float fracmatrix_p1s[4][4] ;
+        float fracmatrix_m1s[4][4] ;
+
+       //-- read in the numbers.
         for ( int fci=0; fci<4; fci++ ) {
            for ( int tci=0; tci<4; tci++ ) {
               char pname[1000] ;
@@ -1183,11 +1191,83 @@
            } // tci.
         } // fci.
 
-        printf("\n\n btag SF transfer fractions successfully read from %s\n\n", infracfile ) ;
+       //-- check for consistency.
+        for ( int fci=0; fci<4; fci++ ) {
+           float psum(0.) ;
+           float msum(0.) ;
+           for ( int tci=0; tci<4; tci++ ) {
+              psum += fracmatrix_p1s[fci][tci] ;
+              msum += fracmatrix_m1s[fci][tci] ;
+           } // tci.
+           if ( fabs( 1.0 - psum ) > 0.001 ) { printf(" \n\n *** readBtagSFFracMatrix : fractions for %s, +1 sigma don't add up to 1.\n\n", btag_catname[fci] ) ; return false ; }
+           if ( fabs( 1.0 - msum ) > 0.001 ) { printf(" \n\n *** readBtagSFFracMatrix : fractions for %s, -1 sigma don't add up to 1.\n\n", btag_catname[fci] ) ; return false ; }
+        } // fci.
+
+
+        printf("\n\n btag SF transfer fractions successfully read from %s and checked.\n\n", infracfile ) ;
+
+
+
+       //-- Look for btag SF nuisance parameter.  If it doesn't exist, make it.
+
+        char prim_name[1000] ;
+        sprintf( prim_name, "prim_btag_SF_syst" ) ;
+        RooRealVar* rrv_btag_SF_base_par = (RooRealVar*) allNuisances -> find( prim_name ) ;
+
+        if ( rrv_btag_SF_base_par == 0x0 ) {
+
+           printf( " setupBtagSFFracMatrix : creating btag SF nuisance parameter %s\n\n", prim_name ) ;
+           rrv_btag_SF_base_par = new RooRealVar( prim_name, prim_name, -6.0, 6.0 ) ;
+           rrv_btag_SF_base_par -> setVal( 0. ) ;
+           rrv_btag_SF_base_par -> setConstant( kFALSE ) ;
+           allNuisances -> add( *rrv_btag_SF_base_par ) ;
+
+           char vname[1000] ;
+           sprintf( vname, "mean_%s", prim_name ) ;
+           RooRealVar* g_mean = new RooRealVar( vname, vname, 0.0,-10.,10. ) ;
+           g_mean->setConstant(kTRUE);
+           sprintf( vname, "sigma_%s", prim_name ) ;
+           RooConstVar* g_sigma = new RooConstVar( vname, vname, 1.0 ) ;
+
+           char pdfname[100] ;
+           sprintf( pdfname, "pdf_%s", prim_name ) ;
+           printf("\n\n setupBtagSFFracMatrix : creating btag SF nuisance parameter pdf - %s\n\n", pdfname ) ;
+           RooGaussian* base_np_pdf = new RooGaussian( pdfname, pdfname, *rrv_btag_SF_base_par, *g_mean, *g_sigma ) ;
+
+           allNuisancePdfs -> add( *base_np_pdf ) ;
+           globalObservables -> add( *g_mean ) ;
+
+        }
+
+
+       //-- Create the fraction parameters.
+
+        for ( int fci=0; fci<4; fci++ ) {
+           for ( int tci=0; tci<4; tci++ ) {
+
+               char pname[100] ;
+               RooAbsReal* rar_par ;
+
+               sprintf( pname, "frac_p1s_from_%s_to_%s_%s", btag_catname[fci], btag_catname[tci], postfix ) ;
+               RooRealVar* frac_p1s = new RooRealVar( pname, pname, fracmatrix_p1s[fci][tci], 0., 1. ) ;
+               frac_p1s -> setConstant( kTRUE ) ;
+
+               sprintf( pname, "frac_m1s_from_%s_to_%s_%s", btag_catname[fci], btag_catname[tci], postfix ) ;
+               RooRealVar* frac_m1s = new RooRealVar( pname, pname, fracmatrix_m1s[fci][tci], 0., 1. ) ;
+               frac_m1s -> setConstant( kTRUE ) ;
+
+               sprintf( pname, "frac_from_%s_to_%s_%s", btag_catname[fci], btag_catname[tci], postfix ) ;
+               rar_par = new RooAsymAbsProd( pname, pname, *frac_m1s, *frac_p1s, *rrv_btag_SF_base_par ) ;
+               workspace.import( *rar_par ) ;
+
+           } // tci.
+        } // fci.
+
+
 
         return true ;
 
-   } // readBtagSFFracMatrix
+   } // setupBtagSFFracMatrix
 
  //===============================================================================================================
 
