@@ -29,6 +29,7 @@
    char btag_catname[4][10] = { "NT", "2b", "3b", "4b" } ;
 
    const int bins_of_nb(3) ;
+   const int sigmc_bins_of_nb(4) ;
    const int max_bins_of_met(50) ;
    int       bins_of_met ;
    int       first_met_bin_array_index(0) ;
@@ -36,12 +37,6 @@
    RooArgSet* globalObservables ;
    RooArgSet* allNuisances ;
    RooArgSet* allNuisancePdfs ;
-
-   RooRealVar* rv_smc_msig[bins_of_nb+1][max_bins_of_met] ; // first index is number of btags, second is met bin.
-   RooRealVar* rv_smc_msb[bins_of_nb+1][max_bins_of_met]  ; // first index is number of btags, second is met bin.
-
-   RooAbsReal* rv_smc_msig_mcstat_syst[bins_of_nb+1][max_bins_of_met] ; // first index is number of btags, second is met bin.
-   RooAbsReal* rv_smc_msb_mcstat_syst[bins_of_nb+1][max_bins_of_met]  ; // first index is number of btags, second is met bin.
 
    int n_shape_systs(0) ;
 
@@ -62,7 +57,7 @@
 
    bool setupBtagSFFracMatrix( const char* infracfile, const char* postfix, RooWorkspace& workspace ) ;
 
-   bool readSignalCounts( const char* susy_counts_file, float sig_mass ) ;
+   bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace ) ;
 
   //===========================================================================================
 
@@ -132,7 +127,7 @@
          printf("\n\n *** Can't find input susy counts file: signal_counts_file line of %s.\n\n", infile ) ;
          return ;
       }
-      if ( !readSignalCounts( susy_counts_filename, sig_mass ) ) {
+      if ( !readSignalCounts( susy_counts_filename, sig_mass, workspace ) ) {
          printf("\n\n *** Can't find signal mass of %.0f in %s\n\n", sig_mass, susy_counts_filename ) ;
          return ;
       }
@@ -306,15 +301,12 @@
 
     //-------------------------------------------------------------------------
 
-     //-- Define all mu parameters.
+     //-- Define mu parameters for background.
 
-      printf("\n\n Defining mu parameters.\n\n") ;
+      printf("\n\n Defining mu parameters for background.\n\n") ;
 
       RooAbsReal* rv_mu_bg_msig[bins_of_nb][max_bins_of_met] ;  // first index is number of btags, second is met bin.
       RooAbsReal* rv_mu_bg_msb[bins_of_nb][max_bins_of_met]  ;  // first index is number of btags, second is met bin.
-
-      RooAbsReal* rv_mu_sig_msig[bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
-      RooAbsReal* rv_mu_sig_msb[bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
 
       for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
 
@@ -335,6 +327,26 @@
             rv_mu_bg_msig[nbi][mbi] -> Print() ;
 
 
+         } // mbi.
+
+      } // nbi.
+
+
+
+
+
+     //-- Define mu parameters for signal.
+
+      printf("\n\n Defining mu parameters for signal.\n\n") ;
+
+      RooAbsReal* rv_mu_sig_msig_nobtagsyst[sigmc_bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
+      RooAbsReal* rv_mu_sig_msb_nobtagsyst[sigmc_bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
+
+
+      for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {  //--- this is 0 = no-tag, 1 = 2b, 2 = 3b, 3 = 4b
+
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+
            //-- set up combination of all signal shape systematics.
             char syst_prod_eqn[1000] ;
             sprintf( syst_prod_eqn, "@0" ) ;
@@ -346,41 +358,135 @@
 
             RooArgSet shapeSystProdSet_msig ;
             for ( int ssi=0; ssi<n_shape_systs; ssi++ ) {
-               sprintf( pname, "shape_syst_%s_msig_met%d_%db", shape_syst_names[ssi], mbi+1, nbi+2 ) ;
+               sprintf( pname, "shape_syst_%s_msig_met%d_%s", shape_syst_names[ssi], mbi+1, btag_catname[smcnbi] ) ;
                RooAbsReal* rar_sf = (RooAbsReal*) workspace.obj( pname ) ;
-               if ( rar_sf == 0x0 ) { printf("\n\n *** Missing %s shape syst for met %d, nb %d,  (%s)\n\n", shape_syst_names[ssi], mbi+1, nbi+2, pname ) ; return ; }
+               if ( rar_sf == 0x0 ) { printf("\n\n *** Missing %s shape syst for met %d, nb %s,  (%s)\n\n", shape_syst_names[ssi], mbi+1, btag_catname[smcnbi], pname ) ; return ; }
                shapeSystProdSet_msig.add( *rar_sf ) ;
             } // ssi.
-            sprintf( pname, "shape_syst_prod_msig_met%d_%db", mbi+1, nbi+2 ) ;
+            sprintf( pname, "shape_syst_prod_msig_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
             RooFormulaVar* rfv_shape_syst_prod_msig = new RooFormulaVar( pname, syst_prod_eqn, shapeSystProdSet_msig ) ;
 
             RooArgSet shapeSystProdSet_msb ;
             for ( int ssi=0; ssi<n_shape_systs; ssi++ ) {
-               sprintf( pname, "shape_syst_%s_msb_met%d_%db", shape_syst_names[ssi], mbi+1, nbi+2 ) ;
+               sprintf( pname, "shape_syst_%s_msb_met%d_%s", shape_syst_names[ssi], mbi+1, btag_catname[smcnbi] ) ;
                RooAbsReal* rar_sf = (RooAbsReal*) workspace.obj( pname ) ;
-               if ( rar_sf == 0x0 ) { printf("\n\n *** Missing %s shape syst for met %d, nb %d,  (%s)\n\n", shape_syst_names[ssi], mbi+1, nbi+2, pname ) ; return ; }
+               if ( rar_sf == 0x0 ) { printf("\n\n *** Missing %s shape syst for met %d, nb %s,  (%s)\n\n", shape_syst_names[ssi], mbi+1, btag_catname[smcnbi], pname ) ; return ; }
                shapeSystProdSet_msb.add( *rar_sf ) ;
             } // ssi.
-            sprintf( pname, "shape_syst_prod_msb_met%d_%db", mbi+1, nbi+2 ) ;
+            sprintf( pname, "shape_syst_prod_msb_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
             RooFormulaVar* rfv_shape_syst_prod_msb = new RooFormulaVar( pname, syst_prod_eqn, shapeSystProdSet_msb ) ;
 
 
-            sprintf( formula, "@0 * @1 * @2 * @3" ) ;
-            sprintf( pname, "mu_sig_%db_msig_met%d", nbi+2, mbi+1 ) ;
-            printf( "  %s\n", pname ) ;
-            rv_mu_sig_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msig, *rv_smc_msig_mcstat_syst[nbi+1][mbi], *rv_smc_msig[nbi+1][mbi] ) ) ;
-            rv_mu_sig_msig[nbi][mbi] -> Print() ;
+
+           //-- retrieve signals pars from workspace, created in readSignalCounts
+
+            sprintf( pname, "smc_%s_msig_met%d", btag_catname[smcnbi], mbi+1 ) ;
+            RooRealVar* smc_msig = (RooRealVar*) workspace.obj( pname ) ;
+            if ( smc_msig == 0x0 ) { printf("\n\n *** missing %s in workspace.\n\n", pname ) ; return ; }
+
+            sprintf( pname, "smc_%s_msb_met%d", btag_catname[smcnbi], mbi+1 ) ;
+            RooRealVar* smc_msb = (RooRealVar*) workspace.obj( pname ) ;
+            if ( smc_msb == 0x0 ) { printf("\n\n *** missing %s in workspace.\n\n", pname ) ; return ; }
+
+            sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+            RooRealVar* smc_msig_mcstat_syst = (RooRealVar*) workspace.obj( pname ) ;
+            if ( smc_msig_mcstat_syst == 0x0 ) { printf("\n\n *** missing %s in workspace.\n\n", pname ) ; return ; }
+
+            sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+            RooRealVar* smc_msb_mcstat_syst = (RooRealVar*) workspace.obj( pname ) ;
+            if ( smc_msb_mcstat_syst == 0x0 ) { printf("\n\n *** missing %s in workspace.\n\n", pname ) ; return ; }
+
 
             sprintf( formula, "@0 * @1 * @2 * @3" ) ;
-            sprintf( pname, "mu_sig_%db_msb_met%d", nbi+2, mbi+1 ) ;
-            printf( "  %s\n", pname ) ;
-            rv_mu_sig_msb[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msb, *rv_smc_msb_mcstat_syst[nbi+1][mbi], *rv_smc_msb[nbi+1][mbi] ) ) ;
-            rv_mu_sig_msb[nbi][mbi] -> Print() ;
+            sprintf( pname, "mu_sig_%s_msig_met%d_nobtagsyst", btag_catname[smcnbi], mbi+1 ) ;
+            printf( "  %s, smcnbi=%d, mbi=%d \n", pname, smcnbi, mbi ) ;
+            rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msig, *smc_msig_mcstat_syst, *smc_msig ) ) ;
+            rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] -> Print() ;
+
+            sprintf( formula, "@0 * @1 * @2 * @3" ) ;
+            sprintf( pname, "mu_sig_%s_msb_met%d_nobtagsyst", btag_catname[smcnbi], mbi+1 ) ;
+            printf( "  %s, smcnbi=%d, mbi=%d\n", pname, smcnbi, mbi ) ;
+            rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msb, *smc_msb_mcstat_syst, *smc_msb ) ) ;
+            rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] -> Print() ;
 
 
          } // mbi.
 
-      } // nbi.
+      } // smcnbi.
+
+
+
+      RooAbsReal* rv_mu_sig_msig[sigmc_bins_of_nb][max_bins_of_met] ; // first index is number of btags, second is met bin.
+      RooAbsReal* rv_mu_sig_msb[sigmc_bins_of_nb][max_bins_of_met]  ; // first index is number of btags, second is met bin.
+
+      for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+
+         for ( int to_smcnbi=0; to_smcnbi<sigmc_bins_of_nb; to_smcnbi++ ) {  //--- this is 0 = no-tag, 1 = 2b, 2 = 3b, 3 = 4b
+
+            RooArgSet formulaArgs_msig ;
+            RooArgSet formulaArgs_msb ;
+
+            for ( int from_smcnbi=0; from_smcnbi<sigmc_bins_of_nb; from_smcnbi++ ) {  //--- this is 0 = no-tag, 1 = 2b, 2 = 3b, 3 = 4b
+
+               sprintf( pname, "frac_from_%s_to_%s_%s", btag_catname[from_smcnbi], btag_catname[to_smcnbi], "SIGSB_METsigAll" ) ;
+               RooAbsReal* frac = (RooAbsReal*) workspace.obj( pname ) ;
+               if ( frac == 0x0 ) { printf("\n\n *** missing fraction parameter %s\n\n", pname ) ; return ; }
+
+               formulaArgs_msig.add( *frac ) ;
+               formulaArgs_msig.add( *rv_mu_sig_msig_nobtagsyst[from_smcnbi][mbi] ) ;
+
+               formulaArgs_msb.add(  *frac ) ;
+               formulaArgs_msb.add(  *rv_mu_sig_msb_nobtagsyst[from_smcnbi][mbi] ) ;
+
+            } // from_smcnbi.
+
+            sprintf( formula, "@0 * @1 + @2 * @3 + @4 * @5 + @6 * @7" ) ;
+            sprintf( pname, "mu_sig_%s_msig_met%d", btag_catname[to_smcnbi], mbi+1 ) ;
+            rv_mu_sig_msig[to_smcnbi][mbi] = new RooFormulaVar( pname, formula, formulaArgs_msig ) ;
+            rv_mu_sig_msig[to_smcnbi][mbi] -> Print() ;
+
+            RooRealVar* rrv_btag_SF_base_par = (RooRealVar*) workspace.obj( "prim_btag_SF_syst" ) ;
+            if ( rrv_btag_SF_base_par == 0x0 ) { printf("\n\n *** can't find prim_btag_SF_syst\n\n" ) ; return ; }
+
+            {
+               rrv_btag_SF_base_par -> setVal( 0. ) ;
+               double val_nom = rv_mu_sig_msig[to_smcnbi][mbi] -> getVal() ;
+
+               rrv_btag_SF_base_par -> setVal( 1. ) ;
+               double val_p1s = rv_mu_sig_msig[to_smcnbi][mbi] -> getVal() ;
+
+               rrv_btag_SF_base_par -> setVal(-1. ) ;
+               double val_m1s = rv_mu_sig_msig[to_smcnbi][mbi] -> getVal() ;
+
+               rrv_btag_SF_base_par -> setVal( 0. ) ;
+
+               printf("     Test of %s (-1s, nom, +1s) : %.2f, %.2f, %.2f\n\n", pname, val_m1s, val_nom, val_p1s ) ;
+            }
+
+
+            sprintf( formula, "@0 * @1 + @2 * @3 + @4 * @5 + @6 * @7" ) ;
+            sprintf( pname, "mu_sig_%s_msb_met%d", btag_catname[to_smcnbi], mbi+1 ) ;
+            rv_mu_sig_msb[to_smcnbi][mbi] = new RooFormulaVar( pname, formula, formulaArgs_msb ) ;
+            rv_mu_sig_msb[to_smcnbi][mbi] -> Print() ;
+
+            {
+               rrv_btag_SF_base_par -> setVal( 0. ) ;
+               double val_nom = rv_mu_sig_msb[to_smcnbi][mbi] -> getVal() ;
+
+               rrv_btag_SF_base_par -> setVal( 1. ) ;
+               double val_p1s = rv_mu_sig_msb[to_smcnbi][mbi] -> getVal() ;
+
+               rrv_btag_SF_base_par -> setVal(-1. ) ;
+               double val_m1s = rv_mu_sig_msb[to_smcnbi][mbi] -> getVal() ;
+
+               rrv_btag_SF_base_par -> setVal( 0. ) ;
+
+               printf("     Test of %s (-1s, nom, +1s) : %.2f, %.2f, %.2f\n\n", pname, val_m1s, val_nom, val_p1s ) ;
+            }
+
+         } // to_smcnbi.
+
+      } // mbi.
 
      //-- Finished defining mu parameters.
 
@@ -397,19 +503,21 @@
 
          if ( (!use3b) && nbi==1 ) continue ;
 
+         int smcnbi = nbi+1 ;
+
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             sprintf( formula, "@0 + @1" ) ;
 
             sprintf( pname, "n_%db_msig_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
-            rv_n_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_mu_sig_msig[nbi][mbi], *rv_mu_bg_msig[nbi][mbi] ) ) ;
+            rv_n_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_mu_sig_msig[smcnbi][mbi], *rv_mu_bg_msig[nbi][mbi] ) ) ;
             rv_n_msig[nbi][mbi] -> Print() ;
             workspace.import( *rv_n_msig[nbi][mbi] ) ;
 
             sprintf( pname, "n_%db_msb_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
-            rv_n_msb[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_mu_sig_msb[nbi][mbi], *rv_mu_bg_msb[nbi][mbi] ) ) ;
+            rv_n_msb[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_mu_sig_msb[smcnbi][mbi], *rv_mu_bg_msb[nbi][mbi] ) ) ;
             rv_n_msb[nbi][mbi] -> Print() ;
             workspace.import( *rv_n_msb[nbi][mbi] ) ;
 
@@ -846,19 +954,14 @@
 
      //-- convention for each line in systematics file is
      //
-     //  Mparent Mlsp    sys_msig_met1_nb2 sys_msig_met2_nb2 sys_msig_met3_nb2 sys_msig_met4_nb2    sys_msig_met1_nb3 sys_msig_met2_nb3 sys_msig_met3_nb3 sys_msig_met4_nb3   sys_msig_met1_nb4 sys_msig_met2_nb4 sys_msig_met3_nb4 sys_msig_met4_nb4    sys_msb_met1_nb2 sys_msb_met2_nb2 sys_msb_met3_nb2 sys_msb_met4_nb2    sys_msb_met1_nb3 sys_msb_met2_nb3 sys_msb_met3_nb3 sys_msb_met4_nb3   sys_msb_met1_nb4 sys_msb_met2_nb4 sys_msb_met3_nb4 sys_msb_met4_nb4
+     //    m1 m2  sig_m1_nt sig_m1_2b sig_m1_3b sig_m1_4b   sig_m2_nt sig_m2_2b sig_m2_3b sig_m2_4b   sig_m3_nt sig_m3_2b sig_m3_3b sig_m3_4b   sig_m4_nt sig_m4_2b sig_m4_3b sig_m4_4b     sb_m1_nt sb_m1_2b sb_m1_3b sb_m1_4b   sb_m2_nt sb_m2_2b sb_m2_3b sb_m2_4b   sb_m3_nt sb_m3_2b sb_m3_3b sb_m3_4b   sb_m4_nt sb_m4_2b sb_m4_3b sb_m4_4b
      //
      //    where sys is the fractional uncertainty on the signal efficiency for that bin.
-     //
-     //    The elements in a more compact notation are
-     //
-     //       m1 m2   sig_m1_2b sig_m2_2b sig_m3_2b sig_m4_2b    sig_m1_3b sig_m2_3b sig_m3_3b sig_m4_3b   sig_m1_4b sig_m2_4b sig_m3_4b sig_m4_4b   sb_m1_2b sb_m2_2b sb_m3_2b sb_m4_2b   sb_m1_3b sb_m2_3b sb_m3_3b sb_m4_3b   sb_m1_4b sb_m2_4b sb_m3_4b sb_m4_4b
-     //
-     //    where the array index, counting from zero, is 2 + sig_or_sb * (Nmet*Nb) + nb_index * (Mmet) + met_index
+     //    where the array index, counting from zero, is 2 + sig_or_sb * (Nmet*Nb) + met_index * (Nb) + nb_index
      //
      //       where sig_or_sb is : =0 for higgs mass signal box, =1 for higgs mass sideband
-     //             nb_index is  : =0 for 2b, =1 for 3b, =2 for 4b
      //             met_index is : =0 for bin1, =1 for bin2, =2 for bin3, =3 for bin4
+     //             nb_index is  : =0 for no-tag, =1 for 2b, =2 for 3b, =3 for 4b
      //
      //
   bool setupShapeSyst( const char* infile,
@@ -946,24 +1049,6 @@
          return false ;
       }
 
-     //-- convention for each line in systematics file is
-     //
-     //  Mparent Mlsp    sys_msig_met1_nb2 sys_msig_met2_nb2 sys_msig_met3_nb2 sys_msig_met4_nb2    sys_msig_met1_nb3 sys_msig_met2_nb3 sys_msig_met3_nb3 sys_msig_met4_nb3   sys_msig_met1_nb4 sys_msig_met2_nb4 sys_msig_met3_nb4 sys_msig_met4_nb4    sys_msb_met1_nb2 sys_msb_met2_nb2 sys_msb_met3_nb2 sys_msb_met4_nb2    sys_msb_met1_nb3 sys_msb_met2_nb3 sys_msb_met3_nb3 sys_msb_met4_nb3   sys_msb_met1_nb4 sys_msb_met2_nb4 sys_msb_met3_nb4 sys_msb_met4_nb4
-     //
-     //    where sys is the fractional uncertainty on the signal efficiency for that bin.
-     //
-     //    The elements in a more compact notation are
-     //
-     //       m1 m2   sig_m1_2b sig_m2_2b sig_m3_2b sig_m4_2b    sig_m1_3b sig_m2_3b sig_m3_3b sig_m4_3b   sig_m1_4b sig_m2_4b sig_m3_4b sig_m4_4b   sb_m1_2b sb_m2_2b sb_m3_2b sb_m4_2b   sb_m1_3b sb_m2_3b sb_m3_3b sb_m4_3b   sb_m1_4b sb_m2_4b sb_m3_4b sb_m4_4b
-     //
-     //    where the array index, counting from zero, is 2 + sig_or_sb * (Nmet*Nb) + nb_index * (Mmet) + met_index
-     //
-     //       where sig_or_sb is : =0 for higgs mass signal box, =1 for higgs mass sideband
-     //             nb_index is  : =0 for 2b, =1 for 3b, =2 for 4b
-     //             met_index is : =0 for bin1, =1 for bin2, =2 for bin3, =3 for bin4
-     //
-
-     //  Note: Always have 2b, 3b, and 4b in the syst file, even if creating workspace that doesn't use 3b.
 
       double syst_msig[3][max_bins_of_met] ;
       double syst_msb[3][max_bins_of_met]  ;
@@ -973,72 +1058,72 @@
       double minSyst_msb(999.) ;
       double maxSyst_msb(0.) ;
 
-      for ( int nbi=0; nbi<3; nbi++ ) {
+      for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
-            syst_msig[nbi][mbi] = ArrayContent[ 2  +  nbi * (bins_of_met)  +  mbi ] ;
-            syst_msb[nbi][mbi]  = ArrayContent[ 2  +  nbi * (bins_of_met)  +  mbi  + (bins_of_met*3) ] ;
-            if ( syst_msig[nbi][mbi] > maxSyst_msig ) maxSyst_msig = syst_msig[nbi][mbi] ;
-            if ( syst_msig[nbi][mbi] < minSyst_msig ) minSyst_msig = syst_msig[nbi][mbi] ;
-            if ( syst_msb[nbi][mbi] > maxSyst_msb ) maxSyst_msb = syst_msb[nbi][mbi] ;
-            if ( syst_msb[nbi][mbi] < minSyst_msb ) minSyst_msb = syst_msb[nbi][mbi] ;
+            syst_msig[smcnbi][mbi] = ArrayContent[ 2  +  mbi * (sigmc_bins_of_nb)  +  smcnbi ] ;
+            syst_msb[smcnbi][mbi]  = ArrayContent[ 2  +  mbi * (sigmc_bins_of_nb)  +  smcnbi  + (bins_of_met*sigmc_bins_of_nb) ] ;
+            if ( syst_msig[smcnbi][mbi] > maxSyst_msig ) maxSyst_msig = syst_msig[smcnbi][mbi] ;
+            if ( syst_msig[smcnbi][mbi] < minSyst_msig ) minSyst_msig = syst_msig[smcnbi][mbi] ;
+            if ( syst_msb[smcnbi][mbi] > maxSyst_msb ) maxSyst_msb = syst_msb[smcnbi][mbi] ;
+            if ( syst_msb[smcnbi][mbi] < minSyst_msb ) minSyst_msb = syst_msb[smcnbi][mbi] ;
          } // mbi.
-      } // nbi.
+      } // smcnbi.
 
       printf("\n\n") ;
       printf(" ====== Shape systematics for %s, sig observables\n", systname ) ;
-      for ( int nbi=0; nbi<3; nbi++ ) {
-         printf("  %s, sig, %db :   ", systname, nbi+2 ) ;
+      for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
+         printf("  %s, sig, %s :   ", systname, btag_catname[smcnbi] ) ;
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
-            printf("  %6.3f  ", syst_msig[nbi][mbi] ) ;
+            printf("  %6.3f  ", syst_msig[smcnbi][mbi] ) ;
          } // mbi.
          printf("\n") ;
-      } // nbi.
+      } // smcnbi.
 
       printf("\n\n") ;
       printf(" ====== Shape systematics for %s, sb observables\n", systname ) ;
-      for ( int nbi=0; nbi<3; nbi++ ) {
-         printf("  %s, sb,  %db :   ", systname, nbi+2 ) ;
+      for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
+         printf("  %s, sb,  %s :   ", systname, btag_catname[smcnbi] ) ;
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
-            printf("  %6.3f  ", syst_msb[nbi][mbi] ) ;
+            printf("  %6.3f  ", syst_msb[smcnbi][mbi] ) ;
          } // mbi.
          printf("\n") ;
-      } // nbi.
+      } // smcnbi.
 
 
       printf("\n\n setupShapeSyst: %s : higgs mass sig bins: Min syst = %6.3f, Max syst = %6.3f\n\n", systname, minSyst_msig, maxSyst_msig ) ;
       printf("\n\n setupShapeSyst: %s : higgs mass sb  bins: Min syst = %6.3f, Max syst = %6.3f\n\n", systname, minSyst_msb , maxSyst_msb  ) ;
 
 
-      for ( int nbi=0; nbi<3; nbi++ ) {
+      for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
                char pname[100] ;
                bool changeSign ;
                RooAbsReal* rar_par ;
 
-               sprintf( pname, "%s_msig_met%d_%db", systname, mbi+1, nbi+2 ) ;
-               if ( syst_msig[mbi][nbi] < 0 ) { changeSign = true ; } else { changeSign = false ; }
+               sprintf( pname, "%s_msig_met%d_%s", systname, mbi+1, btag_catname[smcnbi] ) ;
+               if ( syst_msig[mbi][smcnbi] < 0 ) { changeSign = true ; } else { changeSign = false ; }
                if ( constraintType == 1 ) {
-                  rar_par = makeCorrelatedGaussianConstraint(  pname, 1.0, fabs(syst_msig[mbi][nbi]), systname, changeSign ) ;
+                  rar_par = makeCorrelatedGaussianConstraint(  pname, 1.0, fabs(syst_msig[mbi][smcnbi]), systname, changeSign ) ;
                } else if ( constraintType == 2 ) {
-                  rar_par = makeCorrelatedLognormalConstraint( pname, 1.0, fabs(syst_msig[mbi][nbi]), systname, changeSign ) ;
+                  rar_par = makeCorrelatedLognormalConstraint( pname, 1.0, fabs(syst_msig[mbi][smcnbi]), systname, changeSign ) ;
                }
                cout << flush ;
                workspace.import( *rar_par ) ;
 
-               sprintf( pname, "%s_msb_met%d_%db", systname, mbi+1, nbi+2 ) ;
-               if ( syst_msb[mbi][nbi] < 0 ) { changeSign = true ; } else { changeSign = false ; }
+               sprintf( pname, "%s_msb_met%d_%s", systname, mbi+1, btag_catname[smcnbi] ) ;
+               if ( syst_msb[mbi][smcnbi] < 0 ) { changeSign = true ; } else { changeSign = false ; }
                if ( constraintType == 1 ) {
-                  rar_par = makeCorrelatedGaussianConstraint(  pname, 1.0, fabs(syst_msb[mbi][nbi]), systname, changeSign ) ;
+                  rar_par = makeCorrelatedGaussianConstraint(  pname, 1.0, fabs(syst_msb[mbi][smcnbi]), systname, changeSign ) ;
                } else if ( constraintType == 2 ) {
-                  rar_par = makeCorrelatedLognormalConstraint( pname, 1.0, fabs(syst_msb[mbi][nbi]), systname, changeSign ) ;
+                  rar_par = makeCorrelatedLognormalConstraint( pname, 1.0, fabs(syst_msb[mbi][smcnbi]), systname, changeSign ) ;
                }
                cout << flush ;
                workspace.import( *rar_par ) ;
 
 
          } // mbi.
-      } // nbi.
+      } // smcnbi.
 
       return true ;
 
@@ -1047,7 +1132,7 @@
 
  //===============================================================================================================
 
-   bool readSignalCounts( const char* susy_counts_file, float sig_mass ) {
+   bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace ) {
 
       ifstream infp ;
       infp.open( susy_counts_file ) ;
@@ -1056,7 +1141,7 @@
          return false ;
       }
 
-      int ArraySize = 2 + bins_of_met * (bins_of_nb+1) * 2 * 2 ; // 2 (sig vs sb) * 2 (vals and errs).
+      int ArraySize = 2 + bins_of_met * sigmc_bins_of_nb * 2 * 2 ; // 2 (sig vs sb) * 2 (vals and errs).
 
       char command[10000] ;
       sprintf(command, "tail -1 %s | awk '{print NF}' | grep -q %d", susy_counts_file, ArraySize ) ;
@@ -1101,20 +1186,22 @@
 
       if ( !found ) { printf("\n\n *** Did not find mass point %.0f in %s.\n\n", sig_mass, susy_counts_file ) ; return false ; }
 
-      float smc_msig_val[bins_of_nb+1][max_bins_of_met] ;
-      float smc_msb_val[bins_of_nb+1][max_bins_of_met] ;
+      float smc_msig_val[sigmc_bins_of_nb][max_bins_of_met] ;
+      float smc_msb_val[sigmc_bins_of_nb][max_bins_of_met] ;
 
-      float smc_msig_err[bins_of_nb+1][max_bins_of_met] ;
-      float smc_msb_err[bins_of_nb+1][max_bins_of_met] ;
+      float smc_msig_err[sigmc_bins_of_nb][max_bins_of_met] ;
+      float smc_msb_err[sigmc_bins_of_nb][max_bins_of_met] ;
 
-      for ( int nbi=0; nbi<(bins_of_nb+1); nbi++ ) {
+      for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
-            smc_msig_val[nbi][mbi] = ArrayContent[ 2 + (                   nbi)*(bins_of_met) + mbi ] ;
-            smc_msb_val[nbi][mbi]  = ArrayContent[ 2 + (1*(bins_of_nb+1) + nbi)*(bins_of_met) + mbi ] ;
-            smc_msig_err[nbi][mbi] = ArrayContent[ 2 + (2*(bins_of_nb+1) + nbi)*(bins_of_met) + mbi ] ;
-            smc_msb_err[nbi][mbi]  = ArrayContent[ 2 + (3*(bins_of_nb+1) + nbi)*(bins_of_met) + mbi ] ;
+
+            smc_msig_val[smcnbi][mbi] = ArrayContent[ 2 + (                mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msb_val[smcnbi][mbi]  = ArrayContent[ 2 + (1*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msig_err[smcnbi][mbi] = ArrayContent[ 2 + (2*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msb_err[smcnbi][mbi]  = ArrayContent[ 2 + (3*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+
          } // mbi.
-      } // nbi.
+      } // smcnbi.
 
       printf("\n\n\n") ;
       printf("=============================================================================================================================================================================\n") ;
@@ -1123,47 +1210,65 @@
       fflush(stdout) ;
       for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
          printf(" met bin %d : ", mbi+1 ) ;
-         for ( int nbi=(bins_of_nb); nbi>=0; nbi-- ) {
+         for ( int smcnbi=sigmc_bins_of_nb-1; smcnbi>=0; smcnbi-- ) {
             printf( "  %6.1f +/- %4.1f,  %6.1f +/- %4.1f    |",
-                 smc_msb_val[nbi][mbi] , smc_msb_val[nbi][mbi]  * smc_msb_err[nbi][mbi],
-                 smc_msig_val[nbi][mbi], smc_msig_val[nbi][mbi] * smc_msig_err[nbi][mbi] ) ;
-         } // nbi.
+                 smc_msb_val[smcnbi][mbi] , smc_msb_err[smcnbi][mbi],
+                 smc_msig_val[smcnbi][mbi], smc_msig_err[smcnbi][mbi] ) ;
+         } // smcnbi.
          printf("\n") ;
       } // mbi.
       printf("=====================================================================================================================================\n") ;
 
 
-      for ( int nbi=0; nbi<bins_of_nb+1; nbi++ ) {
+     //-- input stat errors are now in same units as counts (i.e. events).
+     //   convert errors into fractional errors.
+      for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+         for ( int smcnbi=sigmc_bins_of_nb-1; smcnbi>=0; smcnbi-- ) {
+            if ( smc_msig_val[smcnbi][mbi] > 0. ) { smc_msig_err[smcnbi][mbi] = smc_msig_err[smcnbi][mbi] / smc_msig_val[smcnbi][mbi] ; }
+            if ( smc_msb_val[smcnbi][mbi]  > 0. ) { smc_msb_err[smcnbi][mbi]  = smc_msb_err[smcnbi][mbi]  / smc_msb_val[smcnbi][mbi]  ; }
+         } // smcnbi.
+      } // mbi.
+
+      for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
             char pname[1000] ;
 
-            sprintf( pname, "smc_%s_msig_met%d", btag_catname[nbi], mbi+1 ) ;
-            rv_smc_msig[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
-            rv_smc_msig[nbi][mbi] -> setVal( smc_msig_val[nbi][mbi] ) ;
-            rv_smc_msig[nbi][mbi] -> setConstant( kTRUE ) ;
+            RooRealVar* rv_smc_msig(0x0) ;
+            RooRealVar* rv_smc_msb(0x0) ;
+            RooAbsReal* rv_smc_msig_mcstat_syst(0x0) ;
+            RooAbsReal* rv_smc_msb_mcstat_syst(0x0) ;
 
-            sprintf( pname, "smc_%s_msb_met%d", btag_catname[nbi], mbi+1 ) ;
-            rv_smc_msb[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
-            rv_smc_msb[nbi][mbi] -> setVal( smc_msig_val[nbi][mbi] ) ;
-            rv_smc_msb[nbi][mbi] -> setConstant( kTRUE ) ;
+            sprintf( pname, "smc_%s_msig_met%d", btag_catname[smcnbi], mbi+1 ) ;
+            rv_smc_msig = new RooRealVar( pname, pname, 0., 1.e6 ) ;
+            rv_smc_msig -> setVal( smc_msig_val[smcnbi][mbi] ) ;
+            rv_smc_msig -> setConstant( kTRUE ) ;
+            workspace.import( *rv_smc_msig ) ;
+
+            sprintf( pname, "smc_%s_msb_met%d", btag_catname[smcnbi], mbi+1 ) ;
+            rv_smc_msb = new RooRealVar( pname, pname, 0., 1.e6 ) ;
+            rv_smc_msb -> setVal( smc_msb_val[smcnbi][mbi] ) ;
+            rv_smc_msb -> setConstant( kTRUE ) ;
+            workspace.import( *rv_smc_msb ) ;
 
             if ( syst_type == 1 ) {
-               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[nbi] ) ;
-               rv_smc_msig_mcstat_syst[nbi][mbi] = makeGaussianConstraint( pname, 1.0, smc_msig_err[nbi][mbi] ) ;
-               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[nbi] ) ;
-               rv_smc_msb_mcstat_syst[nbi][mbi] = makeGaussianConstraint( pname, 1.0, smc_msb_err[nbi][mbi] ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+               rv_smc_msig_mcstat_syst = makeGaussianConstraint( pname, 1.0, smc_msig_err[smcnbi][mbi] ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+               rv_smc_msb_mcstat_syst = makeGaussianConstraint( pname, 1.0, smc_msb_err[smcnbi][mbi] ) ;
             } else if ( syst_type == 2 ) {
-               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[nbi] ) ;
-               rv_smc_msig_mcstat_syst[nbi][mbi] = makeLognormalConstraint( pname, 1.0, smc_msig_err[nbi][mbi] ) ;
-               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[nbi] ) ;
-               rv_smc_msb_mcstat_syst[nbi][mbi] = makeLognormalConstraint( pname, 1.0, smc_msb_err[nbi][mbi] ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+               rv_smc_msig_mcstat_syst = makeLognormalConstraint( pname, 1.0, smc_msig_err[smcnbi][mbi] ) ;
+               sprintf( pname, "syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+               rv_smc_msb_mcstat_syst = makeLognormalConstraint( pname, 1.0, smc_msb_err[smcnbi][mbi] ) ;
             } else {
                printf("\n\n *** I don't know how to do syst_type %d\n\n", syst_type ) ; return false ;
             }
+            workspace.import( *rv_smc_msig_mcstat_syst ) ;
+            workspace.import( *rv_smc_msb_mcstat_syst ) ;
 
          } // mbi.
-      } // nbi.
+      } // smcnbi.
 
       return true ;
 
@@ -1248,6 +1353,9 @@
                char pname[100] ;
                RooAbsReal* rar_par ;
 
+               bool same_initial_and_final(false) ;
+               if ( fci == tci ) { same_initial_and_final = true ; }
+
                sprintf( pname, "frac_p1s_from_%s_to_%s_%s", btag_catname[fci], btag_catname[tci], postfix ) ;
                RooRealVar* frac_p1s = new RooRealVar( pname, pname, fracmatrix_p1s[fci][tci], 0., 1. ) ;
                frac_p1s -> setConstant( kTRUE ) ;
@@ -1256,8 +1364,23 @@
                RooRealVar* frac_m1s = new RooRealVar( pname, pname, fracmatrix_m1s[fci][tci], 0., 1. ) ;
                frac_m1s -> setConstant( kTRUE ) ;
 
+              //-- RooAsymAbsProd
+              //
+              //     Returns |g|*f_i,j             if  i != j (same_initial_and_final = false, or off-diagonal matrix element)
+              //     Returns (1 - |g|(1 - f_i,j))  if  i == j (same_initial_and_final = true, or on-diagonal matrix element)
+              //
                sprintf( pname, "frac_from_%s_to_%s_%s", btag_catname[fci], btag_catname[tci], postfix ) ;
-               rar_par = new RooAsymAbsProd( pname, pname, *frac_m1s, *frac_p1s, *rrv_btag_SF_base_par ) ;
+               rar_par = new RooAsymAbsProd( pname, pname, *frac_m1s, *frac_p1s, *rrv_btag_SF_base_par, same_initial_and_final ) ;
+               rar_par -> Print("all") ;
+               double val_nom, val_p1s, val_m1s ;
+               rrv_btag_SF_base_par -> setVal( 0. ) ;
+               val_nom = rar_par -> getVal() ;
+               rrv_btag_SF_base_par -> setVal( 1. ) ;
+               val_p1s = rar_par -> getVal() ;
+               rrv_btag_SF_base_par -> setVal(-1. ) ;
+               val_m1s = rar_par -> getVal() ;
+               printf("    Test for %s (-1s, nom, +1s):  %.3f, %.3f, %.3f\n\n", pname, val_m1s, val_nom, val_p1s ) ;
+               rrv_btag_SF_base_par -> setVal(0. ) ;
                workspace.import( *rar_par ) ;
 
            } // tci.

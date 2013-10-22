@@ -180,10 +180,10 @@
 
       for ( int nbi=0; nbi<bins_of_nb_sigmc; nbi++ ) {
          for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
-            smc_msig_val[nbi][mbi] = ArrayContent[ 2 + (               nbi)*(bins_of_met) + mbi ] ;
-            smc_msb_val[nbi][mbi]  = ArrayContent[ 2 + (1*bins_of_nb_sigmc + nbi)*(bins_of_met) + mbi ] ;
-            smc_msig_err[nbi][mbi] = ArrayContent[ 2 + (2*bins_of_nb_sigmc + nbi)*(bins_of_met) + mbi ] ;
-            smc_msb_err[nbi][mbi]  = ArrayContent[ 2 + (3*bins_of_nb_sigmc + nbi)*(bins_of_met) + mbi ] ;
+            smc_msig_val[nbi][mbi] = ArrayContent[ 2 + (                mbi)*(bins_of_nb_sigmc) + nbi ] ;
+            smc_msb_val[nbi][mbi]  = ArrayContent[ 2 + (1*bins_of_met + mbi)*(bins_of_nb_sigmc) + nbi ] ;
+            smc_msig_err[nbi][mbi] = ArrayContent[ 2 + (2*bins_of_met + mbi)*(bins_of_nb_sigmc) + nbi ] ;
+            smc_msb_err[nbi][mbi]  = ArrayContent[ 2 + (3*bins_of_met + mbi)*(bins_of_nb_sigmc) + nbi ] ;
          } // mbi.
       } // nbi.
 
