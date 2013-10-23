@@ -21,7 +21,7 @@
   using namespace RooFit;
   using namespace RooStats;
 
-   void scan_sigstrength( const char* wsfile = "outputfiles/ws.root", double scanLow = 0., double scanHigh = 3.0, int nScanPoints = 40, double ymax = 9.  ) {
+   void scan_sigstrength( const char* wsfile = "outputfiles/ws.root", const char* rootfile = "", double scanLow = 0., double scanHigh = 3.0, int nScanPoints = 40, double ymax = 9.  ) {
 
       gStyle->SetOptStat(0) ;
 
@@ -58,6 +58,8 @@
       double ssVals[200] ;
       double testStatVals[200] ;
 
+      double btag_sf_np_vals[200] ;
+
       for ( int spi=0; spi<nScanPoints; spi++ ) {
 
          ssVals[spi] = scanLow + spi*(scanHigh-scanLow)/(nScanPoints-1.) ;
@@ -73,7 +75,15 @@
          testStatVals[spi] = 2.*( minNll_sp - minNllSusyFloat ) ;
          delete fitResult_sp ;
 
-         printf("  %3d : %s = %6.1f,  test stat = %7.3f\n", spi, rv_sig_strength->GetName(), ssVals[spi], testStatVals[spi] ) ; fflush(stdout) ;
+         RooRealVar* btag_sf_np = (RooRealVar*) ws -> obj( "prim_btag_SF_syst" ) ;
+         if ( btag_sf_np != 0x0 ) {
+            btag_sf_np_vals[spi] = btag_sf_np -> getVal() ;
+         } else {
+            btag_sf_np_vals[spi] = 0. ;
+         }
+
+         printf("  %3d : %s = %6.1f,  test stat = %7.3f, btag SF np = %.3f\n",
+            spi, rv_sig_strength->GetName(), ssVals[spi], testStatVals[spi], btag_sf_np_vals[spi] ) ; fflush(stdout) ;
 
       } // spi.
 
@@ -96,9 +106,6 @@
       TLine* line = new TLine() ;
       line->SetLineColor(4) ;
 
-      //TCanvas *c0 = new TCanvas("c0","simple PL scan",700,600);
-
-      //gPad->SetGridy(1) ;
 
       if ( ymax>0 ) {
          TH1F* hdummy = new TH1F("hdummy","Profile likelihood scan of signal strength",2,ssVals[0], ssVals[nScanPoints-1]) ;
@@ -178,11 +185,33 @@
       }
 
 
+      if ( strlen( rootfile ) > 0 ) {
+         TFile f( rootfile, "update" ) ;
+         ScanPlot -> Write() ;
+         f.Close() ;
+      }
+
+     //---
+      TGraph* btag_sf_graph = new TGraph( nScanPoints, ssVals, btag_sf_np_vals ) ;
+      btag_sf_graph -> SetName( "btag_sf_graph" ) ;
+      btag_sf_graph -> GetXaxis()->SetTitle("signal strength");
+      btag_sf_graph -> GetYaxis()->SetTitle("btag SF nuisance par.");
+      btag_sf_graph -> SetLineColor(2) ;
+      btag_sf_graph -> SetLineWidth(3) ;
+      btag_sf_graph -> SetTitle( "btag SF nuisance parameter vs signal strength" ) ;
+
+      new TCanvas("c0","btag SF vs signal strength",400,300);
+
+      gPad->SetGridy(1) ;
+      gPad->SetGridx(1) ;
+      btag_sf_graph -> Draw("AC") ;
+
+      if ( strlen( rootfile ) > 0 ) {
+         TFile f( rootfile, "update" ) ;
+         btag_sf_graph -> Write() ;
+         f.Close() ;
+      }
 
 
    } // scan_sigstrength.
-
-
-
-
 

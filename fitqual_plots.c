@@ -328,10 +328,14 @@
       pad++ ;
 
 
+      TString histfile( wsfile ) ;
+      histfile.ReplaceAll("ws-","fitqual-") ;
 
       cfq1->cd( pad ) ;
 
-      scan_sigstrength( wsfile ) ;
+      saveHist( histfile, "h*" ) ;
+
+      scan_sigstrength( wsfile, histfile ) ;
 
 
       tt_title -> DrawTextNDC( 0.85, 0.25, plottitle ) ;
@@ -347,19 +351,23 @@
 
 
 
-      TString histfile( wsfile ) ;
-      histfile.ReplaceAll("ws-","fitqual-") ;
+   // TString histfile( wsfile ) ;
+   // histfile.ReplaceAll("ws-","fitqual-") ;
 
-      saveHist( histfile, "h*" ) ;
+  //  saveHist( histfile, "h*" ) ;
 
-      TGraph* gr_scan = (TGraph*) gDirectory -> FindObject( "sig_strength_PL_scan" ) ;
-      cout << " scan graph pointer: " << gr_scan << endl << flush ;
+  //  TGraph* gr_scan = (TGraph*) gDirectory -> FindObject( "sig_strength_PL_scan" ) ;
+  //  cout << " scan graph pointer: " << gr_scan << endl << flush ;
 
-      if ( gr_scan != 0x0 ) {
-         TFile rf( histfile, "update" ) ;
-         gr_scan -> Write() ;
-         rf.Close() ;
-      }
+  //  TGraph* gr_btag_sf = (TGraph*) gDirectory -> FindObject( "btag_sf_graph" ) ;
+  //  cout << " btag SF graph pointer: " << gr_btag_sf << endl << flush ;
+
+  //  if ( gr_scan != 0x0 ) {
+  //     TFile rf( histfile, "update" ) ;
+  //     gr_scan -> Write() ;
+  //     //gr_btag_sf -> Write() ;
+  //     rf.Close() ;
+  //  }
 
 
 
