@@ -1,0 +1,20 @@
+
+
+
+   foreach sigmass ( 175 200 250 300 350 400 450 500 )
+
+      foreach csyst ( 4 )
+
+         echo sigmass $sigmass , csyst $csyst
+
+         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass-withMSB1.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-nosignal-sigmass-$sigmass-withMSB1.log
+
+         root -b -q fitqual_plots.c+\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass-withMSB1.root\"\) |& tee logfiles/fitqual-metsig-4metbin-w3b-wpu-csyst$csyst-withsignal-sigmass-$sigmass-withMSB1.log
+
+
+      end
+
+   end
+
+
+
