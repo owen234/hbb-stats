@@ -228,7 +228,7 @@
             return ;
          }
          printf("\n\n ======= Reading in shape syst %s from %s\n\n", shape_syst_names[ssi], shape_syst_file ) ;
-         setupShapeSyst( shape_syst_file, systname, syst_type, 175., 0., workspace ) ;
+         setupShapeSyst( shape_syst_file, systname, syst_type, sig_mass, 1., workspace ) ;
       } // ssi.
 
 
@@ -1113,7 +1113,7 @@
 
          }
 
-         if ( fabs( mgl-target_mgl ) < 26. && fabs( mlsp - target_mlsp ) < 26. && !foundNearbyMatch ) {
+         if ( fabs( mgl-target_mgl ) < 12.5 && fabs( mlsp - target_mlsp ) < 12.5 && !foundNearbyMatch ) {
 
             for ( int i=0; i<ArraySize; i++ ) { nearbyMatchArrayContent[i] = readArrayContent[i] ; }
             foundNearbyMatch = true ;
