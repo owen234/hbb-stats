@@ -994,20 +994,43 @@
       fprintf( outfile, "Rsigsb_syst_2b_metbins%s   %5.3f\n", metbinsumstring, syst_Rsigsb_2b_metbinsum ) ;
 
 
+     //-- Trigger efficiency corrections, applied to susy signal counts only
+
+      fprintf( outfile, "trig_eff_corr_metsig1_val    0.739\n" ) ;
+      fprintf( outfile, "trig_eff_corr_metsig1_err    0.016\n" ) ; //-- this is in the same units as the correction.  Multiplicitive error will be 0.016/0.739 = 0.022
+
+      fprintf( outfile, "trig_eff_corr_metsig2_val    0.897\n" ) ;
+      fprintf( outfile, "trig_eff_corr_metsig2_err    0.012\n" ) ;
+
+      fprintf( outfile, "trig_eff_corr_metsig34_val   0.944\n" ) ;
+      fprintf( outfile, "trig_eff_corr_metsig34_err   0.019\n" ) ;
+
+
+
      //-- give location of signal counts file
-      fprintf( outfile, "signal_counts_file  outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\n" ) ;
+   //--------------------
+   // fprintf( outfile, "signal_counts_file  outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\n" ) ;
+   //--------------------
+      fprintf( outfile, "signal_counts_file  test-input-files1/sigcounts.TChiHH.txt\n" ) ;
+   //--------------------
 
      //-- give list of shape systematic files here.
-   // fprintf( outfile, "list_of_shape_systs   JES  PDF  btag\n" ) ;
-   // fprintf( outfile, "shape_syst_JES    test-input-files1/test-syst-file1.txt\n") ;
-   // fprintf( outfile, "shape_syst_PDF    test-input-files1/test-syst-file1.txt\n") ;
-   // fprintf( outfile, "shape_syst_btag   test-input-files1/test-syst-file1.txt\n") ;
-      fprintf( outfile, "list_of_shape_systs   ALL\n" ) ;
-      fprintf( outfile, "shape_syst_ALL    test-input-files1/test-syst-file3.txt\n") ;
+   //--------------------
+   // fprintf( outfile, "list_of_shape_systs   ALL\n" ) ;
+   // fprintf( outfile, "shape_syst_ALL    test-input-files1/test-syst-file3.txt\n") ;
+   //--------------------
+      fprintf( outfile, "list_of_shape_systs   ISR  JER  JES  PDF  PU\n" ) ;
+      fprintf( outfile, "shape_syst_ISR    test-input-files1/sigsystematics.TChiHH.ISR.txt\n") ;
+      fprintf( outfile, "shape_syst_JER    test-input-files1/sigsystematics.TChiHH.JER.txt\n") ;
+      fprintf( outfile, "shape_syst_JES    test-input-files1/sigsystematics.TChiHH.JES.txt\n") ;
+      fprintf( outfile, "shape_syst_PDF    test-input-files1/sigsystematics.TChiHH.PDF.txt\n") ;
+      fprintf( outfile, "shape_syst_PU     test-input-files1/sigsystematics.TChiHH.PU.txt\n") ;
+   //--------------------
 
 
      //-- give location of btag SF syst file.
-      fprintf( outfile, "btag_SF_frac_matrix_file      test-input-files1/test-transfer-fraction-matrix.txt" ) ;
+      fprintf( outfile, "btag_SF_frac_matrix_file_SIG      test-input-files1/syst-btag-sf-SIG.txt\n" ) ;
+      fprintf( outfile, "btag_SF_frac_matrix_file_SB       test-input-files1/syst-btag-sf-SB.txt\n" ) ;
 
 
 

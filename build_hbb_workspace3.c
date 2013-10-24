@@ -57,7 +57,7 @@
                         RooWorkspace& workspace
                          ) ;
 
-   bool setupBtagSFFracMatrix( const char* infracfile, const char* postfix, RooWorkspace& workspace ) ;
+   bool setupBtagSFFracMatrix( const char* infracfile, float sig_mass, const char* postfix, RooWorkspace& workspace ) ;
 
    bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace ) ;
 
@@ -237,14 +237,81 @@
 
      //-- Read in the btag SF systematic transfer fraction matrices
       char btag_sf_frac_file[10000] ;
-      if ( !getFileStringValue( infile, "btag_SF_frac_matrix_file", btag_sf_frac_file ) ) {
-         printf("\n\n *** Can't find btag SF transfer fraction matrix file name btag_SF_frac_matrix_file in %s\n\n", infile ) ;
+      if ( !getFileStringValue( infile, "btag_SF_frac_matrix_file_SIG", btag_sf_frac_file ) ) {
+         printf("\n\n *** Can't find btag SF transfer fraction matrix file name btag_SF_frac_matrix_file_SIG in %s\n\n", infile ) ;
          return ;
       }
-      if ( !setupBtagSFFracMatrix( btag_sf_frac_file, "SIGSB_METsigAll", workspace ) ) {
+      if ( !setupBtagSFFracMatrix( btag_sf_frac_file, sig_mass, "SIG_METsigAll", workspace ) ) {
          printf("\n\n *** Problem reading in btag SF transfer matrix from %s\n\n", btag_sf_frac_file ) ;
          return ;
       }
+
+      if ( !getFileStringValue( infile, "btag_SF_frac_matrix_file_SB", btag_sf_frac_file ) ) {
+         printf("\n\n *** Can't find btag SF transfer fraction matrix file name btag_SF_frac_matrix_file_SB in %s\n\n", infile ) ;
+         return ;
+      }
+      if ( !setupBtagSFFracMatrix( btag_sf_frac_file, sig_mass, "SB_METsigAll", workspace ) ) {
+         printf("\n\n *** Problem reading in btag SF transfer matrix from %s\n\n", btag_sf_frac_file ) ;
+         return ;
+      }
+
+
+     //-- Read in trigger efficiency corrections and uncertainties.
+
+      float trig_eff_corr_val ;
+      float trig_eff_corr_err ;
+
+     //-- trig eff, metsig1
+      sprintf( pname, "trig_eff_corr_metsig1_val" ) ;
+      if ( !getFileValue( infile, pname, trig_eff_corr_val ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+      sprintf( pname, "trig_eff_corr_metsig1_err" ) ;
+      if ( !getFileValue( infile, pname, trig_eff_corr_err ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+
+      RooAbsReal* rv_trig_eff_corr_metsig1(0x0) ;
+      sprintf( pname, "trig_eff_corr_metsig1" ) ;
+      if ( syst_type == 1 ) {
+         rv_trig_eff_corr_metsig1 = makeGaussianConstraint( pname, trig_eff_corr_val, trig_eff_corr_err ) ;
+      } else if ( syst_type == 2 ) {
+         rv_trig_eff_corr_metsig1 = makeLognormalConstraint( pname, trig_eff_corr_val, trig_eff_corr_err ) ;
+      } else {
+         printf("\n\n *** Illegal syst_type %d\n\n", syst_type ) ; return ;
+      }
+
+
+     //-- trig eff, metsig2
+      sprintf( pname, "trig_eff_corr_metsig2_val" ) ;
+      if ( !getFileValue( infile, pname, trig_eff_corr_val ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+      sprintf( pname, "trig_eff_corr_metsig2_err" ) ;
+      if ( !getFileValue( infile, pname, trig_eff_corr_err ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+
+      RooAbsReal* rv_trig_eff_corr_metsig2(0x0) ;
+      sprintf( pname, "trig_eff_corr_metsig2" ) ;
+      if ( syst_type == 1 ) {
+         rv_trig_eff_corr_metsig2 = makeGaussianConstraint( pname, trig_eff_corr_val, trig_eff_corr_err ) ;
+      } else if ( syst_type == 2 ) {
+         rv_trig_eff_corr_metsig2 = makeLognormalConstraint( pname, trig_eff_corr_val, trig_eff_corr_err ) ;
+      } else {
+         printf("\n\n *** Illegal syst_type %d\n\n", syst_type ) ; return ;
+      }
+
+
+
+     //-- trig eff, metsig34
+      sprintf( pname, "trig_eff_corr_metsig34_val" ) ;
+      if ( !getFileValue( infile, pname, trig_eff_corr_val ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+      sprintf( pname, "trig_eff_corr_metsig34_err" ) ;
+      if ( !getFileValue( infile, pname, trig_eff_corr_err ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+
+      RooAbsReal* rv_trig_eff_corr_metsig34(0x0) ;
+      sprintf( pname, "trig_eff_corr_metsig34" ) ;
+      if ( syst_type == 1 ) {
+         rv_trig_eff_corr_metsig34 = makeGaussianConstraint( pname, trig_eff_corr_val, trig_eff_corr_err ) ;
+      } else if ( syst_type == 2 ) {
+         rv_trig_eff_corr_metsig34 = makeLognormalConstraint( pname, trig_eff_corr_val, trig_eff_corr_err ) ;
+      } else {
+         printf("\n\n *** Illegal syst_type %d\n\n", syst_type ) ; return ;
+      }
+
 
 
 
@@ -400,17 +467,25 @@
             RooRealVar* smc_msb_mcstat_syst = (RooRealVar*) workspace.obj( pname ) ;
             if ( smc_msb_mcstat_syst == 0x0 ) { printf("\n\n *** missing %s in workspace.\n\n", pname ) ; return ; }
 
+            RooAbsReal* rv_trig_eff_corr(0x0) ;
+            if ( mbi == 0 ) {
+               rv_trig_eff_corr = rv_trig_eff_corr_metsig1 ;
+            } else if ( mbi == 1 ) {
+               rv_trig_eff_corr = rv_trig_eff_corr_metsig2 ;
+            } else {
+               rv_trig_eff_corr = rv_trig_eff_corr_metsig34 ;
+            }
 
-            sprintf( formula, "@0 * @1 * @2 * @3" ) ;
+            sprintf( formula, "@0 * @1 * @2 * @3 * @4" ) ;
             sprintf( pname, "mu_sig_%s_msig_met%d_nobtagsyst", btag_catname[smcnbi], mbi+1 ) ;
             printf( "  %s, smcnbi=%d, mbi=%d \n", pname, smcnbi, mbi ) ;
-            rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msig, *smc_msig_mcstat_syst, *smc_msig ) ) ;
+            rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_trig_eff_corr, *rv_sig_strength, *rfv_shape_syst_prod_msig, *smc_msig_mcstat_syst, *smc_msig ) ) ;
             rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] -> Print() ;
 
-            sprintf( formula, "@0 * @1 * @2 * @3" ) ;
+            sprintf( formula, "@0 * @1 * @2 * @3 * @4" ) ;
             sprintf( pname, "mu_sig_%s_msb_met%d_nobtagsyst", btag_catname[smcnbi], mbi+1 ) ;
             printf( "  %s, smcnbi=%d, mbi=%d\n", pname, smcnbi, mbi ) ;
-            rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_sig_strength, *rfv_shape_syst_prod_msb, *smc_msb_mcstat_syst, *smc_msb ) ) ;
+            rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_trig_eff_corr, *rv_sig_strength, *rfv_shape_syst_prod_msb, *smc_msb_mcstat_syst, *smc_msb ) ) ;
             rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] -> Print() ;
 
 
@@ -432,14 +507,18 @@
 
             for ( int from_smcnbi=0; from_smcnbi<sigmc_bins_of_nb; from_smcnbi++ ) {  //--- this is 0 = no-tag, 1 = 2b, 2 = 3b, 3 = 4b
 
-               sprintf( pname, "frac_from_%s_to_%s_%s", btag_catname[from_smcnbi], btag_catname[to_smcnbi], "SIGSB_METsigAll" ) ;
-               RooAbsReal* frac = (RooAbsReal*) workspace.obj( pname ) ;
-               if ( frac == 0x0 ) { printf("\n\n *** missing fraction parameter %s\n\n", pname ) ; return ; }
+               sprintf( pname, "frac_from_%s_to_%s_%s", btag_catname[from_smcnbi], btag_catname[to_smcnbi], "SIG_METsigAll" ) ;
+               RooAbsReal* frac_sig = (RooAbsReal*) workspace.obj( pname ) ;
+               if ( frac_sig == 0x0 ) { printf("\n\n *** missing fraction parameter %s\n\n", pname ) ; return ; }
 
-               formulaArgs_msig.add( *frac ) ;
+               sprintf( pname, "frac_from_%s_to_%s_%s", btag_catname[from_smcnbi], btag_catname[to_smcnbi], "SB_METsigAll" ) ;
+               RooAbsReal* frac_sb  = (RooAbsReal*) workspace.obj( pname ) ;
+               if ( frac_sb  == 0x0 ) { printf("\n\n *** missing fraction parameter %s\n\n", pname ) ; return ; }
+
+               formulaArgs_msig.add( *frac_sig ) ;
                formulaArgs_msig.add( *rv_mu_sig_msig_nobtagsyst[from_smcnbi][mbi] ) ;
 
-               formulaArgs_msb.add(  *frac ) ;
+               formulaArgs_msb.add(  *frac_sb ) ;
                formulaArgs_msb.add(  *rv_mu_sig_msb_nobtagsyst[from_smcnbi][mbi] ) ;
 
             } // from_smcnbi.
@@ -669,7 +748,7 @@
 
       workspace.writeToFile( outfile ) ;
 
-      makeBtagSFSystHists( workspace, outfile ) ;
+  //////    makeBtagSFSystHists( workspace, outfile ) ;
 
 
    } // build_hbb_workspace3.
@@ -1148,7 +1227,7 @@
          return false ;
       }
 
-      int ArraySize = 2 + bins_of_met * sigmc_bins_of_nb * 2 * 2 ; // 2 (sig vs sb) * 2 (vals and errs).
+      int ArraySize = 4 + bins_of_met * sigmc_bins_of_nb * 2 * 2 ; // 2 (sig vs sb) * 2 (vals and errs).
 
       char command[10000] ;
       sprintf(command, "tail -1 %s | awk '{print NF}' | grep -q %d", susy_counts_file, ArraySize ) ;
@@ -1179,7 +1258,7 @@
          }
          printf( " 1st column: %.0f\n", ArrayContent[0] ) ;
 
-         if ( TMath::Nint( fabs( ArrayContent[0] - sig_mass ) ) == 0 ) {
+         if ( TMath::Nint( fabs( ArrayContent[0] - sig_mass ) ) == 0   && TMath::Nint( fabs( ArrayContent[1] - 1. ) ) < 2 ) {
 
             printf("  found mass point %.0f in file %s\n", sig_mass, susy_counts_file ) ;
 
@@ -1202,10 +1281,10 @@
       for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
-            smc_msig_val[smcnbi][mbi] = ArrayContent[ 2 + (                mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
-            smc_msb_val[smcnbi][mbi]  = ArrayContent[ 2 + (1*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
-            smc_msig_err[smcnbi][mbi] = ArrayContent[ 2 + (2*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
-            smc_msb_err[smcnbi][mbi]  = ArrayContent[ 2 + (3*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msig_val[smcnbi][mbi] = ArrayContent[ 4 + (                mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msb_val[smcnbi][mbi]  = ArrayContent[ 4 + (1*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msig_err[smcnbi][mbi] = ArrayContent[ 4 + (2*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msb_err[smcnbi][mbi]  = ArrayContent[ 4 + (3*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
 
          } // mbi.
       } // smcnbi.
@@ -1284,24 +1363,65 @@
 
  //===============================================================================================================
 
-   bool setupBtagSFFracMatrix( const char* infracfile, const char* postfix, RooWorkspace& workspace ) {
+   bool setupBtagSFFracMatrix( const char* infracfile, float sig_mass, const char* postfix, RooWorkspace& workspace ) {
 
         float fracmatrix_p1s[4][4] ;
         float fracmatrix_m1s[4][4] ;
 
        //-- read in the numbers.
+        ifstream instr ;
+        instr.open( infracfile ) ;
+        if ( !instr.good() ) { printf( "\n\n *** Problem opening %s\n\n", infracfile ) ; return false ; }
+
+        int array_size = 2 + 4*4 + 4*4 ;
+        float array_content[ array_size ] ;
+        bool found_signal_point(false) ;
+        while ( instr.good() ) {
+           TString line ;
+           line.ReadLine( instr ) ;
+           TObjArray* tokens = line.Tokenize( " " ) ;
+           if ( tokens -> GetEntries() != array_size ) {
+              printf("\n\n *** setupBtagSFFracMatrix : warning.  found %d tokens when expecting %d in %s\n", tokens -> GetEntries(), array_size, infracfile ) ;
+              continue ;
+           }
+           for ( int i = 0 ; instr && i < array_size; ++ i ) {
+              TObjString* str = (TObjString*) (tokens->At(i)) ;
+              sscanf( (str->GetString()).Data(), "%f", &(array_content[i]) )  ;
+           }
+           if ( TMath::Nint( fabs( array_content[0] - sig_mass ) ) == 0 ) { found_signal_point = true ; break ; }
+        } // still reading?
+
+        if ( ! found_signal_point ) { printf("\n\n *** setupBtagSFFracMatrix : did not find signal point %.0f in %s\n\n", sig_mass, infracfile ) ; return false ; }
+
         for ( int fci=0; fci<4; fci++ ) {
            for ( int tci=0; tci<4; tci++ ) {
-              char pname[1000] ;
-              float fileVal ;
-              sprintf( pname, "frac_p1s_from_%s_to_%s_%s", btag_catname[fci], btag_catname[tci], postfix ) ;
-              if ( !getFileValue( infracfile, pname, fileVal ) ) { printf("\n\n *** readBtagSFFracMatrix : can't find %s in %s.\n\n", pname, infracfile ) ; return false ; }
-              fracmatrix_p1s[fci][tci] = fileVal ;
-              sprintf( pname, "frac_m1s_from_%s_to_%s_%s", btag_catname[fci], btag_catname[tci], postfix ) ;
-              if ( !getFileValue( infracfile, pname, fileVal ) ) { printf("\n\n *** readBtagSFFracMatrix : can't find %s in %s.\n\n", pname, infracfile ) ; return false ; }
-              fracmatrix_m1s[fci][tci] = fileVal ;
+              fracmatrix_p1s[fci][tci] = array_content[ 2 + 4*fci + tci ] ;
+              fracmatrix_m1s[fci][tci] = array_content[ 2 + 4*fci + tci + 4*4 ] ;
            } // tci.
         } // fci.
+
+
+
+
+
+       //-- print them out for the log file.
+
+        printf("\n\n btag SF transfer fraction matrices from %s for signal point %.0f\n\n", infracfile, sig_mass ) ;
+
+        for ( int tci=3; tci>=0; tci-- ) {
+           printf("   to %s : ", btag_catname[tci] ) ;
+           for ( int fci=0; fci<4; fci++ ) { printf("  %.3f  ", fracmatrix_p1s[fci][tci] ) ; }
+           printf("            ") ;
+           for ( int fci=0; fci<4; fci++ ) { printf("  %.3f  ", fracmatrix_m1s[fci][tci] ) ; }
+           printf("\n") ;
+        } // tci.
+        printf( "   from    ") ;
+        for ( int fci=0; fci<4; fci++ ) { printf("    %s   ", btag_catname[fci] ) ; }
+        printf("            ") ;
+        for ( int fci=0; fci<4; fci++ ) { printf("    %s   ", btag_catname[fci] ) ; }
+        printf("\n\n\n") ;
+
+
 
        //-- check for consistency.
         for ( int fci=0; fci<4; fci++ ) {
@@ -1311,8 +1431,8 @@
               psum += fracmatrix_p1s[fci][tci] ;
               msum += fracmatrix_m1s[fci][tci] ;
            } // tci.
-           if ( fabs( 1.0 - psum ) > 0.001 ) { printf(" \n\n *** readBtagSFFracMatrix : fractions for %s, +1 sigma don't add up to 1.\n\n", btag_catname[fci] ) ; return false ; }
-           if ( fabs( 1.0 - msum ) > 0.001 ) { printf(" \n\n *** readBtagSFFracMatrix : fractions for %s, -1 sigma don't add up to 1.\n\n", btag_catname[fci] ) ; return false ; }
+           if ( fabs( 1.0 - psum ) > 0.005 ) { printf(" \n\n *** readBtagSFFracMatrix : fractions for %s, +1 sigma don't add up to 1.\n\n", btag_catname[fci] ) ; return false ; }
+           if ( fabs( 1.0 - msum ) > 0.005 ) { printf(" \n\n *** readBtagSFFracMatrix : fractions for %s, -1 sigma don't add up to 1.\n\n", btag_catname[fci] ) ; return false ; }
         } // fci.
 
 

@@ -686,7 +686,7 @@
 
       for ( int spi=0; spi<nsigpoints; spi++ ) {
 
-         fprintf( outfile, "  %5.0f  %5.0f    ", sigmass[spi], 0. ) ;
+         fprintf( outfile, "  %5.0f  %5.0f   0.   0.  ", sigmass[spi], 0. ) ;
 
          for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
              fprintf( outfile, " %7.2f  %7.2f  %7.2f  %7.2f    ", smc_nt_msig_val[spi][mbi] , smc_2b_msig_val[spi][mbi] , smc_3b_msig_val[spi][mbi] , smc_4b_msig_val[spi][mbi] ) ;

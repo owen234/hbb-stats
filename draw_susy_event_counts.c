@@ -1,16 +1,11 @@
 
-
-//
-//  This takes a background only input file as input and
-//  produces a new input file where the observables are set to BG + SUSY values.
-//  Takes the susy counts file from the input file to ensure consistency.
-//  Adds a tag line to the new input file that warns user that signal was embedded and what signal mass was used.
-//
-
 #include "TMath.h"
 #include "TSystem.h"
+#include "TH1F.h"
+#include "TDirectory.h"
+#include "TStyle.h"
+#include "TCanvas.h"
 
-#include "RooPosDefCorrGauss.h"
 
 #include "getFileValue.c"
 #include "updateFileValue.c"
@@ -21,7 +16,7 @@
    const int bins_of_nb(3) ;
    const int bins_of_nb_sigmc(4) ;
    const int max_bins_of_met(50) ;
-   int       bins_of_met ;
+   int       bins_of_met(4) ;
 
    float smc_msig_val[bins_of_nb_sigmc][max_bins_of_met] ;
    float smc_msb_val[bins_of_nb_sigmc][max_bins_of_met] ;
@@ -29,6 +24,7 @@
    float smc_msig_err[bins_of_nb_sigmc][max_bins_of_met] ;
    float smc_msb_err[bins_of_nb_sigmc][max_bins_of_met] ;
 
+   char btag_catname[4][10] = { "NT", "2b", "3b", "4b" } ;
 
   //--- prototypes here.
 
@@ -36,84 +32,125 @@
 
   //===========================================================================================
 
-   void add_susy_to_obs3( const char* infile = "outputfiles/input-file.txt",
-                         float sig_mass = 250.,
-                         float susy_signal_strength = 1.,
-                         const char* outfile = ""
-                        ) {
+   void draw_susy_event_counts( const char* susy_counts_file = "outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt", float sig_mass = 250. ) {
 
+      gDirectory -> Delete( "h*" ) ;
 
     //-------------------------------------------------------------------------
 
-      printf("\n\n Reading input file: %s\n\n", infile ) ;
+      printf("\n\n Reading input file: %s\n\n", susy_counts_file ) ;
 
       float fileVal ;
       char pname[1000] ;
       char command[10000] ;
 
 
-      sprintf( pname, "bins_of_met" ) ;
-      if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
-      bins_of_met = TMath::Nint( fileVal ) ;
-
-     //-- get signal input file and look for requested signal mass.
-      char susy_counts_filename[10000] ;
-      if ( !getFileStringValue( infile, "signal_counts_file", susy_counts_filename ) ) {
-         printf("\n\n *** Can't find input susy counts file: signal_counts_file line of %s.\n\n", infile ) ;
-         return ;
-      }
-      if ( !readSignalCounts( susy_counts_filename, sig_mass ) ) {
-         printf("\n\n *** Can't find signal mass of %.0f in %s\n\n", sig_mass, susy_counts_filename ) ;
+      if ( !readSignalCounts( susy_counts_file, sig_mass ) ) {
+         printf("\n\n *** Can't find signal mass of %.0f in %s\n\n", sig_mass, susy_counts_file ) ;
          return ;
       }
 
+      TH1F* h_msig_nom[bins_of_nb_sigmc] ;
+      TH1F* h_msb_nom[bins_of_nb_sigmc] ;
 
-      char newoutfilename[10000] ;
-      if ( strlen(outfile) == 0 ) {
-         sprintf( command, "basename %s .txt", infile ) ;
-         const char* filebase = gSystem -> GetFromPipe( command ) ;
-         sprintf( newoutfilename, "outputfiles/%s-susy-%04d-embedded-sigstrength-%.1f.txt", filebase, TMath::Nint(sig_mass), susy_signal_strength ) ;
-         printf( "\n\n New output filename: %s\n\n", newoutfilename ) ;
-      } else {
-         sprintf( newoutfilename, "%s", outfile ) ;
-         printf( "\n\n Output filename: %s\n\n", newoutfilename ) ;
+      TH1F* h_msig_p1s[bins_of_nb_sigmc] ;
+      TH1F* h_msb_p1s[bins_of_nb_sigmc] ;
+
+      TH1F* h_msig_m1s[bins_of_nb_sigmc] ;
+      TH1F* h_msb_m1s[bins_of_nb_sigmc] ;
+
+      TCanvas* can1 = (TCanvas*) gDirectory -> FindObject("can1") ;
+      if ( can1 == 0x0 ) {
+         can1 = new TCanvas( "can1", "SUSY signal counts", 600, 800 ) ;
       }
+      can1 -> Clear() ;
+      can1 -> Divide( 2, 4 ) ;
 
-      sprintf( command, "cp %s %s\n", infile, newoutfilename ) ;
-      int returnStat = gSystem -> Exec( command ) ;
-      if ( returnStat != 0 ) { printf("\n\n *** Problem creating output file %s\n\n", newoutfilename ) ; return ; }
+      int canind(1) ;
+
+      for ( int nbi=0; nbi<bins_of_nb_sigmc; nbi++ ) {
+
+         char hname[1000] ;
+         char htitle[1000] ;
+
+         sprintf( hname, "h_msig_%s_nom", btag_catname[nbi] ) ;
+         sprintf( htitle, "SIG, %s", btag_catname[nbi] ) ;
+         h_msig_nom[nbi] = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
+
+         sprintf( hname, "h_msig_%s_p1s", btag_catname[nbi] ) ;
+         sprintf( htitle, "SIG, %s, +1 sigma", btag_catname[nbi] ) ;
+         h_msig_p1s[nbi] = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
+
+         sprintf( hname, "h_msig_%s_m1s", btag_catname[nbi] ) ;
+         sprintf( htitle, "SIG, %s, -1 sigma", btag_catname[nbi] ) ;
+         h_msig_m1s[nbi] = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
 
 
+         sprintf( hname, "h_msb_%s_nom", btag_catname[nbi] ) ;
+         sprintf( htitle, "SB, %s", btag_catname[nbi] ) ;
+         h_msb_nom[nbi] = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
 
-      for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
+         sprintf( hname, "h_msb_%s_p1s, +1 sigma", btag_catname[nbi] ) ;
+         sprintf( htitle, "SB, %s", btag_catname[nbi] ) ;
+         h_msb_p1s[nbi] = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
+
+         sprintf( hname, "h_msb_%s_m1s, -1 sigma", btag_catname[nbi] ) ;
+         sprintf( htitle, "SB, %s", btag_catname[nbi] ) ;
+         h_msb_m1s[nbi] = new TH1F( hname, htitle, bins_of_met, 0.5, bins_of_met+0.5 ) ;
+
          for ( int mbi=0; mbi<bins_of_met; mbi++ ) {
 
-            float inval, newval ;
+            h_msig_nom[nbi] -> SetBinContent( mbi+1, smc_msig_val[nbi][mbi] ) ;
+            h_msig_p1s[nbi] -> SetBinContent( mbi+1, smc_msig_val[nbi][mbi] + smc_msig_err[nbi][mbi] ) ;
+            h_msig_m1s[nbi] -> SetBinContent( mbi+1, smc_msig_val[nbi][mbi] - smc_msig_err[nbi][mbi] ) ;
 
-            sprintf( pname, "N_%db_msig_met%d", nbi+2, mbi+1 ) ;
-            getFileValue( infile, pname, inval ) ;
-            newval = inval + susy_signal_strength * smc_msig_val[nbi+1][mbi] ;
-            printf("  %s : adding %6.1f susy counts to %6.1f BG counts.\n", pname, susy_signal_strength * smc_msig_val[nbi+1][mbi], inval ) ;
-            updateFileValue( newoutfilename, pname, newval ) ;
+            h_msb_nom[nbi] -> SetBinContent( mbi+1, smc_msb_val[nbi][mbi] ) ;
+            h_msb_p1s[nbi] -> SetBinContent( mbi+1, smc_msb_val[nbi][mbi] + smc_msb_err[nbi][mbi] ) ;
+            h_msb_m1s[nbi] -> SetBinContent( mbi+1, smc_msb_val[nbi][mbi] - smc_msb_err[nbi][mbi] ) ;
 
-            sprintf( pname, "N_%db_msb_met%d", nbi+2, mbi+1 ) ;
-            getFileValue( infile, pname, inval ) ;
-            newval = inval + susy_signal_strength * smc_msb_val[nbi+1][mbi] ;
-            printf("  %s : adding %6.1f susy counts to %6.1f BG counts.\n", pname, susy_signal_strength * smc_msb_val[nbi+1][mbi], inval ) ;
-            updateFileValue( newoutfilename, pname, newval ) ;
+            char binlabel[100] ;
+            sprintf( binlabel, "S bin %d", mbi+1 ) ;
+
+            h_msig_nom[nbi] -> GetXaxis() -> SetBinLabel( mbi+1, binlabel ) ;
+            h_msig_p1s[nbi] -> GetXaxis() -> SetBinLabel( mbi+1, binlabel ) ;
+            h_msig_m1s[nbi] -> GetXaxis() -> SetBinLabel( mbi+1, binlabel ) ;
+
+            h_msb_nom[nbi] -> GetXaxis() -> SetBinLabel( mbi+1, binlabel ) ;
+            h_msb_p1s[nbi] -> GetXaxis() -> SetBinLabel( mbi+1, binlabel ) ;
+            h_msb_m1s[nbi] -> GetXaxis() -> SetBinLabel( mbi+1, binlabel ) ;
 
          } // mbi.
+
+         h_msig_nom[nbi] -> SetLineWidth(2) ;
+         h_msig_p1s[nbi] -> SetLineWidth(2) ;
+         h_msig_m1s[nbi] -> SetLineWidth(2) ;
+
+         h_msb_nom[nbi] -> SetLineWidth(2) ;
+         h_msb_p1s[nbi] -> SetLineWidth(2) ;
+         h_msb_m1s[nbi] -> SetLineWidth(2) ;
+
+         h_msig_nom[nbi] -> SetLineColor(1) ;
+         h_msig_p1s[nbi] -> SetLineColor(2) ;
+         h_msig_m1s[nbi] -> SetLineColor(4) ;
+
+         h_msb_nom[nbi] -> SetLineColor(1) ;
+         h_msb_p1s[nbi] -> SetLineColor(2) ;
+         h_msb_m1s[nbi] -> SetLineColor(4) ;
+
+         can1 -> cd( canind++ ) ;
+         h_msb_p1s[nbi] -> Draw() ;
+         h_msb_m1s[nbi] -> Draw( "same" ) ;
+         h_msb_nom[nbi] -> Draw( "same" ) ;
+
+         can1 -> cd( canind++ ) ;
+         h_msig_p1s[nbi] -> Draw() ;
+         h_msig_m1s[nbi] -> Draw( "same" ) ;
+         h_msig_nom[nbi] -> Draw( "same" ) ;
+
       } // nbi.
 
 
-      sprintf( command, "echo \"EMBEDDED_SUSY_SIGNAL %.0f , signal-strength %.1f , %s\" >> %s", 
-                sig_mass, susy_signal_strength, susy_counts_filename, newoutfilename ) ;
-      gSystem -> Exec( command ) ;
-
-      printf("\n\n Created embed input file: %s\n\n\n", newoutfilename ) ;
-
-
-   } // add_susy_to_obs.
+   } // draw_susy_event_counts
 
 
 
