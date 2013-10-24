@@ -1,0 +1,21 @@
+
+
+ set ntoy =  2000
+ set minmu = 0.10
+ set maxmu = 3.10
+ set npoints = 30
+
+  #-- toys
+
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-175-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-175-4metbin-w3b.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-200-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-200-4metbin-w3b.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-250-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-250-4metbin-w3b.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-300-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-300-4metbin-w3b.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-350-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-350-4metbin-w3b.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-400-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-400-4metbin-w3b.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-450-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-450-4metbin-w3b.log
+   root -b -q rundemo.c\(\"outputfiles/ws-metsig-4metbin-w3b-wpu-csyst4-nosignal-sigmass-500-withMSB1.root\",0,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-toys-metsig-nosig-500-4metbin-w3b.log
+
+
+
+
