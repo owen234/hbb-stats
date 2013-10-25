@@ -15,13 +15,17 @@
  //char bgcompname[3][100] = { "tt", "znn", "qcd" } ;
  //TChain* bgcompchain[3] ;
  //----------------
-   int  nbgcomps(2) ;
-   char bgcompname[2][100] = { "tt", "znn" } ;
-   TChain* bgcompchain[2] ;
+ //int  nbgcomps(2) ;
+ //char bgcompname[2][100] = { "tt", "znn" } ;
+ //TChain* bgcompchain[2] ;
+ //----------------
+   int  nbgcomps(5) ;
+   char bgcompname[5][100] = { "tt", "znn", "qcd", "wt", "other" } ;
+   TChain* bgcompchain[5] ;
  //----------------
 
 
-   float dataIntLumiIPB(20000.) ;
+   float dataIntLumiIPB(19399.) ;
 
 
 
@@ -43,7 +47,8 @@
                         const char* metvarname = "METsig",
                         bool use3b = true,
                         bool usePUweight = true,
-                        int  closure_syst_option = 1
+                        int  closure_syst_option = 1,
+                        bool no_closure_correction = false
                         ) {
 
 
@@ -115,7 +120,8 @@
       ///// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july11-2013-pt20" ;
       ///// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-sept17-2013-v71-1s" ;
       ///// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-sept17-2013-v71-1s" ;
-      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-slim-oct08-2013-v71-5b" ;
+      ///////////char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-slim-oct08-2013-v71-5b" ;
+      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-oct12-2013-v71-5b/" ;
 
       printf("\n\n\n   Reduced tree directory: %s\n\n\n", rtdir ) ;
 
@@ -125,87 +131,79 @@
 
       char pathandfile[10000] ;
 
-     //--- ttbar, 1 and 2 lepton
-  /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.TTJets_SemiLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v1_AODSIM_UCSB1800_v69-slimskim.root", rtdir ) ;
-  /// bgcompchain[compIndex] -> Add( pathandfile ) ;
-  /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.TTJets_FullLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v2_AODSIM_UCSB1799_v69-slimskim.root", rtdir ) ;
-  /// bgcompchain[compIndex] -> Add( pathandfile ) ;
-
-      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_SemiLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v1_AODSIM_UCSB1884ra2b_v71s-slimskim.root", rtdir, namestub ) ;
+     //--- ttbar, 1 lepton
+      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_SemiLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v1_AODSIM_UCSB1884ra2b_v71s-skim.root", rtdir,namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_FullLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v2_AODSIM_UCSB1883ra2b_v71s-slimskim.root", rtdir, namestub ) ;
+     //--- ttbar, 2 lepton
+      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_FullLeptMGDecays_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V7C-v2_AODSIM_UCSB1883ra2b_v71s-skim.root", rtdir,namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
       compIndex++ ;
+
 
      //--- Znn
-  /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.ZJetsToNuNu_100_HT_200_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1832_v69-slimskim.root", rtdir ) ;
-  /// bgcompchain[compIndex] -> Add( pathandfile ) ;
-  /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1833_v69-slimskim.root", rtdir ) ;
-  /// bgcompchain[compIndex] -> Add( pathandfile ) ;
-  /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1834_v69-slimskim.root", rtdir ) ;
-  /// bgcompchain[compIndex] -> Add( pathandfile ) ;
-  /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1831_v69-slimskim.root", rtdir ) ;
-  /// bgcompchain[compIndex] -> Add( pathandfile ) ;
-  /// sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1835_v69-slimskim.root", rtdir ) ;
-  /// bgcompchain[compIndex] -> Add( pathandfile ) ;
-
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_100_HT_200_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1887ra2b_v71s-slimskim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_100_HT_200_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1887ra2b_v71s-skim.root", rtdir,namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1888ra2b_v71s-slimskim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1888ra2b_v71s-skim.root", rtdir,namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1889ra2b_v71s-slimskim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1889ra2b_v71s-skim.root", rtdir,namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1890ra2b_v71s-slimskim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1890ra2b_v71s-skim.root", rtdir,namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1891ra2b_v71s-slimskim.root", rtdir, namestub ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph_ext_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1891ra2b_v71s-skim.root", rtdir,namestub ) ;
       bgcompchain[compIndex] -> Add( pathandfile ) ;
       compIndex++ ;
 
-      if ( nbgcomps > 2 ) {
-        //--- QCD
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1000to1400_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1820_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-120to170_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v3_AODSIM_UCSB1814_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1400to1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1821_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-170to300_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1815_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1822_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-300to470_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1816_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-470to600_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1817_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-600to800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1818_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
-    ///  sprintf( pathandfile, "%s/reducedTree.CSVM_PF2PATjets_JES0_JER0_PFMETTypeI_METunc0_PUunc0_BTagEff05_HLTEff0.QCD_Pt-800to1000_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1819_v69-slimskim.root", rtdir ) ;
-    ///  bgcompchain[compIndex] -> Add( pathandfile ) ;
+     //--- QCD
+      sprintf( pathandfile, "%s/reducedTree.%s.BJets_HT-1000ToInf_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1895ra2b_v71s-skim.root", rtdir, namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.BJets_HT-250To500_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1893ra2b_v71s-skim.root", rtdir, namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.BJets_HT-500To1000_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1894ra2b_v71s-skim.root", rtdir, namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+     //--- ttbar, hadronic (grouped with QCD)
+      sprintf( pathandfile, "%s/reducedTree.%s.TTJets_HadronicMGDecays_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A_ext-v1_AODSIM_UCSB1880ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      compIndex++ ;
 
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1000to1400_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1903ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-120to170_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v3_AODSIM_UCSB1897ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1400to1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1904ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-170to300_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1898ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-1800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1905ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-300to470_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1899ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-470to600_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1900ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-600to800_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1901ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-         sprintf( pathandfile, "%s/reducedTree.%s.QCD_Pt-800to1000_TuneZ2star_8TeV_pythia6_Summer12_DR53X-PU_S10_START53_V7A-v2_AODSIM_UCSB1902ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
-        //--- ttbar, hadronic (grouped with QCD)
-         sprintf( pathandfile, "%s/reducedTree.%s.TTJets_HadronicMGDecays_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A_ext-v1_AODSIM_UCSB1880ra2b_v71s-slimskim.root", rtdir, namestub ) ;
-         bgcompchain[compIndex] -> Add( pathandfile ) ;
+     //--- wjets and single top
+      sprintf( pathandfile, "%s/reducedTree.%s.W2JetsToLNu_TuneZ2Star_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1877ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.W3JetsToLNu_TuneZ2Star_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1878ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.W4JetsToLNu_TuneZ2Star_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1879ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.T_s-channel_TuneZ2star_8TeV-powheg-tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1860ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.T_t-channel_TuneZ2star_8TeV-powheg-tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1861ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.T_tW-channel-DR_TuneZ2star_8TeV-powheg-tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1862ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.Tbar_s-channel_TuneZ2star_8TeV-powheg-tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1864ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.Tbar_t-channel_TuneZ2star_8TeV-powheg-tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1865ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.Tbar_tW-channel-DR_TuneZ2star_8TeV-powheg-tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1866ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      compIndex++ ;
 
-         compIndex++ ;
-      }
+     //--- everything else: ttZ, ttW, ttH, WW, WZ, ZZ, WH, ZH
+      sprintf( pathandfile, "%s/reducedTree.%s.TTH_HToBB_M-125_8TeV-pythia6_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1855ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.TTWJets_8TeV-madgraph_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1857ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.TTZJets_8TeV-madgraph_v2_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1856ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.WH_WToLNu_HToBB_M-125_8TeV-powheg-herwigpp_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1858ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.WW_TuneZ2star_8TeV_pythia6_tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1874ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.WZ_TuneZ2star_8TeV_pythia6_tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1875ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZH_ZToBB_HToBB_M-125_8TeV-powheg-herwigpp_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1868ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      sprintf( pathandfile, "%s/reducedTree.%s.ZZ_TuneZ2star_8TeV_pythia6_tauola_Summer12_DR53X-PU_S10_START53_V7A-v1_AODSIM_UCSB1876ra2b_v71s-skim.root", rtdir,namestub ) ;
+      bgcompchain[compIndex] -> Add( pathandfile ) ;
+      compIndex++ ;
 
 
 
@@ -220,9 +218,8 @@
       sprintf( basiccuts, "cutPV==1&&passCleaning==1&&buggyEvent==0&& MET/caloMET<2 && maxTOBTECjetDeltaMult<40" ) ;
 
       char triggercuts[10000] ;
-      sprintf( triggercuts, "(passMC_DiCentralPFJet30_PFMET80_BTagCSV07==1||passMC_PFMET150==1)" ) ;
+      sprintf( triggercuts, "(passMC_DiCentralPFJet30_PFMET80_BTagCSV07==1||passMC_PFMET150==1||passMC_DiCentralPFJet30_PFMHT80==1)" ) ;
       char triggercuts_data[10000] ;
-      //add DiJet MHT trigger for Run2012A
       sprintf( triggercuts_data, "(pass_DiCentralPFJet30_PFMET80_BTagCSV07==1||pass_PFMET150==1||pass_DiCentralPFJet30_PFMHT80==1)" ) ;
 
       char njetcuts[10000] ;
@@ -237,14 +234,12 @@
      //--- These are beyond the skim selection.
 
       char leptonveto[10000] ;
-      // sprintf( leptonveto, "%s", "nMuons==0&&nElectrons==0&&nIsoTracks15_005_03==0&&nTausLoose==0" ) ;
       sprintf( leptonveto, "%s", "nMuons==0&&nElectrons==0&&nIsoPFcands10_010==0&&nTausLoose==0" ) ;
 
       char drmaxcut[10000] ;
       sprintf( drmaxcut, "%s", "deltaRmax_hh<2.2" ) ;
 
       char mindphicut[10000] ;
-      //// sprintf( mindphicut, "%s", "((METsig>50&&minDeltaPhi20>0.3)||(METsig<50&&minDeltaPhi20>0.5))" ) ;
       sprintf( mindphicut, "%s", "((METsig>50&&minDeltaPhi20_eta5_noIdAll_nobeta>0.3)||(METsig<50&&minDeltaPhi20_eta5_noIdAll_nobeta>0.5))" ) ;
 
       char jet2ptcut[10000] ;
@@ -384,26 +379,32 @@
          sprintf( puweight, "" ) ;
       }
 
+      //note : topPtWeight is set to 1 for samples other than ttbar, so it is safe to use everywhere
+      //this syntax is a hack to weight events with the trigger efficiency correction in bins of METsig; note that there is no correction for METsig<30
+      //for METsig<30, just use the same correction as 30<METsig<50
+      char extraWeightFactors[10000] ;
+      sprintf(extraWeightFactors,"((0.804*(METsig<50)+0.897*(METsig>=50&&METsig<100)+0.944*(METsig>=100))*topPtWeight)");
+
       for ( int si=0; si<nbgcomps; si++ ) {
 
          printf("\n\n ++++++++ %s component\n\n", bgcompname[si] ) ;
 
          sprintf( arg1, "%s>>h_%s_4b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssigcuts, btag4bcuts, puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%s*%.0f", allcommoncuts, masssigcuts, btag4bcuts, puweight, extraWeightFactors, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_4b_msig_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_3b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssigcuts, btag3bcuts, puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%s*%.0f", allcommoncuts, masssigcuts, btag3bcuts, puweight, extraWeightFactors, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_3b_msig_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_2b_msig_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssigcuts, btag2bcuts, puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%s*%.0f", allcommoncuts, masssigcuts, btag2bcuts, puweight, extraWeightFactors, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -411,21 +412,21 @@
 
 
          sprintf( arg1, "%s>>h_%s_4b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssbcuts, btag4bcuts, puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%s*%.0f", allcommoncuts, masssbcuts, btag4bcuts, puweight, extraWeightFactors, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_4b_msb_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_3b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssbcuts, btag3bcuts, puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%s*%.0f", allcommoncuts, masssbcuts, btag3bcuts, puweight, extraWeightFactors, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
          h_3b_msb_bg[si] -> Print("all") ;
 
          sprintf( arg1, "%s>>h_%s_2b_msb_bg_%s", metvarname, metvarname_nospecial.Data(), bgcompname[si] ) ;
-         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%.0f", allcommoncuts, masssbcuts, btag2bcuts, puweight, dataIntLumiIPB ) ;
+         sprintf( allcuts, "((%s)&&(%s)&&(%s))*weight3%s*%s*%.0f", allcommoncuts, masssbcuts, btag2bcuts, puweight, extraWeightFactors, dataIntLumiIPB ) ;
          printf("\n %s : %s\n", arg1, allcuts ) ; fflush(stdout) ;
          bgcompchain[si] -> Draw( arg1, allcuts ) ;
          can->Update() ; can->Draw() ;
@@ -737,60 +738,69 @@
 
 
 
+      //-- Compute SIG/SB corrections and uncertainties.  Simplified on Oct 25, 2013.
 
-      //-- Compute SIG/SB corrections and uncertainties.
-      //
-      //  The fit will do a weighted average of the 2b, 3b, and 4b samples, so corrections
-      //  should be made with respect to that average.  In computing the weighted average
-      //  below, use sqrt(N) for uncertainty, not MC stats error, since that's what the
-      //  fit will do.
-      //
-      //  Taking the uncertainty on the correction as the (MC stat error / value) on the difference
-      //  with respect to the weighted ave combined with half of the difference with respect
-      //  to the weighted ave in quadrature.
-      //
-      //  If bins_of_met is set to 1, only use 2b and 4b (ignore 3b).
+      // assume 2b dominates the determination of SIG/SB (true).
+      // evaluate closure w.r.t. 2b
 
-      printf("\n\n") ;
-      float wave_Rsigsb_val[50] ;
-      float wave_Rsigsb_err[50] ;
-      for ( int hbi=1; hbi<=bins_of_met; hbi++ ) {
-         if ( bins_of_met > 1 && use3b ) {
-            wave_Rsigsb_val[hbi] =  ( Rsigsb_2b_val[hbi] / Rsigsb_2b_staterr2[hbi] + Rsigsb_3b_val[hbi] / Rsigsb_3b_staterr2[hbi] + Rsigsb_4b_val[hbi] / Rsigsb_4b_staterr2[hbi] ) /
-                                    (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_3b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ;
-            wave_Rsigsb_err[hbi] = sqrt( 1. / (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_3b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ) ;
-         } else {
-            wave_Rsigsb_val[hbi] =  ( Rsigsb_2b_val[hbi] / Rsigsb_2b_staterr2[hbi] + Rsigsb_4b_val[hbi] / Rsigsb_4b_staterr2[hbi] ) /
-                                    (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ;
-            wave_Rsigsb_err[hbi] = sqrt( 1. / (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ) ;
-         }
-         printf(" expected sqrt(N) weighted Rsig/sb ave for METsig bin %d :  %5.3f +/- %5.3f\n", hbi, wave_Rsigsb_val[hbi], wave_Rsigsb_err[hbi] ) ;
-      } // hbi
 
-      //
-      //  Add combination of top N-1 met bins, in case we want to use that.
-      //
-      float wave_Rsigsb_metbinsum_val(0.) ;
-      float wave_Rsigsb_metbinsum_err(0.) ;
+////  //-- old way
+////  //
+////  //  The fit will do a weighted average of the 2b, 3b, and 4b samples, so corrections
+////  //  should be made with respect to that average.  In computing the weighted average
+////  //  below, use sqrt(N) for uncertainty, not MC stats error, since that's what the
+////  //  fit will do.
+////  //
+////  //  Taking the uncertainty on the correction as the (MC stat error / value) on the difference
+////  //  with respect to the weighted ave combined with half of the difference with respect
+////  //  to the weighted ave in quadrature.
+////  //
+////  //  If bins_of_met is set to 1, only use 2b and 4b (ignore 3b).
 
-      if ( bins_of_met > 1 && use3b ) {
-         wave_Rsigsb_metbinsum_val =  (  Rsigsb_2b_metbinsum_val / Rsigsb_2b_metbinsum_staterr2 + Rsigsb_3b_metbinsum_val / Rsigsb_3b_metbinsum_staterr2 + Rsigsb_4b_metbinsum_val / Rsigsb_4b_metbinsum_staterr2 ) /
-                                      (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_3b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ;
-         wave_Rsigsb_metbinsum_err = sqrt( 1. / (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_3b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ) ;
-      } else {
-         wave_Rsigsb_metbinsum_val =  (  Rsigsb_2b_metbinsum_val / Rsigsb_2b_metbinsum_staterr2 + Rsigsb_4b_metbinsum_val / Rsigsb_4b_metbinsum_staterr2 ) /
-                                      (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ;
-         wave_Rsigsb_metbinsum_err = sqrt( 1. / (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ) ;
-      }
-      printf("\n") ;
-      printf(" expected sqrt(N) weighted Rsig/sb ave for higest %d METsig bins:  %5.3f +/- %5.3f\n", bins_of_met-1, wave_Rsigsb_metbinsum_val, wave_Rsigsb_metbinsum_err ) ;
-      printf("\n") ;
+////  printf("\n\n") ;
+////  float wave_Rsigsb_val[50] ;
+////  float wave_Rsigsb_err[50] ;
+////  for ( int hbi=1; hbi<=bins_of_met; hbi++ ) {
+////     if ( bins_of_met > 1 && use3b ) {
+////        wave_Rsigsb_val[hbi] =  ( Rsigsb_2b_val[hbi] / Rsigsb_2b_staterr2[hbi] + Rsigsb_3b_val[hbi] / Rsigsb_3b_staterr2[hbi] + Rsigsb_4b_val[hbi] / Rsigsb_4b_staterr2[hbi] ) /
+////                                (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_3b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ;
+////        wave_Rsigsb_err[hbi] = sqrt( 1. / (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_3b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ) ;
+////     } else {
+////        wave_Rsigsb_val[hbi] =  ( Rsigsb_2b_val[hbi] / Rsigsb_2b_staterr2[hbi] + Rsigsb_4b_val[hbi] / Rsigsb_4b_staterr2[hbi] ) /
+////                                (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ;
+////        wave_Rsigsb_err[hbi] = sqrt( 1. / (                1.  / Rsigsb_2b_staterr2[hbi] +                1.  / Rsigsb_4b_staterr2[hbi] ) ) ;
+////     }
+////     printf(" expected sqrt(N) weighted Rsig/sb ave for METsig bin %d :  %5.3f +/- %5.3f\n", hbi, wave_Rsigsb_val[hbi], wave_Rsigsb_err[hbi] ) ;
+////  } // hbi
+
+////  //
+////  //  Add combination of top N-1 met bins, in case we want to use that.
+////  //
+////  float wave_Rsigsb_metbinsum_val(0.) ;
+////  float wave_Rsigsb_metbinsum_err(0.) ;
+
+////  if ( bins_of_met > 1 && use3b ) {
+////     wave_Rsigsb_metbinsum_val =  (  Rsigsb_2b_metbinsum_val / Rsigsb_2b_metbinsum_staterr2 + Rsigsb_3b_metbinsum_val / Rsigsb_3b_metbinsum_staterr2 + Rsigsb_4b_metbinsum_val / Rsigsb_4b_metbinsum_staterr2 ) /
+////                                  (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_3b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ;
+////     wave_Rsigsb_metbinsum_err = sqrt( 1. / (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_3b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ) ;
+////  } else {
+////     wave_Rsigsb_metbinsum_val =  (  Rsigsb_2b_metbinsum_val / Rsigsb_2b_metbinsum_staterr2 + Rsigsb_4b_metbinsum_val / Rsigsb_4b_metbinsum_staterr2 ) /
+////                                  (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ;
+////     wave_Rsigsb_metbinsum_err = sqrt( 1. / (                      1.  / Rsigsb_2b_metbinsum_staterr2 +                     1.  / Rsigsb_4b_metbinsum_staterr2 ) ) ;
+////  }
+////  printf("\n") ;
+////  printf(" expected sqrt(N) weighted Rsig/sb ave for higest %d METsig bins:  %5.3f +/- %5.3f\n", bins_of_met-1, wave_Rsigsb_metbinsum_val, wave_Rsigsb_metbinsum_err ) ;
+////  printf("\n") ;
 
 
 
       float correction_Rsigsb_4b[50] ;
       float correction_Rsigsb_3b[50] ;
       float correction_Rsigsb_2b[50] ;
+
+      float correction_Rsigsb_4b_staterr[50] ;
+      float correction_Rsigsb_3b_staterr[50] ;
+      float correction_Rsigsb_2b_staterr[50] ;
 
       float syst_Rsigsb_4b[50] ;
       float syst_Rsigsb_3b[50] ;
@@ -800,16 +810,35 @@
 
       for ( int hbi=1; hbi<=bins_of_met; hbi++ ) {
 
-         correction_Rsigsb_4b[hbi] = Rsigsb_4b_val[hbi] / wave_Rsigsb_val[hbi] ;
-         correction_Rsigsb_3b[hbi] = Rsigsb_3b_val[hbi] / wave_Rsigsb_val[hbi] ;
-         correction_Rsigsb_2b[hbi] = Rsigsb_2b_val[hbi] / wave_Rsigsb_val[hbi] ;
+         correction_Rsigsb_2b[hbi] = 1.0 ;
+         correction_Rsigsb_3b[hbi] = Rsigsb_3b_val[hbi] / Rsigsb_2b_val[hbi] ;
+         correction_Rsigsb_4b[hbi] = Rsigsb_4b_val[hbi] / Rsigsb_2b_val[hbi] ;
+
+         correction_Rsigsb_2b_staterr[hbi] = 0. ;
+         correction_Rsigsb_3b_staterr[hbi] = 1. ;
+         if ( Rsigsb_3b_val[hbi] > 0. && Rsigsb_2b_val[hbi] > 0. ) {
+            correction_Rsigsb_3b_staterr[hbi] = correction_Rsigsb_3b[hbi] * sqrt( ::pow( Rsigsb_3b_err[hbi]/Rsigsb_3b_val[hbi], 2.) + ::pow( Rsigsb_2b_err[hbi]/Rsigsb_2b_val[hbi], 2. )  ) ;
+         }
+         correction_Rsigsb_4b_staterr[hbi] = 1. ;
+         if ( Rsigsb_4b_val[hbi] > 0. && Rsigsb_2b_val[hbi] > 0. ) {
+            correction_Rsigsb_4b_staterr[hbi] = correction_Rsigsb_4b[hbi] * sqrt( ::pow( Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi], 2.) + ::pow( Rsigsb_2b_err[hbi]/Rsigsb_2b_val[hbi], 2. )  ) ;
+         }
+
+
+////     correction_Rsigsb_4b[hbi] = Rsigsb_4b_val[hbi] / wave_Rsigsb_val[hbi] ;
+////     correction_Rsigsb_3b[hbi] = Rsigsb_3b_val[hbi] / wave_Rsigsb_val[hbi] ;
+////     correction_Rsigsb_2b[hbi] = Rsigsb_2b_val[hbi] / wave_Rsigsb_val[hbi] ;
 
          if ( closure_syst_option == 1 ) {
 
            //-- nominal: mcstat + 1/2 correction
-            syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
-            syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
-            syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.)/2.,2. ) ) ;
+////        syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
+////        syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
+////        syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.)/2.,2. ) ) ;
+
+            syst_Rsigsb_4b[hbi] = sqrt( ::pow( correction_Rsigsb_4b_staterr[hbi], 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.)/2.,2. ) ) ;
+            syst_Rsigsb_3b[hbi] = sqrt( ::pow( correction_Rsigsb_3b_staterr[hbi], 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.)/2.,2. ) ) ;
+            syst_Rsigsb_2b[hbi] = 0. ;
 
          } else if ( closure_syst_option == 2 ) {
 
@@ -820,17 +849,42 @@
 
          } else if ( closure_syst_option == 3 ) {
 
-           //-- aggressive: mcstat only
-            syst_Rsigsb_4b[hbi] =  (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]) ;
-            syst_Rsigsb_3b[hbi] =  (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]) ;
-            syst_Rsigsb_2b[hbi] =  (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+////       //-- aggressive: mcstat only
+////        syst_Rsigsb_4b[hbi] =  (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+////        syst_Rsigsb_3b[hbi] =  (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+////        syst_Rsigsb_2b[hbi] =  (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]) ;
+
+            syst_Rsigsb_4b[hbi] = correction_Rsigsb_4b_staterr[hbi] ;
+            syst_Rsigsb_3b[hbi] = correction_Rsigsb_3b_staterr[hbi] ;
+            syst_Rsigsb_2b[hbi] = 0. ;
 
          } else if ( closure_syst_option == 4 ) {
 
-           //-- nominal: mcstat + full correction
-            syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.),2. ) ) ;
-            syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.),2. ) ) ;
-            syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.),2. ) ) ;
+////       //-- nominal: mcstat + full correction
+////        syst_Rsigsb_4b[hbi] = sqrt( ::pow( (Rsigsb_4b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.),2. ) ) ;
+////        syst_Rsigsb_3b[hbi] = sqrt( ::pow( (Rsigsb_3b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.),2. ) ) ;
+////        syst_Rsigsb_2b[hbi] = sqrt( ::pow( (Rsigsb_2b_err[hbi]/Rsigsb_4b_val[hbi]), 2. )  +  ::pow( (correction_Rsigsb_2b[hbi]-1.),2. ) ) ;
+
+            syst_Rsigsb_4b[hbi] = sqrt( ::pow( correction_Rsigsb_4b_staterr[hbi], 2. )  +  ::pow( (correction_Rsigsb_4b[hbi]-1.),2. ) ) ;
+            syst_Rsigsb_3b[hbi] = sqrt( ::pow( correction_Rsigsb_3b_staterr[hbi], 2. )  +  ::pow( (correction_Rsigsb_3b[hbi]-1.),2. ) ) ;
+            syst_Rsigsb_2b[hbi] = 0. ;
+
+         } else if ( closure_syst_option == 5 ) {
+
+           //-- larger of either full correction or mc stat error.
+            if ( fabs(correction_Rsigsb_4b[hbi]-1.) > correction_Rsigsb_4b_staterr[hbi] ) {
+               syst_Rsigsb_4b[hbi] = fabs(correction_Rsigsb_4b[hbi]-1.) ;
+            } else {
+               syst_Rsigsb_4b[hbi] = correction_Rsigsb_4b_staterr[hbi] ;
+            }
+            syst_Rsigsb_2b[hbi] = 0. ;
+
+            if ( fabs(correction_Rsigsb_3b[hbi]-1.) > correction_Rsigsb_3b_staterr[hbi] ) {
+               syst_Rsigsb_3b[hbi] = fabs(correction_Rsigsb_3b[hbi]-1.) ;
+            } else {
+               syst_Rsigsb_3b[hbi] = correction_Rsigsb_3b_staterr[hbi] ;
+            }
+            syst_Rsigsb_2b[hbi] = 0. ;
 
          } else {
 
@@ -839,6 +893,7 @@
             printf("   2  No closure syst.\n") ;
             printf("   3  MC stat error only.\n") ;
             printf("   4  MC stat error + full non-closure in quadrature.\n") ;
+            printf("   5  larger of MC stat error or full non-closure.\n" ) ;
             printf("\n\n\n") ;
 
             return ;
@@ -860,9 +915,23 @@
 
       } // hbi.
 
-      float correction_Rsigsb_4b_metbinsum  =  Rsigsb_4b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
-      float correction_Rsigsb_3b_metbinsum  =  Rsigsb_3b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
-      float correction_Rsigsb_2b_metbinsum  =  Rsigsb_2b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+      float correction_Rsigsb_4b_metbinsum  =  Rsigsb_4b_metbinsum_val / Rsigsb_2b_metbinsum_val ;
+      float correction_Rsigsb_3b_metbinsum  =  Rsigsb_3b_metbinsum_val / Rsigsb_2b_metbinsum_val ;
+      float correction_Rsigsb_2b_metbinsum  =  1.0 ;
+
+////  float correction_Rsigsb_4b_metbinsum  =  Rsigsb_4b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+////  float correction_Rsigsb_3b_metbinsum  =  Rsigsb_3b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+////  float correction_Rsigsb_2b_metbinsum  =  Rsigsb_2b_metbinsum_val / wave_Rsigsb_metbinsum_val ;
+
+      float correction_Rsigsb_4b_metbinsum_staterr = 1. ;
+      float correction_Rsigsb_3b_metbinsum_staterr = 1. ;
+
+      if ( Rsigsb_4b_metbinsum_val > 0. && Rsigsb_2b_metbinsum_val > 0. ) {
+         correction_Rsigsb_4b_metbinsum_staterr = correction_Rsigsb_4b_metbinsum * sqrt( ::pow( Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val, 2.) + ::pow( Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val, 2.) ) ;
+      }
+      if ( Rsigsb_3b_metbinsum_val > 0. && Rsigsb_2b_metbinsum_val > 0. ) {
+         correction_Rsigsb_3b_metbinsum_staterr = correction_Rsigsb_3b_metbinsum * sqrt( ::pow( Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val, 2.) + ::pow( Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val, 2.) ) ;
+      }
 
       float syst_Rsigsb_4b_metbinsum(0.) ;
       float syst_Rsigsb_3b_metbinsum(0.) ;
@@ -870,10 +939,14 @@
 
       if ( closure_syst_option == 1 ) {
 
-        //-- nominal: mcstat + 1/2 correction
-         syst_Rsigsb_4b_metbinsum  =  sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.)/2., 2. ) ) ;
-         syst_Rsigsb_3b_metbinsum  =  sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.)/2., 2. ) ) ;
-         syst_Rsigsb_2b_metbinsum  =  sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.)/2., 2. ) ) ;
+         syst_Rsigsb_4b_metbinsum = sqrt( ::pow( correction_Rsigsb_4b_metbinsum_staterr, 2.) + ::pow( (correction_Rsigsb_4b_metbinsum-1.)/2., 2. ) ) ;
+         syst_Rsigsb_3b_metbinsum = sqrt( ::pow( correction_Rsigsb_3b_metbinsum_staterr, 2.) + ::pow( (correction_Rsigsb_3b_metbinsum-1.)/2., 2. ) ) ;
+         syst_Rsigsb_4b_metbinsum = 0. ;
+
+////    //-- nominal: mcstat + 1/2 correction
+////     syst_Rsigsb_4b_metbinsum  =  sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.)/2., 2. ) ) ;
+////     syst_Rsigsb_3b_metbinsum  =  sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.)/2., 2. ) ) ;
+////     syst_Rsigsb_2b_metbinsum  =  sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.)/2., 2. ) ) ;
 
       } else if ( closure_syst_option == 2 ) {
 
@@ -884,17 +957,41 @@
 
       } else if ( closure_syst_option == 3 ) {
 
-        //-- aggressive: mcstat only
-         syst_Rsigsb_4b_metbinsum  =  Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val ;
-         syst_Rsigsb_3b_metbinsum  =  Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val ;
-         syst_Rsigsb_2b_metbinsum  =  Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val ;
+         syst_Rsigsb_4b_metbinsum =  correction_Rsigsb_4b_metbinsum_staterr ;
+         syst_Rsigsb_3b_metbinsum =  correction_Rsigsb_3b_metbinsum_staterr ;
+         syst_Rsigsb_4b_metbinsum = 0. ;
+
+////    //-- aggressive: mcstat only
+////     syst_Rsigsb_4b_metbinsum  =  Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val ;
+////     syst_Rsigsb_3b_metbinsum  =  Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val ;
+////     syst_Rsigsb_2b_metbinsum  =  Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val ;
 
       } else if ( closure_syst_option == 4 ) {
 
-        //-- nominal: mcstat + full correction
-         syst_Rsigsb_4b_metbinsum  =  sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.), 2. ) ) ;
-         syst_Rsigsb_3b_metbinsum  =  sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.), 2. ) ) ;
-         syst_Rsigsb_2b_metbinsum  =  sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.), 2. ) ) ;
+         syst_Rsigsb_4b_metbinsum = sqrt( ::pow( correction_Rsigsb_4b_metbinsum_staterr, 2.) + ::pow( (correction_Rsigsb_4b_metbinsum-1.), 2. ) ) ;
+         syst_Rsigsb_3b_metbinsum = sqrt( ::pow( correction_Rsigsb_3b_metbinsum_staterr, 2.) + ::pow( (correction_Rsigsb_3b_metbinsum-1.), 2. ) ) ;
+         syst_Rsigsb_4b_metbinsum = 0. ;
+
+////    //-- nominal: mcstat + full correction
+////     syst_Rsigsb_4b_metbinsum  =  sqrt( ::pow( (Rsigsb_4b_metbinsum_err/Rsigsb_4b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_4b_metbinsum-1.), 2. ) ) ;
+////     syst_Rsigsb_3b_metbinsum  =  sqrt( ::pow( (Rsigsb_3b_metbinsum_err/Rsigsb_3b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_3b_metbinsum-1.), 2. ) ) ;
+////     syst_Rsigsb_2b_metbinsum  =  sqrt( ::pow( (Rsigsb_2b_metbinsum_err/Rsigsb_2b_metbinsum_val), 2. ) + ::pow( (correction_Rsigsb_2b_metbinsum-1.), 2. ) ) ;
+
+      } else if ( closure_syst_option == 5 ) {
+
+         if ( fabs(correction_Rsigsb_4b_metbinsum-1.) > correction_Rsigsb_4b_metbinsum_staterr ) {
+            syst_Rsigsb_4b_metbinsum = fabs(correction_Rsigsb_4b_metbinsum-1.) ;
+         } else {
+            syst_Rsigsb_4b_metbinsum = correction_Rsigsb_4b_metbinsum_staterr ;
+         }
+
+         if ( fabs(correction_Rsigsb_3b_metbinsum-1.) > correction_Rsigsb_3b_metbinsum_staterr ) {
+            syst_Rsigsb_3b_metbinsum = fabs(correction_Rsigsb_3b_metbinsum-1.) ;
+         } else {
+            syst_Rsigsb_3b_metbinsum = correction_Rsigsb_3b_metbinsum_staterr ;
+         }
+
+         syst_Rsigsb_4b_metbinsum = 0. ;
 
       } else {
 
@@ -903,6 +1000,7 @@
          printf("   2  No closure syst.\n") ;
          printf("   3  MC stat error only.\n") ;
          printf("   4  MC stat error + full non-closure in quadrature.\n") ;
+         printf("   5  larger of MC stat error or full non-closure.\n" ) ;
          printf("\n\n\n") ;
 
          return ;
@@ -966,17 +1064,29 @@
 
       //-- Rsig/sb correction factors and systematics.
       for ( int mbi=1; mbi<=bins_of_met; mbi++ ) {
-         fprintf( outfile, "Rsigsb_corr_4b_met%d   %5.3f\n", mbi, correction_Rsigsb_4b[mbi] ) ;
+         if ( no_closure_correction ) {
+            fprintf( outfile, "Rsigsb_corr_4b_met%d   %5.3f\n", mbi, 1.0 ) ;
+         } else {
+            fprintf( outfile, "Rsigsb_corr_4b_met%d   %5.3f\n", mbi, correction_Rsigsb_4b[mbi] ) ;
+         }
          fprintf( outfile, "Rsigsb_syst_4b_met%d   %5.3f\n", mbi, syst_Rsigsb_4b[mbi] ) ;
       }
       if ( bins_of_met > 1 && use3b ) {
          for ( int mbi=1; mbi<=bins_of_met; mbi++ ) {
-            fprintf( outfile, "Rsigsb_corr_3b_met%d   %5.3f\n", mbi, correction_Rsigsb_3b[mbi] ) ;
+            if ( no_closure_correction ) {
+               fprintf( outfile, "Rsigsb_corr_3b_met%d   %5.3f\n", mbi, 1.0 ) ;
+            } else {
+               fprintf( outfile, "Rsigsb_corr_3b_met%d   %5.3f\n", mbi, correction_Rsigsb_3b[mbi] ) ;
+            }
             fprintf( outfile, "Rsigsb_syst_3b_met%d   %5.3f\n", mbi, syst_Rsigsb_3b[mbi] ) ;
          }
       }
       for ( int mbi=1; mbi<=bins_of_met; mbi++ ) {
-         fprintf( outfile, "Rsigsb_corr_2b_met%d   %5.3f\n", mbi, correction_Rsigsb_2b[mbi] ) ;
+         if ( no_closure_correction ) {
+            fprintf( outfile, "Rsigsb_corr_2b_met%d   %5.3f\n", mbi, 1.0 ) ;
+         } else {
+            fprintf( outfile, "Rsigsb_corr_2b_met%d   %5.3f\n", mbi, correction_Rsigsb_2b[mbi] ) ;
+         }
          fprintf( outfile, "Rsigsb_syst_2b_met%d   %5.3f\n", mbi, syst_Rsigsb_2b[mbi] ) ;
       }
 
@@ -984,20 +1094,32 @@
       char metbinsumstring[100] ;
       if ( bins_of_met == 4 ) { sprintf( metbinsumstring, "234" ) ; }
 
-      fprintf( outfile, "Rsigsb_corr_4b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_4b_metbinsum ) ;
+      if ( no_closure_correction ) {
+         fprintf( outfile, "Rsigsb_corr_4b_metbins%s   %5.3f\n", metbinsumstring, 1.0 ) ;
+      } else {
+         fprintf( outfile, "Rsigsb_corr_4b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_4b_metbinsum ) ;
+      }
       fprintf( outfile, "Rsigsb_syst_4b_metbins%s   %5.3f\n", metbinsumstring, syst_Rsigsb_4b_metbinsum ) ;
       if ( bins_of_met > 1 && use3b ) {
-         fprintf( outfile, "Rsigsb_corr_3b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_3b_metbinsum ) ;
+         if ( no_closure_correction ) {
+            fprintf( outfile, "Rsigsb_corr_3b_metbins%s   %5.3f\n", metbinsumstring, 1.0 ) ;
+         } else {
+            fprintf( outfile, "Rsigsb_corr_3b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_3b_metbinsum ) ;
+         }
          fprintf( outfile, "Rsigsb_syst_3b_metbins%s   %5.3f\n", metbinsumstring, syst_Rsigsb_3b_metbinsum ) ;
       }
-      fprintf( outfile, "Rsigsb_corr_2b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_2b_metbinsum ) ;
+      if ( no_closure_correction ) {
+         fprintf( outfile, "Rsigsb_corr_2b_metbins%s   %5.3f\n", metbinsumstring, 1.0 ) ;
+      } else {
+         fprintf( outfile, "Rsigsb_corr_2b_metbins%s   %5.3f\n", metbinsumstring, correction_Rsigsb_2b_metbinsum ) ;
+      }
       fprintf( outfile, "Rsigsb_syst_2b_metbins%s   %5.3f\n", metbinsumstring, syst_Rsigsb_2b_metbinsum ) ;
 
 
      //-- Trigger efficiency corrections, applied to susy signal counts only
 
       fprintf( outfile, "trig_eff_corr_metsig1_val    0.739\n" ) ;
-      fprintf( outfile, "trig_eff_corr_metsig1_err    0.016\n" ) ; //-- this is in the same units as the correction.  Multiplicitive error will be 0.016/0.739 = 0.022
+      fprintf( outfile, "trig_eff_corr_metsig1_err    0.016\n" ) ; //-- this is in the same units as the correction.  Multiplicitive error would be 0.016/0.739 = 0.022
 
       fprintf( outfile, "trig_eff_corr_metsig2_val    0.897\n" ) ;
       fprintf( outfile, "trig_eff_corr_metsig2_err    0.012\n" ) ;
@@ -1005,6 +1127,12 @@
       fprintf( outfile, "trig_eff_corr_metsig34_val   0.944\n" ) ;
       fprintf( outfile, "trig_eff_corr_metsig34_err   0.019\n" ) ;
 
+
+     //-- Luminosity uncertainty.
+      fprintf( outfile, "luminosity_uncertainty   0.044\n" ) ;
+
+     //-- BG sample comp
+      fprintf( outfile, "background_sample_comp   0.070\n" ) ;
 
 
      //-- give location of signal counts file

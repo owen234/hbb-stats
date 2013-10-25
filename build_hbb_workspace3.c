@@ -315,6 +315,36 @@
 
 
 
+     //-- lumi uncertainty
+      RooAbsReal* rv_lumi_syst(0x0) ;
+      sprintf( pname, "luminosity_uncertainty" ) ;
+      if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+      if ( syst_type == 1 ) {
+         rv_lumi_syst = makeGaussianConstraint( pname, 1.0, fileVal ) ;
+      } else if ( syst_type == 2 ) {
+         rv_lumi_syst = makeLognormalConstraint( pname, 1.0, fileVal ) ;
+      } else {
+         printf("\n\n *** Illegal syst_type %d\n\n", syst_type ) ; return ;
+      }
+
+
+     //-- background sample comp. syst
+      RooAbsReal* rv_bg_sample_comp_syst(0x0) ;
+      sprintf( pname, "background_sample_comp" ) ;
+      if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** error: can't find %s in %s\n\n", pname, infile ) ; return ; }
+      if ( syst_type == 1 ) {
+         rv_bg_sample_comp_syst = makeGaussianConstraint( pname, 1.0, fileVal ) ;
+      } else if ( syst_type == 2 ) {
+         rv_bg_sample_comp_syst = makeLognormalConstraint( pname, 1.0, fileVal ) ;
+      } else {
+         printf("\n\n *** Illegal syst_type %d\n\n", syst_type ) ; return ;
+      }
+
+
+
+
+
+
 
      //-- Finished reading input from file.
 
@@ -391,10 +421,10 @@
             rv_mu_bg_msb[nbi][mbi] -> Print() ;
 
 
-            sprintf( formula, "@0 * @1 * @2" ) ;
+            sprintf( formula, "@0 * @1 * @2 * @3" ) ;
             sprintf( pname, "mu_bg_%db_msig_met%d", nbi+2, mbi+1 ) ;
             printf( "  %s\n", pname ) ;
-            rv_mu_bg_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_Rsigsb_corr[nbi][mbi], *rv_R_msigmsb[mbi], *rv_mu_bg_msb[nbi][mbi] ) ) ;
+            rv_mu_bg_msig[nbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_bg_sample_comp_syst, *rv_Rsigsb_corr[nbi][mbi], *rv_R_msigmsb[mbi], *rv_mu_bg_msb[nbi][mbi] ) ) ;
             rv_mu_bg_msig[nbi][mbi] -> Print() ;
 
 
@@ -476,16 +506,16 @@
                rv_trig_eff_corr = rv_trig_eff_corr_metsig34 ;
             }
 
-            sprintf( formula, "@0 * @1 * @2 * @3 * @4" ) ;
+            sprintf( formula, "@0 * @1 * @2 * @3 * @4 * @5" ) ;
             sprintf( pname, "mu_sig_%s_msig_met%d_nobtagsyst", btag_catname[smcnbi], mbi+1 ) ;
             printf( "  %s, smcnbi=%d, mbi=%d \n", pname, smcnbi, mbi ) ;
-            rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_trig_eff_corr, *rv_sig_strength, *rfv_shape_syst_prod_msig, *smc_msig_mcstat_syst, *smc_msig ) ) ;
+            rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_lumi_syst, *rv_trig_eff_corr, *rv_sig_strength, *rfv_shape_syst_prod_msig, *smc_msig_mcstat_syst, *smc_msig ) ) ;
             rv_mu_sig_msig_nobtagsyst[smcnbi][mbi] -> Print() ;
 
-            sprintf( formula, "@0 * @1 * @2 * @3 * @4" ) ;
+            sprintf( formula, "@0 * @1 * @2 * @3 * @4 * @5" ) ;
             sprintf( pname, "mu_sig_%s_msb_met%d_nobtagsyst", btag_catname[smcnbi], mbi+1 ) ;
             printf( "  %s, smcnbi=%d, mbi=%d\n", pname, smcnbi, mbi ) ;
-            rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_trig_eff_corr, *rv_sig_strength, *rfv_shape_syst_prod_msb, *smc_msb_mcstat_syst, *smc_msb ) ) ;
+            rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] = new RooFormulaVar( pname, formula, RooArgSet( *rv_lumi_syst, *rv_trig_eff_corr, *rv_sig_strength, *rfv_shape_syst_prod_msb, *smc_msb_mcstat_syst, *smc_msb ) ) ;
             rv_mu_sig_msb_nobtagsyst[smcnbi][mbi] -> Print() ;
 
 
@@ -1297,7 +1327,7 @@
       for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
          printf(" met bin %d : ", mbi+1 ) ;
          for ( int smcnbi=sigmc_bins_of_nb-1; smcnbi>=0; smcnbi-- ) {
-            printf( "  %6.1f +/- %4.1f,  %6.1f +/- %4.1f    |",
+            printf( "  %6.2f +/- %4.2f,  %6.2f +/- %4.2f    |",
                  smc_msb_val[smcnbi][mbi] , smc_msb_err[smcnbi][mbi],
                  smc_msig_val[smcnbi][mbi], smc_msig_err[smcnbi][mbi] ) ;
          } // smcnbi.

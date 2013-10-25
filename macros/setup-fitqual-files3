@@ -3,7 +3,7 @@
 
    foreach sigmass ( 175 200 250 300 350 400 450 500 )
 
-      foreach csyst ( 4 )
+      foreach csyst ( 5 )
 
          echo sigmass $sigmass , csyst $csyst
 
