@@ -1118,8 +1118,8 @@
 
      //-- Trigger efficiency corrections, applied to susy signal counts only
 
-      fprintf( outfile, "trig_eff_corr_metsig1_val    0.739\n" ) ;
-      fprintf( outfile, "trig_eff_corr_metsig1_err    0.016\n" ) ; //-- this is in the same units as the correction.  Multiplicitive error would be 0.016/0.739 = 0.022
+      fprintf( outfile, "trig_eff_corr_metsig1_val    0.875\n" ) ;
+      fprintf( outfile, "trig_eff_corr_metsig1_err    0.019\n" ) ; //-- this is in the same units as the correction.  Multiplicitive error would be 0.016/0.739 = 0.022
 
       fprintf( outfile, "trig_eff_corr_metsig2_val    0.897\n" ) ;
       fprintf( outfile, "trig_eff_corr_metsig2_err    0.012\n" ) ;
