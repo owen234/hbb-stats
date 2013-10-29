@@ -39,6 +39,7 @@
 #include "TCanvas.h"
 #include "TLine.h"
 #include "TROOT.h"
+#include "TSystem.h"
 
 #include "RooStats/AsymptoticCalculator.h"
 #include "RooStats/HybridCalculator.h"
@@ -122,7 +123,8 @@ namespace RooStats {
                      int testStatType, 
                      bool useCLs,  
                      int npoints,
-                     const char * fileNameBase = 0 );
+                     const char * fileNameBase = 0,
+                     double poimin=0., double poimax=1., const char* outfilebase=0);
 
       void SetParameter(const char * name, const char * value);
       void SetParameter(const char * name, bool value);
@@ -265,6 +267,7 @@ StandardHypoTestInvDemo(const char * infile = 0,
                         double poimin = 0,  
                         double poimax = 5, 
                         int ntoys=1000,
+                        const char* outfilebase = "outputfiles/limit-output",
                         bool useNumberCounting = false,
                         const char * nuisPriorName = 0){
 /*
@@ -402,7 +405,7 @@ StandardHypoTestInvDemo(const char * infile = 0,
       }
    }		
   
-   calc.AnalyzeResult( r, calculatorType, testStatType, useCLs, npoints, infile );
+   calc.AnalyzeResult( r, calculatorType, testStatType, useCLs, npoints, infile, poimin, poimax, outfilebase );
   
    return;
 }
@@ -415,7 +418,8 @@ RooStats::HypoTestInvTool::AnalyzeResult( HypoTestInverterResult * r,
                                           int testStatType, 
                                           bool useCLs,  
                                           int npoints,
-                                          const char * fileNameBase ){
+                                          const char * fileNameBase,
+                                          double poimin, double poimax, const char* outfilebase ){
 
    // analyze result produced by the inverter, optionally save it in a file 
    
@@ -502,31 +506,37 @@ RooStats::HypoTestInvTool::AnalyzeResult( HypoTestInverterResult * r,
 
    // plot in a new canvas with style
    TString c1Name = TString::Format("%s_Scan",typeName.c_str());
-   TCanvas * c1 = new TCanvas(c1Name); 
+   TCanvas * c1 = new TCanvas(c1Name,"limit can1", 700, 500); 
    c1->SetLogy(false);
 
    plot->Draw("CLb 2CL");  // plot all and Clb
 
-   // if (useCLs) 
-   //    plot->Draw("CLb 2CL");  // plot all and Clb
-   // else 
-   //    plot->Draw("");  // plot all and Clb
+   gSystem -> Exec( "mkdir -p outputfiles" ) ;
+
+   char c1fname[10000] ;
+   sprintf( c1fname, "%s-limit-canvas1.pdf", outfilebase ) ;
+   printf( "\n\n Saving plots from canvas 1 in %s\n\n", c1fname ) ;
+   c1-> SaveAs( c1fname ) ;
+
   
    const int nEntries = r->ArraySize();
   
    // plot test statistics distributions for the two hypothesis 
    if (mPlotHypoTestResult) { 
-      TCanvas * c2 = new TCanvas();
-      if (nEntries > 1) { 
-         int ny = TMath::CeilNint(TMath::Sqrt(nEntries));
-         int nx = TMath::CeilNint(double(nEntries)/ny);
-         c2->Divide( nx,ny);
-      }
+      printf( " Creating output canvas c3.\n" ) ; fflush(stdout) ;
+      TCanvas * c3 = new TCanvas("c3","limit can3", 700, 500 ) ;
       for (int i=0; i<nEntries; i++) {
-         if (nEntries > 1) c2->cd(i+1);
+         printf(" working on plot %d\n", i ) ; fflush(stdout) ;
          SamplingDistPlot * pl = plot->MakeTestStatPlot(i);
          pl->SetLogYaxis(true);
-         pl->Draw();
+         printf(" Drawing plot in c3\n" ) ; fflush(stdout) ;
+         c3 -> cd() ;
+         pl->Draw() ;
+         float poival = poimin + i*(poimax-poimin)/(1.*nEntries) ;
+         char c3fname[10000] ;
+         sprintf( c3fname, "%s-tsdist-sigstr-%.1f.pdf", outfilebase, poival ) ;
+         printf("  Saving test stat plot %s\n", c3fname ) ; fflush(stdout) ;
+         c3 -> SaveAs( c3fname ) ;
       }
    }
 }

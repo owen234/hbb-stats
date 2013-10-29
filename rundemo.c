@@ -1,7 +1,8 @@
 
 
 
-void rundemo( const char* wsfile = "outputfiles/ws-nosig-250-1metbin.root", int calculatorType=3, float poiMax=1., float poiMin=0., int npoints=10, int ntoys=1000 ) {
+void rundemo( const char* wsfile = "outputfiles/ws-nosig-250-1metbin.root", int calculatorType=3, float poiMax=1., float poiMin=0., int npoints=10, int ntoys=1000,
+              const char* outfilebase = "outputfiles/limit-output" ) {
 
    gROOT->LoadMacro("StandardHypoTestInvDemo.C+") ;
 
@@ -16,7 +17,8 @@ void rundemo( const char* wsfile = "outputfiles/ws-nosig-250-1metbin.root", int 
                             npoints,
                             poiMin,
                             poiMax,
-                            ntoys ) ;
+                            ntoys,
+                            outfilebase ) ;
 
 
 }

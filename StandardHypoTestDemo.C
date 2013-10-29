@@ -362,10 +362,13 @@ void StandardHypoTestDemo(const char* infile = "",
    delete ropl; 
    delete profll;
 
+   HypoTestPlot * plot(0x0) ;
    if (calcType != 2) {
-      HypoTestPlot * plot = new HypoTestPlot(*htr,100);
+      plot = new HypoTestPlot(*htr,100);
       plot->SetLogYaxis(true);
+      TCanvas* can = new TCanvas("can","htr plot", 700, 500 ) ;
       plot->Draw();
+      can -> SaveAs( "outputfiles/signif-htr-plot.pdf" ) ;
    }
    else { 
       std::cout << "Asymptotic results " << std::endl;
@@ -373,6 +376,7 @@ void StandardHypoTestDemo(const char* infile = "",
    }
 
    float nsigma[5] ;
+   float nullpval[5] ;
 
    // look at expected significances 
    // found median of S+B distribution
@@ -395,9 +399,13 @@ void StandardHypoTestDemo(const char* infile = "",
          htExp.SetTestStatisticData( q[i] );
          double sig = -2  + i;      
          std::cout << " Expected p -value and significance at " << sig << " sigma = " 
-                   << htExp.NullPValue() << " significance " << htExp.Significance() << " sigma " << std::endl; 
+                   << htExp.NullPValue() << " significance " << htExp.Significance() << " sigma "
+                   << "  q = " << q[i]
+                   << "  p = " << p[i]
+                   << std::endl; 
          
          nsigma[i] = htExp.Significance() ;
+         nullpval[i] = htExp.NullPValue() ;
       }
    }
    else { 
@@ -410,11 +418,24 @@ void StandardHypoTestDemo(const char* infile = "",
                    << pval << " significance " << ROOT::Math::normal_quantile_c(pval,1) << " sigma " << std::endl; 
          
          nsigma[i] = ROOT::Math::normal_quantile_c(pval,1) ;
+         nullpval[i] = pval ;
       }
    }
 
-   printf("\n\n  owen: (-2s,-1s,m,1s,2s)  %.2f  %.2f  %.2f  %.2f  %.2f\n\n",
+   printf("\n\n  owen:std-dev(-2s,-1s,m,1s,2s)  %.2f  %.2f  %.2f  %.2f  %.2f\n\n",
          nsigma[0], nsigma[1], nsigma[2], nsigma[3], nsigma[4] ) ;
+
+   printf("\n\n  owen:pval(-2s,-1s,m,1s,2s)  %.6f  %.6f  %.6f  %.6f  %.6f\n\n",
+         nullpval[0], nullpval[1], nullpval[2], nullpval[3], nullpval[4] ) ;
+
+
+  //--- try saving to a file.
+   TFile outfile( "outputfiles/signif-output.root", "recreate" ) ;
+   htr -> Write() ;
+   //-- nfg -------
+   ///if ( plot != 0x0 ) { plot -> SetName( "htr_plot" ) ; plot -> Write() ; }
+   //-------------
+   outfile.Close() ;
 
 }
 
