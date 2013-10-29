@@ -1,7 +1,8 @@
 
 
 
-void rundemosignif( const char* wsfile = "outputfiles/ws-nosig-250-1metbin.root", int calculatorType=0, int nToys=5000 ) {
+void rundemosignif( const char* wsfile = "outputfiles/ws-nosig-250-1metbin.root", int calculatorType=0, int nToys=5000,
+                    const char* outfilebase = "outputfiles/significance" ) {
 
    gROOT->LoadMacro("StandardHypoTestDemo.C+") ;
 
@@ -12,7 +13,8 @@ void rundemosignif( const char* wsfile = "outputfiles/ws-nosig-250-1metbin.root"
                             "hbb_observed_rds",
                             calculatorType,
                             3,
-                            nToys ) ;
+                            nToys,
+                            outfilebase ) ;
 
 
 }

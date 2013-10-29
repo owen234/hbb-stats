@@ -34,6 +34,7 @@
 #include "TCanvas.h"
 #include "TLine.h"
 #include "TROOT.h"
+#include "TSystem.h"
 
 #include "RooStats/AsymptoticCalculator.h"
 #include "RooStats/HybridCalculator.h"
@@ -68,8 +69,9 @@ void StandardHypoTestDemo(const char* infile = "",
                           const char* dataName = "obsData", 
                           int calcType = 0, // 0 freq 1 hybrid, 2 asymptotic
                           int testStatType = 3,   // 0 LEP, 1 TeV, 2 LHC, 3 LHC - one sided
-                          int ntoys = 5000, 
-                          bool useNC = false, 
+                          int ntoys = 5000,
+                          const char* outfilebase = 0,
+                          bool useNC = false,
                           const char * nuisPriorName = 0)
 {
 
@@ -368,7 +370,10 @@ void StandardHypoTestDemo(const char* infile = "",
       plot->SetLogYaxis(true);
       TCanvas* can = new TCanvas("can","htr plot", 700, 500 ) ;
       plot->Draw();
-      can -> SaveAs( "outputfiles/signif-htr-plot.pdf" ) ;
+      gSystem -> Exec( "mkdir -p outputfiles" ) ;
+      char plotfile[10000] ;
+      sprintf( plotfile, "%s-significance-results.pdf", outfilebase ) ;
+      can -> SaveAs( plotfile ) ;
    }
    else { 
       std::cout << "Asymptotic results " << std::endl;
@@ -430,7 +435,9 @@ void StandardHypoTestDemo(const char* infile = "",
 
 
   //--- try saving to a file.
-   TFile outfile( "outputfiles/signif-output.root", "recreate" ) ;
+   char rootfile[10000] ;
+   sprintf( rootfile, "%s-signif-results.root", outfilebase ) ;
+   TFile outfile( rootfile, "recreate" ) ;
    htr -> Write() ;
    //-- nfg -------
    ///if ( plot != 0x0 ) { plot -> SetName( "htr_plot" ) ; plot -> Write() ; }

@@ -477,13 +477,17 @@ RooStats::HypoTestInvTool::AnalyzeResult( HypoTestInverterResult * r,
             mResultFileName += mMassValue.c_str();
             mResultFileName += "_";
          }
-    
+     
          TString name = fileNameBase; 
          name.Replace(0, name.Last('/')+1, "");
          mResultFileName += name;
       }
 
-      TFile * fileOut = new TFile(mResultFileName,"RECREATE");
+      char root_ofname[10000] ;
+      sprintf( root_ofname, "%s.root", outfilebase ) ;
+
+      //TFile * fileOut = new TFile(mResultFileName,"RECREATE");
+      TFile * fileOut = new TFile(root_ofname,"RECREATE");
       r->Write();
       fileOut->Close();                                                                     
    }   
