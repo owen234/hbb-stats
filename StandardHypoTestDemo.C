@@ -427,11 +427,11 @@ void StandardHypoTestDemo(const char* infile = "",
       }
    }
 
-   printf("\n\n  owen:std-dev(-2s,-1s,m,1s,2s)  %.2f  %.2f  %.2f  %.2f  %.2f\n\n",
-         nsigma[0], nsigma[1], nsigma[2], nsigma[3], nsigma[4] ) ;
+   printf("\n\n  owen:std-dev(obs,-2s,-1s,m,1s,2s)      %.2f        %.2f  %.2f  %.2f  %.2f  %.2f\n\n",
+         htr -> Significance(), nsigma[0], nsigma[1], nsigma[2], nsigma[3], nsigma[4] ) ;
 
-   printf("\n\n  owen:pval(-2s,-1s,m,1s,2s)  %.6f  %.6f  %.6f  %.6f  %.6f\n\n",
-         nullpval[0], nullpval[1], nullpval[2], nullpval[3], nullpval[4] ) ;
+   printf("\n\n  owen:pval(obs,-2s,-1s,m,1s,2s)     %.6f       %.6f  %.6f  %.6f  %.6f  %.6f\n\n",
+         htr -> NullPValue(), nullpval[0], nullpval[1], nullpval[2], nullpval[3], nullpval[4] ) ;
 
 
   //--- try saving to a file.
