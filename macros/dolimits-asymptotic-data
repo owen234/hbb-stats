@@ -1,0 +1,26 @@
+
+
+ set ntoy =  2000
+ set minmu = 0.10
+ set maxmu = 3.10
+ set npoints = 30
+
+  #-- toys
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-175.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-175-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-200.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-200-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-225.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-225-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-250.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-250-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-275.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-275-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-300.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-300-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-325.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-325-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-350.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-350-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-375.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-375-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-400.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-400-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-425.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-425-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-450.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-450-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-475.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-475-4metbin-w3b-asymptotic.log
+   root -b -q rundemo.c\(\"outputfiles/ws-data-unblind-sigmass-500.root\",3,$maxmu,$minmu,$npoints,$ntoy\) |& tee logfiles/limit-data-500-4metbin-w3b-asymptotic.log
+
+
+
+

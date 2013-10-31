@@ -557,7 +557,13 @@
             sprintf( pname, "mu_sig_%s_msig_met%d", btag_catname[to_smcnbi], mbi+1 ) ;
             rv_mu_sig_msig[to_smcnbi][mbi] = new RooFormulaVar( pname, formula, formulaArgs_msig ) ;
             rv_mu_sig_msig[to_smcnbi][mbi] -> Print() ;
-            if ( to_smcnbi == 0 ) { workspace.import( *rv_mu_sig_msig[to_smcnbi][mbi] ) ; } // this isn't used later so import it here.
+            if ( to_smcnbi == 0 ) {
+               RooAbsReal* rar = (RooAbsReal*) workspace.obj( rv_mu_sig_msig[to_smcnbi][mbi] -> GetName() ) ;
+               if ( rar == 0x0 ) {
+                  printf("\n importing %s into workspace.\n", rv_mu_sig_msig[to_smcnbi][mbi] -> GetName() ) ;
+                  workspace.import( *rv_mu_sig_msig[to_smcnbi][mbi], RecycleConflictNodes() ) ; // this isn't used later so import it here.
+               }
+            }
 
 
             RooRealVar* rrv_btag_SF_base_par = (RooRealVar*) workspace.obj( "prim_btag_SF_syst" ) ;
@@ -583,7 +589,13 @@
             sprintf( pname, "mu_sig_%s_msb_met%d", btag_catname[to_smcnbi], mbi+1 ) ;
             rv_mu_sig_msb[to_smcnbi][mbi] = new RooFormulaVar( pname, formula, formulaArgs_msb ) ;
             rv_mu_sig_msb[to_smcnbi][mbi] -> Print() ;
-            if ( to_smcnbi == 0x0 ) {  workspace.import( *rv_mu_sig_msb[to_smcnbi][mbi] ) ; } // this isn't used later so import it here.
+            if ( to_smcnbi == 0 ) {
+               RooAbsReal* rar = (RooAbsReal*) workspace.obj( rv_mu_sig_msb[to_smcnbi][mbi] -> GetName() ) ;
+               if ( rar == 0x0 ) {
+                  printf("\n importing %s into workspace.\n", rv_mu_sig_msb[to_smcnbi][mbi] -> GetName() ) ;
+                  workspace.import( *rv_mu_sig_msb[to_smcnbi][mbi], RecycleConflictNodes() ) ; // this isn't used later so import it here.
+               }
+            }
 
             {
                rrv_btag_SF_base_par -> setVal( 0. ) ;
@@ -778,7 +790,7 @@
 
       workspace.writeToFile( outfile ) ;
 
-  //////    makeBtagSFSystHists( workspace, outfile ) ;
+      makeBtagSFSystHists( workspace, outfile ) ;
 
 
    } // build_hbb_workspace3.
@@ -1553,6 +1565,8 @@
 
    void makeBtagSFSystHists( RooWorkspace& workspace, const char* outfile ) {
 
+      printf( "\n\n --- In makeBtagSFSystHists ------------------------\n\n") ; fflush(stdout) ;
+
       TFile hfile( outfile, "update" ) ;
 
       RooRealVar* sig_strength = (RooRealVar*) workspace.obj( "sig_strength" ) ;
@@ -1600,25 +1614,25 @@
 
             sprintf( pname, "mu_sig_%s_msig_met%d", btag_catname[smcnbi], mbi+1 ) ;
             RooFormulaVar* mu_sig = (RooFormulaVar*) workspace.obj( pname ) ;
-            printf("  %s\n", pname ) ;
-            mu_sig -> Print() ;
+            printf("\n  %s\n", pname ) ; fflush( stdout ) ;
             if ( mu_sig == 0x0 ) { printf("\n\n *** makeBtagSFSystHists : missing %s\n\n", pname ) ; return ; }
+            mu_sig -> Print() ;
 
             syst_par -> setVal( 0. ) ;
             val = mu_sig -> getVal() ;
-            printf(" nom val %.2f\n", val ) ;
+            printf(" nom val %.2f\n", val ) ; fflush( stdout ) ;
             hist_msig_nom -> SetBinContent( smcnbi+1, val ) ;
             hist_msig_nom -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
 
             syst_par -> setVal( -1. ) ;
             val = mu_sig -> getVal() ;
-            printf(" m1s val %.2f\n", val ) ;
+            printf(" m1s val %.2f\n", val ) ; fflush( stdout ) ;
             hist_msig_m1s -> SetBinContent( smcnbi+1, val ) ;
             hist_msig_m1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
 
             syst_par -> setVal( +1. ) ;
             val = mu_sig -> getVal() ;
-            printf(" p1s val %.2f\n", val ) ;
+            printf(" p1s val %.2f\n", val ) ; fflush( stdout ) ;
             hist_msig_p1s -> SetBinContent( smcnbi+1, val ) ;
             hist_msig_p1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
 
@@ -1626,25 +1640,25 @@
 
             sprintf( pname, "mu_sig_%s_msb_met%d", btag_catname[smcnbi], mbi+1 ) ;
             RooFormulaVar* mu_sb = (RooFormulaVar*) workspace.obj( pname ) ;
-            printf(" %s\n", pname ) ;
-            mu_sb -> Print() ;
+            printf("\n %s\n", pname ) ; fflush( stdout ) ;
             if ( mu_sb == 0x0 ) { printf("\n\n *** makeBtagSFSystHists : missing %s\n\n", pname ) ; return ; }
+            mu_sb -> Print() ;
 
             syst_par -> setVal( 0. ) ;
             val = mu_sb -> getVal() ;
-            printf(" nom val %.2f\n", val ) ;
+            printf(" nom val %.2f\n", val ) ; fflush( stdout ) ;
             hist_msb_nom -> SetBinContent( smcnbi+1, val ) ;
             hist_msb_nom -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
 
             syst_par -> setVal( -1. ) ;
             val = mu_sb -> getVal() ;
-            printf(" m1s val %.2f\n", val ) ;
+            printf(" m1s val %.2f\n", val ) ; fflush( stdout ) ;
             hist_msb_m1s -> SetBinContent( smcnbi+1, val ) ;
             hist_msb_m1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
 
             syst_par -> setVal( +1. ) ;
             val = mu_sb -> getVal() ;
-            printf(" p1s val %.2f\n", val ) ;
+            printf(" p1s val %.2f\n", val ) ; fflush( stdout ) ;
             hist_msb_p1s -> SetBinContent( smcnbi+1, val ) ;
             hist_msb_p1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
 
