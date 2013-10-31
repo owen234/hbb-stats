@@ -30,15 +30,15 @@
 
          char hname[1000] ;
 
-         sprintf( hname, "h_btagsfsyst_msb_met%d_nom", ci ) ;
+         sprintf( hname, "h_syst_btagSF_msb_met%d_nom", ci ) ;
          TH1F* hist_nom = (TH1F*) gDirectory -> FindObject( hname ) ;
          if ( hist_nom == 0x0 ) { printf("\n\n *** Can't find %s\n\n", hname ) ; return ; }
 
-         sprintf( hname, "h_btagsfsyst_msb_met%d_m1s", ci ) ;
+         sprintf( hname, "h_syst_btagSF_msb_met%d_m1s", ci ) ;
          TH1F* hist_m1s = (TH1F*) gDirectory -> FindObject( hname ) ;
          if ( hist_m1s == 0x0 ) { printf("\n\n *** Can't find %s\n\n", hname ) ; return ; }
 
-         sprintf( hname, "h_btagsfsyst_msb_met%d_p1s", ci ) ;
+         sprintf( hname, "h_syst_btagSF_msb_met%d_p1s", ci ) ;
          TH1F* hist_p1s = (TH1F*) gDirectory -> FindObject( hname ) ;
          if ( hist_p1s == 0x0 ) { printf("\n\n *** Can't find %s\n\n", hname ) ; return ; }
 
@@ -79,15 +79,15 @@
 
          char hname[1000] ;
 
-         sprintf( hname, "h_btagsfsyst_msig_met%d_nom", ci ) ;
+         sprintf( hname, "h_syst_btagSF_msig_met%d_nom", ci ) ;
          TH1F* hist_nom = (TH1F*) gDirectory -> FindObject( hname ) ;
          if ( hist_nom == 0x0 ) { printf("\n\n *** Can't find %s\n\n", hname ) ; return ; }
 
-         sprintf( hname, "h_btagsfsyst_msig_met%d_m1s", ci ) ;
+         sprintf( hname, "h_syst_btagSF_msig_met%d_m1s", ci ) ;
          TH1F* hist_m1s = (TH1F*) gDirectory -> FindObject( hname ) ;
          if ( hist_m1s == 0x0 ) { printf("\n\n *** Can't find %s\n\n", hname ) ; return ; }
 
-         sprintf( hname, "h_btagsfsyst_msig_met%d_p1s", ci ) ;
+         sprintf( hname, "h_syst_btagSF_msig_met%d_p1s", ci ) ;
          TH1F* hist_p1s = (TH1F*) gDirectory -> FindObject( hname ) ;
          if ( hist_p1s == 0x0 ) { printf("\n\n *** Can't find %s\n\n", hname ) ; return ; }
 

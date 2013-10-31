@@ -61,7 +61,8 @@
 
    bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace ) ;
 
-   void makeBtagSFSystHists( RooWorkspace& workspace, const char* outfile ) ;
+   void makeSystHists( RooWorkspace& workspace, const char* syst_name, const char* syst_var_par, const char* outfile ) ;
+   void makeSystHistsMultiPar( RooWorkspace& workspace, const char* syst_name, int npars, const char syst_var_pars[][100], const char* outfile ) ;
 
   //===========================================================================================
 
@@ -790,7 +791,37 @@
 
       workspace.writeToFile( outfile ) ;
 
-      makeBtagSFSystHists( workspace, outfile ) ;
+
+
+
+      makeSystHists( workspace, "btagSF", "prim_btag_SF_syst", outfile ) ;
+      makeSystHists( workspace, "lumi", "prim_luminosity_uncertainty", outfile ) ;
+      makeSystHists( workspace, "bgcomp", "prim_background_sample_comp", outfile ) ;
+
+      for ( int ssi=0; ssi<n_shape_systs; ssi++ ) {
+         char spname[100] ;
+         sprintf( spname, "prim_shape_syst_%s", shape_syst_names[ssi] ) ;
+         makeSystHists( workspace, shape_syst_names[ssi], spname, outfile ) ;
+      } // ssi.
+
+
+      int npars(0) ;
+      char syst_var_pars[100][100] ;
+
+      sprintf( syst_var_pars[npars++], "prim_trig_eff_corr_metsig1" ) ;
+      sprintf( syst_var_pars[npars++], "prim_trig_eff_corr_metsig2" ) ;
+      sprintf( syst_var_pars[npars++], "prim_trig_eff_corr_metsig34" ) ;
+      makeSystHistsMultiPar( workspace, "trig", npars, syst_var_pars, outfile ) ;
+
+      npars = 0 ;
+      for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+         for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {  //--- this is 0 = no-tag, 1 = 2b, 2 = 3b, 3 = 4b
+            sprintf( syst_var_pars[npars++], "prim_syst_sig_eff_mc_stats_msig_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+            sprintf( syst_var_pars[npars++], "prim_syst_sig_eff_mc_stats_msb_met%d_%s", mbi+1, btag_catname[smcnbi] ) ;
+         } // smcnbi
+      } // mbi
+      makeSystHistsMultiPar( workspace, "mcstat", npars, syst_var_pars, outfile ) ;
+
 
 
    } // build_hbb_workspace3.
@@ -1563,14 +1594,14 @@
 
  //===============================================================================================================
 
-   void makeBtagSFSystHists( RooWorkspace& workspace, const char* outfile ) {
+   void makeSystHists( RooWorkspace& workspace, const char* syst_name, const char* syst_var_par, const char* outfile ) {
 
-      printf( "\n\n --- In makeBtagSFSystHists ------------------------\n\n") ; fflush(stdout) ;
+      printf( "\n\n --- In makeSystHists for %s ------------------------\n\n", syst_name ) ; fflush(stdout) ;
 
       TFile hfile( outfile, "update" ) ;
 
       RooRealVar* sig_strength = (RooRealVar*) workspace.obj( "sig_strength" ) ;
-      if ( sig_strength == 0x0 ) { printf("\n\n *** makeBtagSFSystHists : missing sig_strength\n\n" ) ; return ; }
+      if ( sig_strength == 0x0 ) { printf("\n\n *** makeSystHists : missing sig_strength\n\n" ) ; return ; }
       sig_strength -> setVal( 1.0 ) ;
 
       for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
@@ -1578,34 +1609,34 @@
          char hname[1000] ;
          char htitle[1000] ;
 
-         sprintf( hname, "h_btagsfsyst_msig_met%d_nom", mbi+1 ) ;
-         sprintf( htitle, "Nbtag cat, btag SF syst, SIG, METsig%d, nominal", mbi+1 ) ;
+         sprintf( hname, "h_syst_%s_msig_met%d_nom", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SIG, METsig%d, nominal", syst_name, mbi+1 ) ;
          TH1F* hist_msig_nom = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
 
-         sprintf( hname, "h_btagsfsyst_msig_met%d_m1s", mbi+1 ) ;
-         sprintf( htitle, "Nbtag cat, btag SF syst, SIG, METsig%d, -1 sigma", mbi+1 ) ;
+         sprintf( hname, "h_syst_%s_msig_met%d_m1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SIG, METsig%d, -1 sigma", syst_name, mbi+1 ) ;
          TH1F* hist_msig_m1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
 
-         sprintf( hname, "h_btagsfsyst_msig_met%d_p1s", mbi+1 ) ;
-         sprintf( htitle, "Nbtag cat, btag SF syst, SIG, METsig%d, +1 sigma", mbi+1 ) ;
+         sprintf( hname, "h_syst_%s_msig_met%d_p1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SIG, METsig%d, +1 sigma", syst_name, mbi+1 ) ;
          TH1F* hist_msig_p1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
 
 
-         sprintf( hname, "h_btagsfsyst_msb_met%d_nom", mbi+1 ) ;
-         sprintf( htitle, "Nbtag cat, btag SF syst, SB, METsig%d, nominal", mbi+1 ) ;
+         sprintf( hname, "h_syst_%s_msb_met%d_nom", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SB, METsig%d, nominal", syst_name, mbi+1 ) ;
          TH1F* hist_msb_nom = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
 
-         sprintf( hname, "h_btagsfsyst_msb_met%d_m1s", mbi+1 ) ;
-         sprintf( htitle, "Nbtag cat, btag SF syst, SB, METsig%d, -1 sigma", mbi+1 ) ;
+         sprintf( hname, "h_syst_%s_msb_met%d_m1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SB, METsig%d, -1 sigma", syst_name, mbi+1 ) ;
          TH1F* hist_msb_m1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
 
-         sprintf( hname, "h_btagsfsyst_msb_met%d_p1s", mbi+1 ) ;
-         sprintf( htitle, "Nbtag cat, btag SF syst, SB, METsig%d, +1 sigma", mbi+1 ) ;
+         sprintf( hname, "h_syst_%s_msb_met%d_p1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SB, METsig%d, +1 sigma", syst_name, mbi+1 ) ;
          TH1F* hist_msb_p1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
 
 
-         RooRealVar* syst_par = (RooRealVar*) workspace.obj( "prim_btag_SF_syst" ) ;
-         if ( syst_par == 0x0 ) { printf("\n\n *** makeBtagSFSystHists : missing syst par prim_btag_SF_syst\n\n" ) ; return ; }
+         RooRealVar* syst_par = (RooRealVar*) workspace.obj( syst_var_par ) ;
+         if ( syst_par == 0x0 ) { printf("\n\n *** makeSystHists : missing syst par %s\n\n", syst_var_par ) ; return ; }
 
          for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
 
@@ -1615,7 +1646,7 @@
             sprintf( pname, "mu_sig_%s_msig_met%d", btag_catname[smcnbi], mbi+1 ) ;
             RooFormulaVar* mu_sig = (RooFormulaVar*) workspace.obj( pname ) ;
             printf("\n  %s\n", pname ) ; fflush( stdout ) ;
-            if ( mu_sig == 0x0 ) { printf("\n\n *** makeBtagSFSystHists : missing %s\n\n", pname ) ; return ; }
+            if ( mu_sig == 0x0 ) { printf("\n\n *** makeSystHists : missing %s\n\n", pname ) ; return ; }
             mu_sig -> Print() ;
 
             syst_par -> setVal( 0. ) ;
@@ -1641,7 +1672,7 @@
             sprintf( pname, "mu_sig_%s_msb_met%d", btag_catname[smcnbi], mbi+1 ) ;
             RooFormulaVar* mu_sb = (RooFormulaVar*) workspace.obj( pname ) ;
             printf("\n %s\n", pname ) ; fflush( stdout ) ;
-            if ( mu_sb == 0x0 ) { printf("\n\n *** makeBtagSFSystHists : missing %s\n\n", pname ) ; return ; }
+            if ( mu_sb == 0x0 ) { printf("\n\n *** makeSystHists : missing %s\n\n", pname ) ; return ; }
             mu_sb -> Print() ;
 
             syst_par -> setVal( 0. ) ;
@@ -1667,6 +1698,9 @@
 
          } // smcnbi.
 
+        //-- reset it to the nominal val.
+         syst_par -> setVal( 0. ) ;
+
          hist_msig_nom -> Write() ;
          hist_msig_m1s -> Write() ;
          hist_msig_p1s -> Write() ;
@@ -1679,12 +1713,139 @@
 
       hfile.Close() ;
 
-   } // makeShapeSystHists
+   } // makeSystHists
 
  //===============================================================================================================
 
+   void makeSystHistsMultiPar( RooWorkspace& workspace, const char* syst_name, int npars, const char syst_var_pars[][100], const char* outfile ) {
 
 
+      printf( "\n\n --- In makeSystHistsMultiPar for %s ------------------------\n\n", syst_name ) ; fflush(stdout) ;
+
+      for ( int pi=0; pi<npars; pi++ ) {
+         printf( "   %s : %s\n", syst_name, syst_var_pars[pi] ) ;
+      }
+
+      TFile hfile( outfile, "update" ) ;
+
+      RooRealVar* sig_strength = (RooRealVar*) workspace.obj( "sig_strength" ) ;
+      if ( sig_strength == 0x0 ) { printf("\n\n *** makeSystHistsMultiPar : missing sig_strength\n\n" ) ; return ; }
+      sig_strength -> setVal( 1.0 ) ;
+
+      for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+
+         char hname[1000] ;
+         char htitle[1000] ;
+
+         sprintf( hname, "h_syst_%s_msig_met%d_nom", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SIG, METsig%d, nominal", syst_name, mbi+1 ) ;
+         TH1F* hist_msig_nom = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
+
+         sprintf( hname, "h_syst_%s_msig_met%d_m1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SIG, METsig%d, -1 sigma", syst_name, mbi+1 ) ;
+         TH1F* hist_msig_m1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
+
+         sprintf( hname, "h_syst_%s_msig_met%d_p1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SIG, METsig%d, +1 sigma", syst_name, mbi+1 ) ;
+         TH1F* hist_msig_p1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
+
+
+         sprintf( hname, "h_syst_%s_msb_met%d_nom", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SB, METsig%d, nominal", syst_name, mbi+1 ) ;
+         TH1F* hist_msb_nom = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
+
+         sprintf( hname, "h_syst_%s_msb_met%d_m1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SB, METsig%d, -1 sigma", syst_name, mbi+1 ) ;
+         TH1F* hist_msb_m1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
+
+         sprintf( hname, "h_syst_%s_msb_met%d_p1s", syst_name, mbi+1 ) ;
+         sprintf( htitle, "Nbtag cat, %s syst, SB, METsig%d, +1 sigma", syst_name, mbi+1 ) ;
+         TH1F* hist_msb_p1s = new TH1F( hname, htitle, 4, 0.5, 4.5 ) ;
+
+
+         RooRealVar* syst_par[100] ;
+         for ( int pi=0; pi<npars; pi++ ) {
+            syst_par[pi] = (RooRealVar*) workspace.obj( syst_var_pars[pi] ) ;
+            if ( syst_par[pi] == 0x0 ) { printf("\n\n *** makeSystHistsMultiPar : missing syst par %s\n\n", syst_var_pars[pi] ) ; }
+         }
+
+         for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
+
+            char pname[1000] ;
+            double val ;
+
+            sprintf( pname, "mu_sig_%s_msig_met%d", btag_catname[smcnbi], mbi+1 ) ;
+            RooFormulaVar* mu_sig = (RooFormulaVar*) workspace.obj( pname ) ;
+            printf("\n  %s\n", pname ) ; fflush( stdout ) ;
+            if ( mu_sig == 0x0 ) { printf("\n\n *** makeSystHistsMultiPar : missing %s\n\n", pname ) ; return ; }
+            mu_sig -> Print() ;
+
+            for ( int pi=0; pi<npars; pi++ ) { if ( syst_par[pi] != 0 ) { syst_par[pi] -> setVal( 0. ) ; } }
+            val = mu_sig -> getVal() ;
+            printf(" nom val %.2f\n", val ) ; fflush( stdout ) ;
+            hist_msig_nom -> SetBinContent( smcnbi+1, val ) ;
+            hist_msig_nom -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
+
+            for ( int pi=0; pi<npars; pi++ ) { if ( syst_par[pi] != 0 ) { syst_par[pi] -> setVal( -1. ) ; } }
+            val = mu_sig -> getVal() ;
+            printf(" m1s val %.2f\n", val ) ; fflush( stdout ) ;
+            hist_msig_m1s -> SetBinContent( smcnbi+1, val ) ;
+            hist_msig_m1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
+
+            for ( int pi=0; pi<npars; pi++ ) { if ( syst_par[pi] != 0 ) { syst_par[pi] -> setVal( +1. ) ; } }
+            val = mu_sig -> getVal() ;
+            printf(" p1s val %.2f\n", val ) ; fflush( stdout ) ;
+            hist_msig_p1s -> SetBinContent( smcnbi+1, val ) ;
+            hist_msig_p1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
+
+
+
+            sprintf( pname, "mu_sig_%s_msb_met%d", btag_catname[smcnbi], mbi+1 ) ;
+            RooFormulaVar* mu_sb = (RooFormulaVar*) workspace.obj( pname ) ;
+            printf("\n %s\n", pname ) ; fflush( stdout ) ;
+            if ( mu_sb == 0x0 ) { printf("\n\n *** makeSystHistsMultiPar : missing %s\n\n", pname ) ; return ; }
+            mu_sb -> Print() ;
+
+            for ( int pi=0; pi<npars; pi++ ) { if ( syst_par[pi] != 0 ) { syst_par[pi] -> setVal( 0. ) ; } }
+            val = mu_sb -> getVal() ;
+            printf(" nom val %.2f\n", val ) ; fflush( stdout ) ;
+            hist_msb_nom -> SetBinContent( smcnbi+1, val ) ;
+            hist_msb_nom -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
+
+            for ( int pi=0; pi<npars; pi++ ) { if ( syst_par[pi] != 0 ) { syst_par[pi] -> setVal( -1 ) ; } }
+            val = mu_sb -> getVal() ;
+            printf(" m1s val %.2f\n", val ) ; fflush( stdout ) ;
+            hist_msb_m1s -> SetBinContent( smcnbi+1, val ) ;
+            hist_msb_m1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
+
+            for ( int pi=0; pi<npars; pi++ ) { if ( syst_par[pi] != 0 ) { syst_par[pi] -> setVal( +1 ) ; } }
+            val = mu_sb -> getVal() ;
+            printf(" p1s val %.2f\n", val ) ; fflush( stdout ) ;
+            hist_msb_p1s -> SetBinContent( smcnbi+1, val ) ;
+            hist_msb_p1s -> GetXaxis() -> SetBinLabel( smcnbi+1, btag_catname[smcnbi] ) ;
+
+
+
+
+         } // smcnbi.
+
+        //-- reset them to their nominal values.
+         for ( int pi=0; pi<npars; pi++ ) { if ( syst_par[pi] != 0 ) { syst_par[pi] -> setVal( 0. ) ; } }
+
+         hist_msig_nom -> Write() ;
+         hist_msig_m1s -> Write() ;
+         hist_msig_p1s -> Write() ;
+
+         hist_msb_nom -> Write() ;
+         hist_msb_m1s -> Write() ;
+         hist_msb_p1s -> Write() ;
+
+      } // mbi.
+
+      hfile.Close() ;
+
+
+   } // makeSystHistsMultiPar
 
 
 
