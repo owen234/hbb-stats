@@ -796,7 +796,6 @@
 
       makeSystHists( workspace, "btagSF", "prim_btag_SF_syst", outfile ) ;
       makeSystHists( workspace, "lumi", "prim_luminosity_uncertainty", outfile ) ;
-      makeSystHists( workspace, "bgcomp", "prim_background_sample_comp", outfile ) ;
 
       for ( int ssi=0; ssi<n_shape_systs; ssi++ ) {
          char spname[100] ;

@@ -1430,10 +1430,16 @@
       char format1[10000] ;
       char format2[10000] ;
       if ( use3b ) {
-         sprintf( format1, "        -           -              -        %%4.2f                -           -              -           -                -           -              -           -      " ) ;
+        //--- Oct 31, 2013: why was I associating this with the SB observable instead of the SIG observable?  Switching to SIG.
+       //sprintf( format1, "        -           -              -        %%4.2f                -           -              -           -                -           -              -           -      " ) ;
+       //sprintf( format2, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
+         sprintf( format1, "        -          %%4.2f            -           -                -           -              -           -                -           -              -           -      " ) ;
          sprintf( format2, "        -           -              -           -                -           -              -           -                -           -              -           -      " ) ;
       } else {
-         sprintf( format1, "        -           -              -        %%4.2f                -           -              -           -      " ) ;
+        //--- Oct 31, 2013: why was I associating this with the SB observable instead of the SIG observable?  Switching to SIG.
+       //sprintf( format1, "        -           -              -        %%4.2f                -           -              -           -      " ) ;
+       //sprintf( format2, "        -           -              -           -                -           -              -           -      " ) ;
+         sprintf( format1, "        -          %%4.2f            -           -                -           -              -           -      " ) ;
          sprintf( format2, "        -           -              -           -                -           -              -           -      " ) ;
       }
 
