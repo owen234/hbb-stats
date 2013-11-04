@@ -1,0 +1,23 @@
+
+
+
+
+
+
+  mkdir -p logfiles
+  mkdir -p outputfiles
+
+   set use3b = 1
+   set syst_type = 2
+   set combine_top_metbins = 0
+   set drop_first_met_bin = 0
+   set csyst = 5
+
+   foreach sigmass ( 150 175 200 225 250 275 300 325 350 375 400 425 450 475 500 )
+
+      root -b -q build_hbb_workspace3.c+\(\"input-files1/input-data-unblind.txt\",\"outputfiles/ws-data-unblind-sigmass-$sigmass.root\",$sigmass,$use3b,$combine_top_metbins,$syst_type,$drop_first_met_bin\) |& tee logfiles/ws-data-unblind-sigmass-$sigmass.log
+
+      root -b -q fitqual_plots.c+\(\"outputfiles/ws-data-unblind-sigmass-$sigmass.root\"\) |& tee logfiles/fitqual-data-unblind-sigmass-$sigmass.log
+
+   end
+

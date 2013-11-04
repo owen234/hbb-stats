@@ -1139,7 +1139,7 @@
    //--------------------
    // fprintf( outfile, "signal_counts_file  outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\n" ) ;
    //--------------------
-      fprintf( outfile, "signal_counts_file  test-input-files1/sigcounts.TChiHH.txt\n" ) ;
+      fprintf( outfile, "signal_counts_file  input-files1/sigcounts.TChiHH.txt\n" ) ;
    //--------------------
 
      //-- give list of shape systematic files here.
@@ -1148,17 +1148,17 @@
    // fprintf( outfile, "shape_syst_ALL    test-input-files1/test-syst-file3.txt\n") ;
    //--------------------
       fprintf( outfile, "list_of_shape_systs   ISR  JER  JES  PDF  PU\n" ) ;
-      fprintf( outfile, "shape_syst_ISR    test-input-files1/sigsystematics.TChiHH.ISR.txt\n") ;
-      fprintf( outfile, "shape_syst_JER    test-input-files1/sigsystematics.TChiHH.JER.txt\n") ;
-      fprintf( outfile, "shape_syst_JES    test-input-files1/sigsystematics.TChiHH.JES.txt\n") ;
-      fprintf( outfile, "shape_syst_PDF    test-input-files1/sigsystematics.TChiHH.PDF.txt\n") ;
-      fprintf( outfile, "shape_syst_PU     test-input-files1/sigsystematics.TChiHH.PU.txt\n") ;
+      fprintf( outfile, "shape_syst_ISR    input-files1/sigsystematics.TChiHH.ISR.txt\n") ;
+      fprintf( outfile, "shape_syst_JER    input-files1/sigsystematics.TChiHH.JER.txt\n") ;
+      fprintf( outfile, "shape_syst_JES    input-files1/sigsystematics.TChiHH.JES.txt\n") ;
+      fprintf( outfile, "shape_syst_PDF    input-files1/sigsystematics.TChiHH.PDF.txt\n") ;
+      fprintf( outfile, "shape_syst_PU     input-files1/sigsystematics.TChiHH.PU.txt\n") ;
    //--------------------
 
 
      //-- give location of btag SF syst file.
-      fprintf( outfile, "btag_SF_frac_matrix_file_SIG      test-input-files1/syst-btag-sf-SIG.txt\n" ) ;
-      fprintf( outfile, "btag_SF_frac_matrix_file_SB       test-input-files1/syst-btag-sf-SB.txt\n" ) ;
+      fprintf( outfile, "btag_SF_frac_matrix_file_SIG      input-files1/syst-btag-sf-SIG.txt\n" ) ;
+      fprintf( outfile, "btag_SF_frac_matrix_file_SB       input-files1/syst-btag-sf-SB.txt\n" ) ;
 
 
 
