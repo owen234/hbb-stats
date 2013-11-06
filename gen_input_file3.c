@@ -1472,7 +1472,7 @@
       }
 
       if ( bins_of_met >= 4 ) {
-         fprintf( outfile_lands, "closure_m2       lnN    " ) ;
+         fprintf( outfile_lands, "closure_m4       lnN    " ) ;
          fprintf( outfile_lands, "%s", format2 ) ;
          fprintf( outfile_lands, "%s", format2 ) ;
          fprintf( outfile_lands, "%s", format2 ) ;
