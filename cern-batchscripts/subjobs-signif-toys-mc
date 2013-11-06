@@ -1,0 +1,78 @@
+#!/bin/tcsh
+
+#
+#  Source this file from the command line.  
+#
+#    That is, do this
+#
+#       source subjobs-signif-toys-mc
+#
+#    Not this
+#
+#       ./subjobs-signif-toys-mc
+#
+
+  which root
+
+  if (  $status == 1 ) then
+     echo set up root first
+     exit -1
+  endif
+
+
+
+#-----------------
+# set ntoy =  500
+# set outputdir = hbb-signif-mc0
+# set batchlogdir = batchlogs-signif-mc0
+# set outfilebase = signif-mc
+# set queuename = 1nd
+#-----------------
+# set ntoy =  10000
+# set outputdir = hbb-signif-mc1
+# set batchlogdir = batchlogs-signif-mc1
+# set outfilebase = signif-mc
+# set queuename = 1nd
+#-----------------
+# set ntoy =  5000
+# set outputdir = hbb-signif-mc2b
+# set batchlogdir = batchlogs-signif-mc2b
+# set outfilebase = signif-mc
+# set queuename = 1nd
+#-----------------
+# set ntoy =  20000
+# set outputdir = hbb-signif-mc3b
+# set batchlogdir = batchlogs-signif-mc3b
+# set outfilebase = signif-mc
+# set queuename = 2nd
+#-----------------
+  set ntoy =  60000
+  set outputdir = hbb-signif-mc4
+  set batchlogdir = batchlogs-signif-mc4
+  set outfilebase = signif-mc
+  set queuename = 2nd
+#-----------------
+
+
+  mkdir -p $batchlogdir
+
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-150.log    jobscript-signif.csh    150    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-150-withMSB1.root    $ntoy     $outputdir  $outfilebase-150
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-175.log    jobscript-signif.csh    175    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-175-withMSB1.root    $ntoy     $outputdir  $outfilebase-175
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-200.log    jobscript-signif.csh    200    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-200-withMSB1.root    $ntoy     $outputdir  $outfilebase-200
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-225.log    jobscript-signif.csh    225    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-225-withMSB1.root    $ntoy     $outputdir  $outfilebase-225
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-250.log    jobscript-signif.csh    250    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-250-withMSB1.root    $ntoy     $outputdir  $outfilebase-250
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-275.log    jobscript-signif.csh    275    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-275-withMSB1.root    $ntoy     $outputdir  $outfilebase-275
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-300.log    jobscript-signif.csh    300    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-300-withMSB1.root    $ntoy     $outputdir  $outfilebase-300
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-325.log    jobscript-signif.csh    325    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-325-withMSB1.root    $ntoy     $outputdir  $outfilebase-325
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-350.log    jobscript-signif.csh    350    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-350-withMSB1.root    $ntoy     $outputdir  $outfilebase-350
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-375.log    jobscript-signif.csh    375    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-375-withMSB1.root    $ntoy     $outputdir  $outfilebase-375
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-400.log    jobscript-signif.csh    400    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-400-withMSB1.root    $ntoy     $outputdir  $outfilebase-400
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-425.log    jobscript-signif.csh    425    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-425-withMSB1.root    $ntoy     $outputdir  $outfilebase-425
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-450.log    jobscript-signif.csh    450    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-450-withMSB1.root    $ntoy     $outputdir  $outfilebase-450
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-475.log    jobscript-signif.csh    475    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-475-withMSB1.root    $ntoy     $outputdir  $outfilebase-475
+  bsub    -q $queuename    -o $batchlogdir/signif-mc-500.log    jobscript-signif.csh    500    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-500-withMSB1.root    $ntoy     $outputdir  $outfilebase-500
+
+
+
+
+

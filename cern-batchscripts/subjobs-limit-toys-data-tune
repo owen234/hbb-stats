@@ -1,0 +1,72 @@
+#!/bin/tcsh
+
+#
+#  Source this file from the command line.  
+#
+#    That is, do this
+#
+#       source subjobs-limit-toys-data
+#
+#    Not this
+#
+#       ./subjobs-limit-toys-data
+#
+
+  which root
+
+  if (  $status == 1 ) then
+     echo set up root first
+     exit -1
+  endif
+
+#-----------------
+# set ntoy =  500
+# set npoints = 10
+# set outputdir = hbb-limits-data-tune0
+# set batchlogdir = batchlogs-data-tune0
+# set outfilebase = limit-data
+# set queuename = 1nd
+#-----------------
+# set ntoy =  2000
+# set npoints = 10
+# set outputdir = hbb-limits-data-tune1b
+# set batchlogdir = batchlogs-data-tune1b
+# set outfilebase = limit-data
+# set queuename = 1nd
+#-----------------
+# set ntoy =  4000
+# set npoints = 10
+# set outputdir = hbb-limits-data-tune2b
+# set batchlogdir = batchlogs-data-tune2b
+# set outfilebase = limit-data
+# set queuename = 2nd
+#-----------------
+  set ntoy =  6000
+  set npoints = 10
+  set outputdir = hbb-limits-data-tune3
+  set batchlogdir = batchlogs-data-tune3
+  set outfilebase = limit-data
+  set queuename = 2nd
+#-----------------
+
+
+  mkdir -p $batchlogdir
+
+  bsub    -q $queuename    -o $batchlogdir/limit-data-150.log    jobscript-limit.csh    150    outputfiles/ws-data-unblind-sigmass-150.root    $ntoy 2.0 20.0 $npoints    $outputdir  $outfilebase-150
+  bsub    -q $queuename    -o $batchlogdir/limit-data-175.log    jobscript-limit.csh    175    outputfiles/ws-data-unblind-sigmass-175.root    $ntoy 1.0 10.0 $npoints    $outputdir  $outfilebase-175
+  bsub    -q $queuename    -o $batchlogdir/limit-data-200.log    jobscript-limit.csh    200    outputfiles/ws-data-unblind-sigmass-200.root    $ntoy 0.5  3.5 $npoints    $outputdir  $outfilebase-200
+  bsub    -q $queuename    -o $batchlogdir/limit-data-225.log    jobscript-limit.csh    225    outputfiles/ws-data-unblind-sigmass-225.root    $ntoy 0.5  3.5 $npoints    $outputdir  $outfilebase-225
+  bsub    -q $queuename    -o $batchlogdir/limit-data-250.log    jobscript-limit.csh    250    outputfiles/ws-data-unblind-sigmass-250.root    $ntoy 0.3  3.0 $npoints    $outputdir  $outfilebase-250
+  bsub    -q $queuename    -o $batchlogdir/limit-data-275.log    jobscript-limit.csh    275    outputfiles/ws-data-unblind-sigmass-275.root    $ntoy 0.3  3.0 $npoints    $outputdir  $outfilebase-275
+  bsub    -q $queuename    -o $batchlogdir/limit-data-300.log    jobscript-limit.csh    300    outputfiles/ws-data-unblind-sigmass-300.root    $ntoy 0.3  2.5 $npoints    $outputdir  $outfilebase-300
+  bsub    -q $queuename    -o $batchlogdir/limit-data-325.log    jobscript-limit.csh    325    outputfiles/ws-data-unblind-sigmass-325.root    $ntoy 0.3  2.5 $npoints    $outputdir  $outfilebase-325
+  bsub    -q $queuename    -o $batchlogdir/limit-data-350.log    jobscript-limit.csh    350    outputfiles/ws-data-unblind-sigmass-350.root    $ntoy 0.3  2.5 $npoints    $outputdir  $outfilebase-350
+  bsub    -q $queuename    -o $batchlogdir/limit-data-375.log    jobscript-limit.csh    375    outputfiles/ws-data-unblind-sigmass-375.root    $ntoy 0.3  2.5 $npoints    $outputdir  $outfilebase-375
+  bsub    -q $queuename    -o $batchlogdir/limit-data-400.log    jobscript-limit.csh    400    outputfiles/ws-data-unblind-sigmass-400.root    $ntoy 0.4  3.0 $npoints    $outputdir  $outfilebase-400
+  bsub    -q $queuename    -o $batchlogdir/limit-data-425.log    jobscript-limit.csh    425    outputfiles/ws-data-unblind-sigmass-425.root    $ntoy 0.4  3.0 $npoints    $outputdir  $outfilebase-425
+  bsub    -q $queuename    -o $batchlogdir/limit-data-450.log    jobscript-limit.csh    450    outputfiles/ws-data-unblind-sigmass-450.root    $ntoy 0.6  3.0 $npoints    $outputdir  $outfilebase-450
+  bsub    -q $queuename    -o $batchlogdir/limit-data-475.log    jobscript-limit.csh    475    outputfiles/ws-data-unblind-sigmass-475.root    $ntoy 0.6  3.0 $npoints    $outputdir  $outfilebase-475
+  bsub    -q $queuename    -o $batchlogdir/limit-data-500.log    jobscript-limit.csh    500    outputfiles/ws-data-unblind-sigmass-500.root    $ntoy 0.8  4.0 $npoints    $outputdir  $outfilebase-500
+
+
+

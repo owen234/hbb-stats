@@ -1,0 +1,51 @@
+#!/bin/tcsh
+
+#
+#  Source this file from the command line.  
+#
+#    That is, do this
+#
+#       source subjobs-signif-toys-mc
+#
+#    Not this
+#
+#       ./subjobs-signif-toys-mc
+#
+
+  which root
+
+  if (  $status == 1 ) then
+     echo set up root first
+     exit -1
+  endif
+
+
+
+#-----------------
+# set ntoy =  10000
+# set outputdir = hbb-nullsignif-mc1
+# set batchlogdir = batchlogs-nullsignif-mc1
+# set queuename = 1nd
+#-----------------
+  set ntoy =  5000
+  set outputdir = hbb-nullsignif-mc2
+  set batchlogdir = batchlogs-nullsignif-mc2
+  set queuename = 1nd
+#-----------------
+
+
+  mkdir -p $batchlogdir
+
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-175.log    jobscript-signif.csh    175    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-175-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-200.log    jobscript-signif.csh    200    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-200-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-250.log    jobscript-signif.csh    250    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-250-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-300.log    jobscript-signif.csh    300    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-300-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-350.log    jobscript-signif.csh    350    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-350-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-400.log    jobscript-signif.csh    400    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-400-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-450.log    jobscript-signif.csh    450    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-450-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-500.log    jobscript-signif.csh    500    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-500-withMSB1.root    $ntoy     $outputdir
+
+
+
+
+

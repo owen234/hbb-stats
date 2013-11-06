@@ -1,0 +1,71 @@
+#!/bin/tcsh
+
+#
+#  Source this file from the command line.  
+#
+#    That is, do this
+#
+#       source subjobs-signif-toys-data
+#
+#    Not this
+#
+#       ./subjobs-signif-toys-data
+#
+
+  which root
+
+  if (  $status == 1 ) then
+     echo set up root first
+     exit -1
+  endif
+
+
+
+#-----------------
+# set ntoy =  500
+# set outputdir = hbb-signif-data0
+# set batchlogdir = batchlogs-signif-data0
+# set outfilebase = signif-data
+# set queuename = 1nd
+#-----------------
+# set ntoy =  10000
+# set outputdir = hbb-signif-data1
+# set batchlogdir = batchlogs-signif-data1
+# set outfilebase = signif-data
+# set queuename = 1nd
+#-----------------
+# set ntoy =  5000
+# set outputdir = hbb-signif-data2b
+# set batchlogdir = batchlogs-signif-data2b
+# set outfilebase = signif-data
+# set queuename = 1nd
+#-----------------
+  set ntoy =  20000
+  set outputdir = hbb-signif-data3
+  set batchlogdir = batchlogs-signif-data3
+  set outfilebase = signif-data
+  set queuename = 2nd
+#-----------------
+
+
+  mkdir -p $batchlogdir
+
+  bsub    -q $queuename    -o $batchlogdir/signif-data-150.log    jobscript-signif.csh    150    outputfiles/ws-data-unblind-sigmass-150.root    $ntoy     $outputdir  $outfilebase-150
+  bsub    -q $queuename    -o $batchlogdir/signif-data-175.log    jobscript-signif.csh    175    outputfiles/ws-data-unblind-sigmass-175.root    $ntoy     $outputdir  $outfilebase-175
+  bsub    -q $queuename    -o $batchlogdir/signif-data-200.log    jobscript-signif.csh    200    outputfiles/ws-data-unblind-sigmass-200.root    $ntoy     $outputdir  $outfilebase-200
+  bsub    -q $queuename    -o $batchlogdir/signif-data-225.log    jobscript-signif.csh    225    outputfiles/ws-data-unblind-sigmass-225.root    $ntoy     $outputdir  $outfilebase-225
+  bsub    -q $queuename    -o $batchlogdir/signif-data-250.log    jobscript-signif.csh    250    outputfiles/ws-data-unblind-sigmass-250.root    $ntoy     $outputdir  $outfilebase-250
+  bsub    -q $queuename    -o $batchlogdir/signif-data-275.log    jobscript-signif.csh    275    outputfiles/ws-data-unblind-sigmass-275.root    $ntoy     $outputdir  $outfilebase-275
+  bsub    -q $queuename    -o $batchlogdir/signif-data-300.log    jobscript-signif.csh    300    outputfiles/ws-data-unblind-sigmass-300.root    $ntoy     $outputdir  $outfilebase-300
+  bsub    -q $queuename    -o $batchlogdir/signif-data-325.log    jobscript-signif.csh    325    outputfiles/ws-data-unblind-sigmass-325.root    $ntoy     $outputdir  $outfilebase-325
+  bsub    -q $queuename    -o $batchlogdir/signif-data-350.log    jobscript-signif.csh    350    outputfiles/ws-data-unblind-sigmass-350.root    $ntoy     $outputdir  $outfilebase-350
+  bsub    -q $queuename    -o $batchlogdir/signif-data-375.log    jobscript-signif.csh    375    outputfiles/ws-data-unblind-sigmass-375.root    $ntoy     $outputdir  $outfilebase-375
+  bsub    -q $queuename    -o $batchlogdir/signif-data-400.log    jobscript-signif.csh    400    outputfiles/ws-data-unblind-sigmass-400.root    $ntoy     $outputdir  $outfilebase-400
+  bsub    -q $queuename    -o $batchlogdir/signif-data-425.log    jobscript-signif.csh    425    outputfiles/ws-data-unblind-sigmass-425.root    $ntoy     $outputdir  $outfilebase-425
+  bsub    -q $queuename    -o $batchlogdir/signif-data-450.log    jobscript-signif.csh    450    outputfiles/ws-data-unblind-sigmass-450.root    $ntoy     $outputdir  $outfilebase-450
+  bsub    -q $queuename    -o $batchlogdir/signif-data-475.log    jobscript-signif.csh    475    outputfiles/ws-data-unblind-sigmass-475.root    $ntoy     $outputdir  $outfilebase-475
+  bsub    -q $queuename    -o $batchlogdir/signif-data-500.log    jobscript-signif.csh    500    outputfiles/ws-data-unblind-sigmass-500.root    $ntoy     $outputdir  $outfilebase-500
+
+
+
+

@@ -1,0 +1,76 @@
+#!/bin/tcsh
+
+#
+#  Source this file from the command line.  
+#
+#    That is, do this
+#
+#       source subjobs-limit-toys-mc
+#
+#    Not this
+#
+#       ./subjobs-limit-toys-mc
+#
+
+  which root
+
+  if (  $status == 1 ) then
+     echo set up root first
+     exit -1
+  endif
+
+
+
+#-----------------
+# set ntoy =  500
+# set npoints = 10
+# set outputdir = hbb-limits-mc-tune0
+# set batchlogdir = batchlogs-mc-tune0
+# set outfilebase = limit-mc
+# set queuename = 1nd
+#-----------------
+# set ntoy =  2000
+# set npoints = 10
+# set outputdir = hbb-limits-mc-tune1b
+# set batchlogdir = batchlogs-mc-tune1b
+# set outfilebase = limit-mc
+# set queuename = 1nd
+#-----------------
+# set ntoy =  4000
+# set npoints = 10
+# set outputdir = hbb-limits-mc-tune2b
+# set batchlogdir = batchlogs-mc-tune2b
+# set outfilebase = limit-mc
+# set queuename = 2nd
+#-----------------
+  set ntoy =  6000
+  set npoints = 10
+  set outputdir = hbb-limits-mc-tune3b
+  set batchlogdir = batchlogs-mc-tune3b
+  set outfilebase = limit-mc
+  set queuename = 2nd
+#-----------------
+
+
+  mkdir -p $batchlogdir
+
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-150.log    jobscript-limit.csh    150    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-150-withMSB1.root    $ntoy   1.0 10.0  $npoints  $outputdir  $outfilebase-150
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-175.log    jobscript-limit.csh    175    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-175-withMSB1.root    $ntoy   1.0 10.0  $npoints  $outputdir  $outfilebase-175
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-200.log    jobscript-limit.csh    200    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-200-withMSB1.root    $ntoy   0.5  3.5  $npoints  $outputdir  $outfilebase-200
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-225.log    jobscript-limit.csh    225    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-225-withMSB1.root    $ntoy   0.5  3.5  $npoints  $outputdir  $outfilebase-225
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-250.log    jobscript-limit.csh    250    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-250-withMSB1.root    $ntoy   0.3  3.0  $npoints  $outputdir  $outfilebase-250
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-275.log    jobscript-limit.csh    275    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-275-withMSB1.root    $ntoy   0.3  3.0  $npoints  $outputdir  $outfilebase-275
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-300.log    jobscript-limit.csh    300    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-300-withMSB1.root    $ntoy   0.3  2.5  $npoints  $outputdir  $outfilebase-300
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-325.log    jobscript-limit.csh    325    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-325-withMSB1.root    $ntoy   0.3  2.5  $npoints  $outputdir  $outfilebase-325
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-350.log    jobscript-limit.csh    350    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-350-withMSB1.root    $ntoy   0.3  2.5  $npoints  $outputdir  $outfilebase-350
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-375.log    jobscript-limit.csh    375    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-375-withMSB1.root    $ntoy   0.3  2.5  $npoints  $outputdir  $outfilebase-375
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-400.log    jobscript-limit.csh    400    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-400-withMSB1.root    $ntoy   0.4  3.0  $npoints  $outputdir  $outfilebase-400
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-425.log    jobscript-limit.csh    425    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-425-withMSB1.root    $ntoy   0.4  3.0  $npoints  $outputdir  $outfilebase-425
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-450.log    jobscript-limit.csh    450    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-450-withMSB1.root    $ntoy   0.6  3.0  $npoints  $outputdir  $outfilebase-450
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-475.log    jobscript-limit.csh    475    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-475-withMSB1.root    $ntoy   0.6  3.0  $npoints  $outputdir  $outfilebase-475
+  bsub    -q $queuename    -o $batchlogdir/limit-mc-500.log    jobscript-limit.csh    500    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-500-withMSB1.root    $ntoy   0.8  4.0  $npoints  $outputdir  $outfilebase-500
+
+
+
+
+
