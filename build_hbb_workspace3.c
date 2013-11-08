@@ -164,12 +164,24 @@
             rv_N_msig[nbi][mbi] -> setConstant( kTRUE ) ;
             observedParametersList -> add( *rv_N_msig[nbi][mbi] ) ;
 
+            //--- Save input val without Nint so that they can be retrieved later for toy generation means.
+            sprintf( pname, "N_%db_msig_met%d_realVal", nbi+2, mbi+1 ) ;
+            RooConstVar rcv_msig( pname, pname, fileVal ) ;
+            workspace.import( rcv_msig ) ;
+
+
             sprintf( pname, "N_%db_msb_met%d", nbi+2, mbi+1 ) ;
             if ( !getFileValue( infile, pname, fileVal ) ) { printf("\n\n *** Error.  Can't find %s\n\n", pname ) ; return ; }
             rv_N_msb[nbi][mbi] = new RooRealVar( pname, pname, 0., 1.e6 ) ;
             rv_N_msb[nbi][mbi] -> setVal( TMath::Nint(fileVal) ) ;
             rv_N_msb[nbi][mbi] -> setConstant( kTRUE ) ;
             observedParametersList -> add( *rv_N_msb[nbi][mbi] ) ;
+
+            //--- Save input val without Nint so that they can be retrieved later for toy generation means.
+            sprintf( pname, "N_%db_msb_met%d_realVal", nbi+2, mbi+1 ) ;
+            RooConstVar rcv_msb( pname, pname, fileVal ) ;
+            workspace.import( rcv_msb ) ;
+
 
             if ( (!combine_top_metbins) || mbi==0 ) {
 
