@@ -193,10 +193,14 @@
       double fit_sig_strength_err_for_pull ;
 
 
+      gSystem->Exec("mkdir -p outputfiles") ;
+      TFile f( output_root_file, "recreate") ;
+
 
       TTree* tt(0x0) ;
 
       tt = new TTree("toytt", "Toy TTree" ) ;
+      tt -> SetAutoFlush(100) ;
 
       tt->Branch( "fit_cov_qual",  &fit_cov_qual,  "fit_cov_qual/I"  ) ;
       tt->Branch( "true_ssi",  &true_ssi,  "true_ssi/I"  ) ;
@@ -204,7 +208,6 @@
       tt->Branch( "fit_sig_strength_val",  &fit_sig_strength_val,  "fit_sig_strength_val/D"  ) ;
       tt->Branch( "fit_sig_strength_err",  &fit_sig_strength_err,  "fit_sig_strength_err/D"  ) ;
       tt->Branch( "fit_sig_strength_err_for_pull",  &fit_sig_strength_err_for_pull,  "fit_sig_strength_err_for_pull/D"  ) ;
-
 
       for ( int ssvi=0; ssvi<n_ssvals; ssvi++ ) {
 
@@ -273,8 +276,6 @@
 
      } // ssvi.
 
-     gSystem->Exec("mkdir -p outputfiles") ;
-     TFile f( output_root_file, "recreate") ;
      tt->Write() ;
      f.Close() ;
 
