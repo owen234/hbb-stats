@@ -25,7 +25,8 @@
 
       TChain* sigmc_chain = new TChain( "reducedTree" ) ;
 
-      sigmc_chain -> Add( "../reduced-trees-slim-oct22-v71-1-pj-s/*TChiHH_2b2b*.root" ) ;
+      //////sigmc_chain -> Add( "../reduced-trees-slim-oct22-v71-1-pj-s/*TChiHH_2b2b*.root" ) ;
+      sigmc_chain -> Add( "../reduced-trees-jan08-v71-7-pj/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to500_mLSP-1_TuneZ2star_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V19-v1_AODSIM_UCSB1992_v71-slim.root" ) ;
 
 
       printf("\n\n Setting up cuts.\n\n") ;

@@ -28,7 +28,7 @@
 #include "histio.c"
 
 #include "scan_sigstrength.c"
-#include "covmat_plot.c"
+//#include "covmat_plot.c"
 
 
   using namespace RooFit;
@@ -114,7 +114,7 @@
       RooFitResult* fitResult = likelihood->fitTo( *rds, Save(true), PrintLevel(3) ) ;
       fitResult->Print() ;
 
-      covmat_plot( fitResult, "test" ) ;
+      //covmat_plot( fitResult, "test" ) ;
 
 
       char hname[1000] ;

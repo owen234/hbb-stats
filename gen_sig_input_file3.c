@@ -13,7 +13,8 @@
    TChain* sigchain ;
 
    /////float dataIntLumiIPB(20000.) ;
-   float dataIntLumiIPB(19399.) ;
+   ///float dataIntLumiIPB(19399.) ;
+   float dataIntLumiIPB(19300.) ;
 
    double met_bin_edges_4bins[5] ;
 
@@ -26,7 +27,8 @@
 
    void gen_sig_input_file3( const char* outfilename = "outputfiles/susy-signal-counts.txt",
                             const char* metvarname = "METsig",
-                            bool usePUweight = false
+                            bool usePUweight = false,
+                            bool isHH = true
                            ) {
 
       const int bins_of_met = 4 ;
@@ -95,11 +97,9 @@
       //// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-july11-2013-pt20" ;
       //// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-sept17-2013-v71-1s" ;
       //// char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-slim-oct08-2013-v71-5b" ;
-      char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-oct12-2013-v17-5b" ;
-
-      printf("\n\n\n   Reduced tree directory: %s\n\n\n", rtdir ) ;
-
-      char pathandfile[10000] ;
+      ///////char rtdir[10000] = "/Users/owen/work/cms/hadronic-susy-bjets/hbb/reduced-trees-skim-oct12-2013-v17-5b" ;
+      ////// printf("\n\n\n   Reduced tree directory: %s\n\n\n", rtdir ) ;
+      /////  char pathandfile[10000] ;
 
       sigchain = new TChain("reducedTree") ;
 
@@ -108,14 +108,23 @@
  ///  sigchain -> Add( pathandfile ) ;
 
      //--- new (official) signal MC.
-      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to325_mLSP-1to195_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1872_v71-skim-slimskim.root", rtdir ) ;
-      sigchain -> Add( pathandfile ) ;
-      sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-350to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1871_v71-skim-slimskim.root", rtdir ) ;
-      sigchain -> Add( pathandfile ) ;
+   // sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to325_mLSP-1to195_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1872_v71-skim-slimskim.root", rtdir ) ;
+   // sigchain -> Add( pathandfile ) ;
+   // sprintf( pathandfile, "%s/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-350to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1871_v71-skim-slimskim.root", rtdir ) ;
+   // sigchain -> Add( pathandfile ) ;
+
+     //-- fullsim
+      char infile[10000] ;
+      //-- HH
+    //sprintf( infile, "../reduced-trees-jan08-v71-7-pj/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiHH_2b2b_2J_mChargino-130to500_mLSP-1_TuneZ2star_8TeV-madgraph-tauola_Summer12_DR53X-PU_S10_START53_V19-v1_AODSIM_UCSB1992_v71-slim.root" ) ;
+      //-- ZH
+      sprintf( infile, "../reduced-trees-jan08-v71-7-pj/reducedTree.JES0_JER0_PFMETTypeI_METunc0_PUunc0_hpt20.SMS-TChiZH_ZccbbHbb_2J_mChargino-130to500_mLSP-1to370_TuneZ2star_8TeV-madgraph-tauola_Summer12-START53_V19_FSIM-v1_AODSIM_UCSB1873_v71-slim.root" ) ;
+      sigchain -> Add( infile ) ;
 
       const int max_sig_points(100) ;
       float signal_weight[max_sig_points] ;
       float sigmass[max_sig_points] ;
+      float prod_Xsec[max_sig_points] ;
 
       int nsigpoints(0) ;
 
@@ -145,23 +154,63 @@
 
 
     //+++ This table is for the official production files in SMS-TChiHH_2b2b files.
-      sigmass[nsigpoints] = 130. ;  signal_weight[nsigpoints] = 2.1319e-05 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 150. ;  signal_weight[nsigpoints] = 7.1267e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 175. ;  signal_weight[nsigpoints] = 8.0680e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 200. ;  signal_weight[nsigpoints] = 4.9270e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 225. ;  signal_weight[nsigpoints] = 3.1318e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 250. ;  signal_weight[nsigpoints] = 5.0604e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 275. ;  signal_weight[nsigpoints] = 3.4774e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 300. ;  signal_weight[nsigpoints] = 2.3687e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 325. ;  signal_weight[nsigpoints] = 1.6850e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 350. ;  signal_weight[nsigpoints] = 2.1626e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 375. ;  signal_weight[nsigpoints] = 1.6090e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 400. ;  signal_weight[nsigpoints] = 1.1710e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 425. ;  signal_weight[nsigpoints] = 0.8738e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 450. ;  signal_weight[nsigpoints] = 0.6714e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 475. ;  signal_weight[nsigpoints] = 0.5033e-07 ;  nsigpoints++ ;
-      sigmass[nsigpoints] = 500. ;  signal_weight[nsigpoints] = 0.3873e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 130. ;  signal_weight[nsigpoints] = 2.1319e-05 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 150. ;  signal_weight[nsigpoints] = 7.1267e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 175. ;  signal_weight[nsigpoints] = 8.0680e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 200. ;  signal_weight[nsigpoints] = 4.9270e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 225. ;  signal_weight[nsigpoints] = 3.1318e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 250. ;  signal_weight[nsigpoints] = 5.0604e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 275. ;  signal_weight[nsigpoints] = 3.4774e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 300. ;  signal_weight[nsigpoints] = 2.3687e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 325. ;  signal_weight[nsigpoints] = 1.6850e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 350. ;  signal_weight[nsigpoints] = 2.1626e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 375. ;  signal_weight[nsigpoints] = 1.6090e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 400. ;  signal_weight[nsigpoints] = 1.1710e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 425. ;  signal_weight[nsigpoints] = 0.8738e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 450. ;  signal_weight[nsigpoints] = 0.6714e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 475. ;  signal_weight[nsigpoints] = 0.5033e-07 ;  nsigpoints++ ;
+  //  sigmass[nsigpoints] = 500. ;  signal_weight[nsigpoints] = 0.3873e-07 ;  nsigpoints++ ;
 
+    //-- Xsec in pb.
+      sigmass[nsigpoints] = 130 ;   prod_Xsec[nsigpoints] =   3.248  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 150 ;   prod_Xsec[nsigpoints] =   1.876  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 175 ;   prod_Xsec[nsigpoints] =   1.027  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 200 ;   prod_Xsec[nsigpoints] =   0.608  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 225 ;   prod_Xsec[nsigpoints] =   0.377  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 250 ;   prod_Xsec[nsigpoints] =   0.244  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 275 ;   prod_Xsec[nsigpoints] =   0.162  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 300 ;   prod_Xsec[nsigpoints] =   0.111  ; nsigpoints++ ;
+      sigmass[nsigpoints] = 325 ;   prod_Xsec[nsigpoints] =   0.0779 ; nsigpoints++ ;
+      sigmass[nsigpoints] = 350 ;   prod_Xsec[nsigpoints] =   0.0553 ; nsigpoints++ ;
+      sigmass[nsigpoints] = 375 ;   prod_Xsec[nsigpoints] =   0.0401 ; nsigpoints++ ;
+      sigmass[nsigpoints] = 400 ;   prod_Xsec[nsigpoints] =   0.0294 ; nsigpoints++ ;
+      sigmass[nsigpoints] = 425 ;   prod_Xsec[nsigpoints] =   0.0218 ; nsigpoints++ ;
+      sigmass[nsigpoints] = 450 ;   prod_Xsec[nsigpoints] =   0.0163 ; nsigpoints++ ;
+      sigmass[nsigpoints] = 475 ;   prod_Xsec[nsigpoints] =   0.0123 ; nsigpoints++ ;
+      sigmass[nsigpoints] = 500 ;   prod_Xsec[nsigpoints] =   0.0094 ; nsigpoints++ ;
+
+      TFile* root_if = new TFile( infile, "read" ) ;
+      TH2D* h_ngen = (TH2D*) root_if -> Get( "scanSMSngen" ) ;
+      if ( h_ngen == 0x0 ) { printf("\n\n *** Can't find scanSMSngen hist in input file : %s\n\n", infile ) ; return ; }
+
+      printf("\n\n Getting generated number of events for %d mass points.\n", nsigpoints ) ;
+      fflush(stdout) ;
+      for ( int pi=0; pi<nsigpoints; pi++ ) {
+         int hbin = h_ngen -> GetXaxis() -> FindBin( sigmass[pi] ) ;
+         double ngen = h_ngen -> GetBinContent( hbin, 1 ) ;
+         double bfprod(0.) ;
+         if ( isHH ) {
+            bfprod = 0.561 * 0.561 ;  // BF(H->bb)^2
+         } else {
+            bfprod = 0.561 * 0.271 ;  // BF(H->bb)*BF(Z->bb,cc)
+         }
+         signal_weight[pi] = 0. ;
+         if ( ngen > 0 ) {
+            //signal_weight[pi] = ( dataIntLumiIPB * prod_Xsec[pi] * bfprod ) / ngen ;
+            signal_weight[pi] = ( prod_Xsec[pi] * bfprod ) / ngen ;
+         }
+         printf("   m = %.0f,  Xsec = %.4f,  Ngen = %7.0f,  weight = %.5f\n", sigmass[pi], prod_Xsec[pi], ngen, signal_weight[pi] ) ;
+      } // pi.
 
    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
