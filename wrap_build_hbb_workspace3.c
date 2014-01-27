@@ -7,14 +7,15 @@
                               bool use3b = true,
                               bool combine_top_metbins = false,
                               int arg_syst_type = 2, // 1 = Gaussian, 2 = log-normal
-                              bool drop_first_met_bin = false
+                              bool drop_first_met_bin = false,
+                              float chi_to_H_bf = 1.0
                              ) {
 
      gROOT->LoadMacro("RooPosDefCorrGauss.cxx+") ;
      gROOT->LoadMacro("RooAsymAbsProd.cxx+") ;
      gROOT->LoadMacro("build_hbb_workspace3.c+") ;
 
-     build_hbb_workspace3( infile, outfile, sig_mass, use3b, combine_top_metbins, arg_syst_type, drop_first_met_bin ) ;
+     build_hbb_workspace3( infile, outfile, sig_mass, use3b, combine_top_metbins, arg_syst_type, drop_first_met_bin, chi_to_H_bf ) ;
 
 
   }

@@ -59,7 +59,7 @@
 
    bool setupBtagSFFracMatrix( const char* infracfile, float sig_mass, const char* postfix, RooWorkspace& workspace ) ;
 
-   bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace ) ;
+   bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace, const char* zh_counts_file, float chi_to_H_bf ) ;
 
    void makeSystHists( RooWorkspace& workspace, const char* syst_name, const char* syst_var_par, const char* outfile ) ;
    void makeSystHistsMultiPar( RooWorkspace& workspace, const char* syst_name, int npars, const char syst_var_pars[][100], const char* outfile ) ;
@@ -72,7 +72,8 @@
                               bool use3b = true,
                               bool combine_top_metbins = false,
                               int arg_syst_type = 2, // 1 = Gaussian, 2 = log-normal
-                              bool drop_first_met_bin = false
+                              bool drop_first_met_bin = false,
+                              float chi_to_H_bf = 1.0
                              ) {
 
 
@@ -132,10 +133,22 @@
          printf("\n\n *** Can't find input susy counts file: signal_counts_file line of %s.\n\n", infile ) ;
          return ;
       }
-      if ( !readSignalCounts( susy_counts_filename, sig_mass, workspace ) ) {
+      char zh_counts_filename[10000] ;
+      if ( !getFileStringValue( infile, "sig_ZH_counts_file", zh_counts_filename ) ) {
+         printf("\n\n *** Can't find input susy ZH counts file: sig_ZH_counts_file line of %s.\n\n", infile ) ;
+         /// return ; // allow to keep going without this.
+         sprintf( zh_counts_filename, "" ) ;
+      }
+
+
+      if ( !readSignalCounts( susy_counts_filename, sig_mass, workspace, zh_counts_filename, chi_to_H_bf ) ) {
          printf("\n\n *** Can't find signal mass of %.0f in %s\n\n", sig_mass, susy_counts_filename ) ;
          return ;
       }
+
+
+
+
 
 
       //-- save bins_of_nb in the workspace for convenience.
@@ -242,6 +255,8 @@
          }
          printf("\n\n ======= Reading in shape syst %s from %s\n\n", shape_syst_names[ssi], shape_syst_file ) ;
          setupShapeSyst( shape_syst_file, systname, syst_type, sig_mass, 1., workspace ) ;
+         printf("\n back from setupShapeSyst.\n\n" ) ;
+         fflush(stdout) ;
       } // ssi.
 
 
@@ -1269,7 +1284,7 @@
 
                char pname[100] ;
                bool changeSign ;
-               RooAbsReal* rar_par ;
+               RooAbsReal* rar_par(0x0) ;
 
                sprintf( pname, "%s_msig_met%d_%s", systname, mbi+1, btag_catname[smcnbi] ) ;
                if ( syst_msig[mbi][smcnbi] < 0 ) { changeSign = true ; } else { changeSign = false ; }
@@ -1277,6 +1292,9 @@
                   rar_par = makeCorrelatedGaussianConstraint(  pname, 1.0, fabs(syst_msig[mbi][smcnbi]), systname, changeSign ) ;
                } else if ( constraintType == 2 ) {
                   rar_par = makeCorrelatedLognormalConstraint( pname, 1.0, fabs(syst_msig[mbi][smcnbi]), systname, changeSign ) ;
+               } else {
+                  printf("\n\n *** unknown constraint type : %d\n\n", constraintType ) ;
+                  return false ;
                }
                cout << flush ;
                workspace.import( *rar_par ) ;
@@ -1287,6 +1305,9 @@
                   rar_par = makeCorrelatedGaussianConstraint(  pname, 1.0, fabs(syst_msb[mbi][smcnbi]), systname, changeSign ) ;
                } else if ( constraintType == 2 ) {
                   rar_par = makeCorrelatedLognormalConstraint( pname, 1.0, fabs(syst_msb[mbi][smcnbi]), systname, changeSign ) ;
+               } else {
+                  printf("\n\n *** unknown constraint type : %d\n\n", constraintType ) ;
+                  return false ;
                }
                cout << flush ;
                workspace.import( *rar_par ) ;
@@ -1295,6 +1316,9 @@
          } // mbi.
       } // smcnbi.
 
+      printf("\n\n Finished setupShapeSyst for %s.\n\n", systname ) ;
+      fflush(stdout) ;
+
       return true ;
 
   } // setupShapeSyst
@@ -1302,7 +1326,7 @@
 
  //===============================================================================================================
 
-   bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace ) {
+   bool readSignalCounts( const char* susy_counts_file, float sig_mass, RooWorkspace& workspace, const char* zh_counts_file, float chi_to_H_bf ) {
 
       ifstream infp ;
       infp.open( susy_counts_file ) ;
@@ -1328,6 +1352,7 @@
 
       bool found(false) ;
 
+     //-- Read in HH signal counts.
       while ( infp.good() ) {
 
          TString line ;
@@ -1352,7 +1377,7 @@
 
          }
 
-      } // still reading input file?
+      } // still reading HH input file?
 
       if ( !found ) { printf("\n\n *** Did not find mass point %.0f in %s.\n\n", sig_mass, susy_counts_file ) ; return false ; }
 
@@ -1365,15 +1390,16 @@
       for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
-            smc_msig_val[smcnbi][mbi] = ArrayContent[ 4 + (                mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
-            smc_msb_val[smcnbi][mbi]  = ArrayContent[ 4 + (1*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
-            smc_msig_err[smcnbi][mbi] = ArrayContent[ 4 + (2*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
-            smc_msb_err[smcnbi][mbi]  = ArrayContent[ 4 + (3*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ] ;
+            smc_msig_val[smcnbi][mbi] = (chi_to_H_bf*chi_to_H_bf) * (ArrayContent[ 4 + (                mbi)*(sigmc_bins_of_nb) + smcnbi ]) ;
+            smc_msb_val[smcnbi][mbi]  = (chi_to_H_bf*chi_to_H_bf) * (ArrayContent[ 4 + (1*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ]) ;
+            smc_msig_err[smcnbi][mbi] = (chi_to_H_bf*chi_to_H_bf) * (ArrayContent[ 4 + (2*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ]) ;
+            smc_msb_err[smcnbi][mbi]  = (chi_to_H_bf*chi_to_H_bf) * (ArrayContent[ 4 + (3*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ]) ;
 
          } // mbi.
       } // smcnbi.
 
       printf("\n\n\n") ;
+      printf("  chi to HH signal counts\n" ) ;
       printf("=============================================================================================================================================================================\n") ;
       printf("  METsig   |        4bSB              4bSIG         |       3bSB              3bSIG         |        2bSB              2bSIG        |        NTSB              NTSIG        |\n") ;
       printf("=============================================================================================================================================================================\n") ;
@@ -1388,6 +1414,103 @@
          printf("\n") ;
       } // mbi.
       printf("=====================================================================================================================================\n") ;
+
+
+
+
+
+
+
+
+     //-- Read in and add ZH counts, if chi_to_H BF is not 1 and have an input file.
+      if ( chi_to_H_bf < 1.0 && strlen( zh_counts_file ) > 0 ) {
+
+         ifstream infpzh ;
+         infpzh.open( zh_counts_file ) ;
+         if ( !infpzh.good() ) {
+            printf("\n\n *** Problem opening input file: %s.\n\n", zh_counts_file ) ;
+            return false ;
+         }
+
+         sprintf(command, "tail -1 %s | awk '{print NF}' | grep -q %d", zh_counts_file, ArraySize ) ;
+         int returnStatzh = gSystem->Exec(command ) ;
+         if ( returnStatzh !=0 ) {
+            printf("\n\n\n *** setSusyScanPoint : expecting %d fields per line in input file %s.  Found ", ArraySize, zh_counts_file ) ; cout << flush ;
+            sprintf( command, "tail -1 %s | awk '{print NF}'", zh_counts_file ) ;
+            gSystem->Exec(command ) ; cout << flush ;
+            printf("\n\n") ;
+            return false ;
+         }
+
+         found = false ;
+
+        //-- Read in ZH signal counts.
+         while ( infpzh.good() ) {
+
+            TString line ;
+            line.ReadLine( infpzh ) ;
+            TObjArray* tokens = line.Tokenize(" ") ;
+            printf(" number of fields : %d\n", tokens->GetEntries() ) ;
+            if ( tokens->GetEntries() != ArraySize ) continue ;
+
+            for ( int i = 0 ; infp && i < ArraySize; ++ i ) {
+               TObjString* str = (TObjString*) (tokens->At(i)) ;
+               sscanf( (str->GetString()).Data(), "%f", &(ArrayContent[i]) )  ;
+            }
+            printf( " 1st column: %.0f\n", ArrayContent[0] ) ;
+
+            if ( TMath::Nint( fabs( ArrayContent[0] - sig_mass ) ) == 0   && TMath::Nint( fabs( ArrayContent[1] - 1. ) ) < 2 ) {
+
+               printf("  found mass point %.0f in file %s\n", sig_mass, zh_counts_file ) ;
+
+               found = true ;
+
+               break ;
+
+            }
+
+         } // still reading HH input file?
+
+         if ( !found ) { printf("\n\n *** Did not find mass point %.0f in %s.\n\n", sig_mass, zh_counts_file ) ; return false ; }
+
+         for ( int smcnbi=0; smcnbi<sigmc_bins_of_nb; smcnbi++ ) {
+            for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+
+               smc_msig_val[smcnbi][mbi] += 2*(chi_to_H_bf*(1.-chi_to_H_bf)) * (ArrayContent[ 4 + (                mbi)*(sigmc_bins_of_nb) + smcnbi ]) ;
+               smc_msb_val[smcnbi][mbi]  += 2*(chi_to_H_bf*(1.-chi_to_H_bf)) * (ArrayContent[ 4 + (1*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ]) ;
+               smc_msig_err[smcnbi][mbi] = sqrt( ::pow( 2*(chi_to_H_bf*(1.-chi_to_H_bf)) * (ArrayContent[ 4 + (2*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ]), 2.)
+                                               + ::pow( smc_msig_err[smcnbi][mbi], 2.) );
+               smc_msb_err[smcnbi][mbi]  = sqrt( ::pow( 2*(chi_to_H_bf*(1.-chi_to_H_bf)) * (ArrayContent[ 4 + (3*bins_of_met + mbi)*(sigmc_bins_of_nb) + smcnbi ]), 2.)
+                                               + ::pow( smc_msb_err[smcnbi][mbi], 2.) ) ;
+
+            } // mbi.
+         } // smcnbi.
+
+         printf("\n\n\n") ;
+         printf("  chi to HH+ZH signal counts\n" ) ;
+         printf("=============================================================================================================================================================================\n") ;
+         printf("  METsig   |        4bSB              4bSIG         |       3bSB              3bSIG         |        2bSB              2bSIG        |        NTSB              NTSIG        |\n") ;
+         printf("=============================================================================================================================================================================\n") ;
+         fflush(stdout) ;
+         for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+            printf(" met bin %d : ", mbi+1 ) ;
+            for ( int smcnbi=sigmc_bins_of_nb-1; smcnbi>=0; smcnbi-- ) {
+               printf( "  %6.2f +/- %4.2f,  %6.2f +/- %4.2f    |",
+                    smc_msb_val[smcnbi][mbi] , smc_msb_err[smcnbi][mbi],
+                    smc_msig_val[smcnbi][mbi], smc_msig_err[smcnbi][mbi] ) ;
+            } // smcnbi.
+            printf("\n") ;
+         } // mbi.
+         printf("=====================================================================================================================================\n") ;
+
+      } // reading in and adding ZH counts.
+
+
+
+
+
+
+
 
 
      //-- input stat errors are now in same units as counts (i.e. events).

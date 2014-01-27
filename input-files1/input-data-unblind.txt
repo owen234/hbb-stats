@@ -63,6 +63,7 @@ trig_eff_corr_metsig34_err   0.019
 luminosity_uncertainty   0.044
 background_sample_comp   0.070
 signal_counts_file  input-files1/sigcounts.FullSim_TChiHH.txt
+sig_ZH_counts_file  input-files1/sigcounts.TChiZH.txt
 list_of_shape_systs   ISR  JER  JES  PDF  PU
 shape_syst_ISR    input-files1/sigsystematics.FullSim_TChiHH.ISR.txt
 shape_syst_JER    input-files1/sigsystematics.FullSim_TChiHH.JER.txt

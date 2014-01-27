@@ -1140,6 +1140,7 @@
    // fprintf( outfile, "signal_counts_file  outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\n" ) ;
    //--------------------
       fprintf( outfile, "signal_counts_file  input-files1/sigcounts.FullSim_TChiHH.txt\n" ) ;
+      fprintf( outfile, "sig_ZH_counts_file  input-files1/sigcounts.TChiZH.txt\n" ) ;
    //--------------------
 
      //-- give list of shape systematic files here.

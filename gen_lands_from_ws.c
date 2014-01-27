@@ -130,11 +130,13 @@
 
 
 
-
-
-
       float smbg_msig[10][50] ;  // first index is n btags, second is met bin.
       float smbg_msb[10][50]  ;  // first index is n btags, second is met bin.
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //
+    //  This is the old way.  BG values are biased by observed counts in SIG bins.
+    //
       for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
 
@@ -152,7 +154,28 @@
 
          } // mbi.
       } // nbi.
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //
+    //  Instead, set BG to simple ABCD calc value for 3b and 3b SIG bins and the
+    //  observed BG value for the rest.
+    //
+    //  Jan 27: this method gives worse agreement than method above.  I hate LandS.
+    //
+    //for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
+    //   for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {
+    //      smbg_msb[nbi][mbi] = obs_N_msb[nbi][mbi] ;
+    //      if ( nbi==0 ) { // 2b
+    //         smbg_msig[nbi][mbi] = obs_N_msig[nbi][mbi] ;
+    //      } else { // 3b or 4b
+    //         float sig_over_sb_ratio_2b = 0. ;
+    //         if ( obs_N_msb[0][mbi] > 0. ) { sig_over_sb_ratio_2b = (1.0 * obs_N_msig[0][mbi]) / (1.0 * obs_N_msb[0][mbi]) ; }
+    //         smbg_msig[nbi][mbi] = sig_over_sb_ratio_2b * obs_N_msb[nbi][mbi] ;
+    //      }
+    //      printf( "   BG value for %db, METsig %d :   SIG = %7.2f,  SB = %7.2f\n", nbi+2, mbi+1, smbg_msig[nbi][mbi], smbg_msb[nbi][mbi] ) ;
+    //   } // mbi.
+    //} // nbi.
 
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
       printf("\n\n") ;
 
 
