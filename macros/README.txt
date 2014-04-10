@@ -1,18 +1,31 @@
 
   April 10, 2014
 
-   Tested with root_v5.34.14 and root_v5.34.18 built from source on a mac (OSX 10.9.2) configured with
-
-     ./configure macosx64 --enable-roofit --disable-xrootd --build=debug
-
-   For some reason, I have a runtime crash if I use root built without the --build=debug flag.
-
-
-===========
-
    In everything below, lines that start with ">" are executed from the
    unix/linux command line
 
+ ----  For Mac OSX
+
+   Tested with root_v5.34.14 and root_v5.34.18 built from source on a mac (OSX 10.9.2) configured
+   and built with
+
+     > ./configure macosx64 --enable-roofit --disable-xrootd --build=debug
+     > make
+
+   For some reason, I have a runtime crash if I use root built without the --build=debug flag.
+
+ ----  At CERN
+
+   I have also tested this at CERN on lxplus5 with root 5.34.10.  I have
+   problems getting things to work on lxplus6 (SLC 6).  I also can't get
+   the more recent versions of root to work at CERN on either lxplus5 or
+   lxplus6.  To run at cern, log in to lxplus5 and set up root like this
+
+     > source /afs/cern.ch/sw/lcg/external/gcc/4.6.3/x86_64-slc5/setup.csh
+     > source /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.10/x86_64-slc5-gcc46-opt/root/bin/thisroot.csh
+
+
+===========
 
    Check out the code and go to the directory
 
