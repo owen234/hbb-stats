@@ -1,7 +1,7 @@
 
   April 10, 2014
 
-   Tested with root_v5.34.14 built from source on a mac (osx 10.9.2) configured with
+   Tested with root_v5.34.14 and root_v5.34.18 built from source on a mac (OSX 10.9.2) configured with
 
      ./configure macosx64 --enable-roofit --disable-xrootd --build=debug
 
