@@ -57,5 +57,13 @@
       > source macros/process-data
 
 
+===========
+
+   To run the full CLs toys, I use the CERN batch system.  Have a look in the
+   cern-batchscripts directory to see what I do.  These will not work for
+   you straight out of the box, since you need to change the path to files,
+   username, etc...
+
+
 
 
