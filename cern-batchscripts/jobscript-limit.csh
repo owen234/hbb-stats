@@ -82,7 +82,8 @@ endif
 
  mkdir -p $finaldir
 
- set logfile = `printf "limit-sigmass-%d.log" $sig_mass`
+ #set logfile = `printf "limit-sigmass-%d.log" $sig_mass`
+ set logfile = `printf "%s-job.log" $outfilebase`
  echo logfile is $logfile
 
  which root

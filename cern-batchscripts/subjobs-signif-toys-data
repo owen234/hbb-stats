@@ -40,9 +40,15 @@
 # set outfilebase = signif-data
 # set queuename = 1nd
 #-----------------
-  set ntoy =  20000
-  set outputdir = hbb-signif-data3
-  set batchlogdir = batchlogs-signif-data3
+# set ntoy =  20000
+# set outputdir = hbb-signif-data3
+# set batchlogdir = batchlogs-signif-data3
+# set outfilebase = signif-data
+# set queuename = 2nd
+#-----------------
+  set ntoy =  60000
+  set outputdir = hbb-signif-data5
+  set batchlogdir = batchlogs-signif-data5
   set outfilebase = signif-data
   set queuename = 2nd
 #-----------------
@@ -50,7 +56,6 @@
 
   mkdir -p $batchlogdir
 
-  bsub    -q $queuename    -o $batchlogdir/signif-data-150.log    jobscript-signif.csh    150    outputfiles/ws-data-unblind-sigmass-150.root    $ntoy     $outputdir  $outfilebase-150
   bsub    -q $queuename    -o $batchlogdir/signif-data-175.log    jobscript-signif.csh    175    outputfiles/ws-data-unblind-sigmass-175.root    $ntoy     $outputdir  $outfilebase-175
   bsub    -q $queuename    -o $batchlogdir/signif-data-200.log    jobscript-signif.csh    200    outputfiles/ws-data-unblind-sigmass-200.root    $ntoy     $outputdir  $outfilebase-200
   bsub    -q $queuename    -o $batchlogdir/signif-data-225.log    jobscript-signif.csh    225    outputfiles/ws-data-unblind-sigmass-225.root    $ntoy     $outputdir  $outfilebase-225

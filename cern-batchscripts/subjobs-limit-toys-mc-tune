@@ -43,10 +43,27 @@
 # set outfilebase = limit-mc
 # set queuename = 2nd
 #-----------------
+# set ntoy =  6000
+# set npoints = 10
+# set outputdir = hbb-limits-mc-tune3b
+# set batchlogdir = batchlogs-mc-tune3b
+# set outfilebase = limit-mc
+# set queuename = 2nd
+#-----------------
+
+
+#-----------------
+# set ntoy =  6000
+# set npoints = 10
+# set outputdir = hbb-limits-mc-tune3b-fullsim
+# set batchlogdir = batchlogs-mc-tune3b-fullsim
+# set outfilebase = limit-mc
+# set queuename = 2nd
+#-----------------
   set ntoy =  6000
   set npoints = 10
-  set outputdir = hbb-limits-mc-tune3b
-  set batchlogdir = batchlogs-mc-tune3b
+  set outputdir = hbb-limits-mc-tune4-fullsim
+  set batchlogdir = batchlogs-mc-tune4-fullsim
   set outfilebase = limit-mc
   set queuename = 2nd
 #-----------------
@@ -54,7 +71,6 @@
 
   mkdir -p $batchlogdir
 
-  bsub    -q $queuename    -o $batchlogdir/limit-mc-150.log    jobscript-limit.csh    150    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-150-withMSB1.root    $ntoy   1.0 10.0  $npoints  $outputdir  $outfilebase-150
   bsub    -q $queuename    -o $batchlogdir/limit-mc-175.log    jobscript-limit.csh    175    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-175-withMSB1.root    $ntoy   1.0 10.0  $npoints  $outputdir  $outfilebase-175
   bsub    -q $queuename    -o $batchlogdir/limit-mc-200.log    jobscript-limit.csh    200    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-200-withMSB1.root    $ntoy   0.5  3.5  $npoints  $outputdir  $outfilebase-200
   bsub    -q $queuename    -o $batchlogdir/limit-mc-225.log    jobscript-limit.csh    225    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-225-withMSB1.root    $ntoy   0.5  3.5  $npoints  $outputdir  $outfilebase-225

@@ -46,9 +46,15 @@
 # set outfilebase = signif-mc
 # set queuename = 2nd
 #-----------------
+# set ntoy =  60000
+# set outputdir = hbb-signif-mc4
+# set batchlogdir = batchlogs-signif-mc4
+# set outfilebase = signif-mc
+# set queuename = 2nd
+#-----------------
   set ntoy =  60000
-  set outputdir = hbb-signif-mc4
-  set batchlogdir = batchlogs-signif-mc4
+  set outputdir = hbb-signif-mc5
+  set batchlogdir = batchlogs-signif-mc5
   set outfilebase = signif-mc
   set queuename = 2nd
 #-----------------
@@ -56,7 +62,6 @@
 
   mkdir -p $batchlogdir
 
-  bsub    -q $queuename    -o $batchlogdir/signif-mc-150.log    jobscript-signif.csh    150    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-150-withMSB1.root    $ntoy     $outputdir  $outfilebase-150
   bsub    -q $queuename    -o $batchlogdir/signif-mc-175.log    jobscript-signif.csh    175    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-175-withMSB1.root    $ntoy     $outputdir  $outfilebase-175
   bsub    -q $queuename    -o $batchlogdir/signif-mc-200.log    jobscript-signif.csh    200    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-200-withMSB1.root    $ntoy     $outputdir  $outfilebase-200
   bsub    -q $queuename    -o $batchlogdir/signif-mc-225.log    jobscript-signif.csh    225    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-withsignal-sigmass-225-withMSB1.root    $ntoy     $outputdir  $outfilebase-225

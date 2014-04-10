@@ -41,10 +41,17 @@
 # set outfilebase = limit-data
 # set queuename = 2nd
 #-----------------
+# set ntoy =  6000
+# set npoints = 10
+# set outputdir = hbb-limits-data-tune3
+# set batchlogdir = batchlogs-data-tune3
+# set outfilebase = limit-data
+# set queuename = 2nd
+#-----------------
   set ntoy =  6000
   set npoints = 10
-  set outputdir = hbb-limits-data-tune3
-  set batchlogdir = batchlogs-data-tune3
+  set outputdir = hbb-limits-data-tune4
+  set batchlogdir = batchlogs-data-tune4
   set outfilebase = limit-data
   set queuename = 2nd
 #-----------------
@@ -52,7 +59,6 @@
 
   mkdir -p $batchlogdir
 
-  bsub    -q $queuename    -o $batchlogdir/limit-data-150.log    jobscript-limit.csh    150    outputfiles/ws-data-unblind-sigmass-150.root    $ntoy 2.0 20.0 $npoints    $outputdir  $outfilebase-150
   bsub    -q $queuename    -o $batchlogdir/limit-data-175.log    jobscript-limit.csh    175    outputfiles/ws-data-unblind-sigmass-175.root    $ntoy 1.0 10.0 $npoints    $outputdir  $outfilebase-175
   bsub    -q $queuename    -o $batchlogdir/limit-data-200.log    jobscript-limit.csh    200    outputfiles/ws-data-unblind-sigmass-200.root    $ntoy 0.5  3.5 $npoints    $outputdir  $outfilebase-200
   bsub    -q $queuename    -o $batchlogdir/limit-data-225.log    jobscript-limit.csh    225    outputfiles/ws-data-unblind-sigmass-225.root    $ntoy 0.5  3.5 $npoints    $outputdir  $outfilebase-225

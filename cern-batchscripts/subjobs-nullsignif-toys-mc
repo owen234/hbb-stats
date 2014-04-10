@@ -22,15 +22,15 @@
 
 
 #-----------------
-# set ntoy =  10000
-# set outputdir = hbb-nullsignif-mc1
-# set batchlogdir = batchlogs-nullsignif-mc1
-# set queuename = 1nd
-#-----------------
-  set ntoy =  5000
-  set outputdir = hbb-nullsignif-mc2
-  set batchlogdir = batchlogs-nullsignif-mc2
+  set ntoy =  10000
+  set outputdir = hbb-nullsignif-mc1
+  set batchlogdir = batchlogs-nullsignif-mc1
   set queuename = 1nd
+#-----------------
+# set ntoy =  5000
+# set outputdir = hbb-nullsignif-mc2
+# set batchlogdir = batchlogs-nullsignif-mc2
+# set queuename = 1nd
 #-----------------
 
 
@@ -38,11 +38,17 @@
 
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-175.log    jobscript-signif.csh    175    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-175-withMSB1.root    $ntoy     $outputdir
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-200.log    jobscript-signif.csh    200    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-200-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-225.log    jobscript-signif.csh    225    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-225-withMSB1.root    $ntoy     $outputdir
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-250.log    jobscript-signif.csh    250    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-250-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-275.log    jobscript-signif.csh    275    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-275-withMSB1.root    $ntoy     $outputdir
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-300.log    jobscript-signif.csh    300    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-300-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-325.log    jobscript-signif.csh    325    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-325-withMSB1.root    $ntoy     $outputdir
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-350.log    jobscript-signif.csh    350    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-350-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-375.log    jobscript-signif.csh    375    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-375-withMSB1.root    $ntoy     $outputdir
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-400.log    jobscript-signif.csh    400    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-400-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-425.log    jobscript-signif.csh    425    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-425-withMSB1.root    $ntoy     $outputdir
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-450.log    jobscript-signif.csh    450    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-450-withMSB1.root    $ntoy     $outputdir
+  bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-475.log    jobscript-signif.csh    475    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-475-withMSB1.root    $ntoy     $outputdir
   bsub    -q $queuename    -o $batchlogdir/nullsignif-mc-500.log    jobscript-signif.csh    500    outputfiles/ws-metsig-4metbin-w3b-wpu-csyst5-nosignal-sigmass-500-withMSB1.root    $ntoy     $outputdir
 
 
