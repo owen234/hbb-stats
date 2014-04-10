@@ -1137,16 +1137,11 @@
 
      //-- give location of signal counts file
    //--------------------
-   // fprintf( outfile, "signal_counts_file  outputfiles/susy-signal-counts-4metbin-w3b-wpu.txt\n" ) ;
-   //--------------------
       fprintf( outfile, "signal_counts_file  input-files1/sigcounts.FullSim_TChiHH.txt\n" ) ;
-      fprintf( outfile, "sig_ZH_counts_file  input-files1/sigcounts.TChiZH.txt\n" ) ;
+   // fprintf( outfile, "sig_ZH_counts_file  input-files1/sigcounts.TChiZH.txt\n" ) ;  // decided to ignore small ZH contribution.
    //--------------------
 
      //-- give list of shape systematic files here.
-   //--------------------
-   // fprintf( outfile, "list_of_shape_systs   ALL\n" ) ;
-   // fprintf( outfile, "shape_syst_ALL    test-input-files1/test-syst-file3.txt\n") ;
    //--------------------
       fprintf( outfile, "list_of_shape_systs   ISR  JER  JES  PDF  PU\n" ) ;
       fprintf( outfile, "shape_syst_ISR    input-files1/sigsystematics.FullSim_TChiHH.ISR.txt\n") ;

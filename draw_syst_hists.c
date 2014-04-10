@@ -127,8 +127,11 @@
             hist_m1s -> SetLineWidth( 2 ) ;
             hist_p1s -> SetLineWidth( 2 ) ;
 
-            hist_m1s -> SetLineColor( 4 ) ;
-            hist_p1s -> SetLineColor( 2 ) ;
+        //  hist_m1s -> SetLineColor( 4 ) ;
+        //  hist_p1s -> SetLineColor( 2 ) ;
+
+            hist_m1s -> SetLineColor( 2 ) ;
+            hist_p1s -> SetLineColor( 4 ) ;
 
             hist_nom -> SetFillColor( 18 ) ;
 
@@ -168,15 +171,22 @@
             hist_m1s_var -> SetMinimum( -0.3 ) ;
             hist_m1s_var -> SetMaximum(  0.3 ) ;
 
-            hist_m1s_var -> SetLineColor( 4 ) ;
-            hist_p1s_var -> SetLineColor( 2 ) ;
+         // hist_m1s_var -> SetLineColor( 4 ) ;
+         // hist_p1s_var -> SetLineColor( 2 ) ;
+         // hist_m1s_var -> SetLineWidth( 2 ) ;
+         // hist_p1s_var -> SetLineWidth( 2 ) ;
+
+            hist_m1s_var -> SetLineColor( 2 ) ;
+            hist_p1s_var -> SetLineColor( 4 ) ;
             hist_m1s_var -> SetLineWidth( 2 ) ;
             hist_p1s_var -> SetLineWidth( 2 ) ;
 
-            hist_m1s_var -> SetFillColor( 4 ) ;
+         // hist_m1s_var -> SetFillColor( 4 ) ;
+            hist_m1s_var -> SetFillColor( 2 ) ;
             hist_m1s_var -> SetFillStyle( 3354 ) ;
 
-            hist_p1s_var -> SetFillColor( 2 ) ;
+         // hist_p1s_var -> SetFillColor( 2 ) ;
+            hist_p1s_var -> SetFillColor( 4 ) ;
             hist_p1s_var -> SetFillStyle( 3345 ) ;
 
             hist_nom     -> SetTitleOffset( 1.5, "y" ) ;

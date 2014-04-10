@@ -135,7 +135,7 @@
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //
-    //  This is the old way.  BG values are biased by observed counts in SIG bins.
+    //  This is the old way.  BG values from full fit.
     //
       for ( int nbi=0; nbi<bins_of_nb; nbi++ ) {
          for ( int mbi=first_met_bin_array_index; mbi<bins_of_met; mbi++ ) {

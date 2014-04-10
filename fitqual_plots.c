@@ -337,7 +337,8 @@
 
       saveHist( histfile, "h*" ) ;
 
-      scan_sigstrength( wsfile, histfile ) ;
+      /////scan_sigstrength( wsfile, histfile ) ;
+      scan_sigstrength( wsfile, histfile, 0., 5. ) ;
 
 
       tt_title -> DrawTextNDC( 0.85, 0.25, plottitle ) ;
