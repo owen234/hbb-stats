@@ -1,21 +1,21 @@
 
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met1\",\"none\",40,0.5,10.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met1-stat-only.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met2\",\"none\",40,0.1,10.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met2-stat-only.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met3\",\"none\",40,0.1,3.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met3-stat-only.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met4\",\"none\",40,0.1,3.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met4-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met1\",\"none\",40,0.5,10.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met1-w4bsigobs-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met2\",\"none\",40,0.1,10.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met2-w4bsigobs-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met3\",\"none\",40,0.1,3.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met3-w4bsigobs-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met4\",\"none\",40,0.1,3.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-4bsig-met4-w4bsigobs-stat-only.log
 
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met1\",\"none\",40,1.0,15.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met1-stat-only.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met2\",\"none\",40,1.0,25.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met2-stat-only.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met3\",\"none\",40,0.1,7.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met3-stat-only.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met4\",\"none\",40,0.1,7.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met4-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met1\",\"none\",40,1.0,15.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met1-w4bsigobs-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met2\",\"none\",40,1.0,25.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met2-w4bsigobs-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met3\",\"none\",40,0.1,7.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met3-w4bsigobs-stat-only.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met4\",\"none\",40,0.1,7.0,150.,5.,0.,0,1\) |& tee logfiles/bg-pl-scan-3bsig-met4-w4bsigobs-stat-only.log
 
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met1\",\"none\",40,0.5,10.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met1-stat-syst.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met2\",\"none\",40,0.1,10.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met2-stat-syst.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met3\",\"none\",40,0.1,3.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met3-stat-syst.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met4\",\"none\",40,0.1,3.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met4-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met1\",\"none\",40,0.5,10.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met1-w4bsigobs-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met2\",\"none\",40,0.1,10.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met2-w4bsigobs-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met3\",\"none\",40,0.1,3.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met3-w4bsigobs-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_4b_msig_met4\",\"none\",40,0.1,3.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-4bsig-met4-w4bsigobs-stat-syst.log
 
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met1\",\"none\",40,1.0,15.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met1-stat-syst.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met2\",\"none\",40,1.0,25.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met2-stat-syst.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met3\",\"none\",40,0.1,7.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met3-stat-syst.log
-   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met4\",\"none\",40,0.1,7.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met4-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met1\",\"none\",40,1.0,15.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met1-w4bsigobs-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met2\",\"none\",40,1.0,25.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met2-w4bsigobs-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met3\",\"none\",40,0.1,7.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met3-w4bsigobs-stat-syst.log
+   root -b -q ws_hbb_constrained_profile.c+\(\"outputfiles/ws-data-unblind-sigmass-250.root\",\"mu_bg_3b_msig_met4\",\"none\",40,0.1,7.0,150.,5.,0.,0,0\) |& tee logfiles/bg-pl-scan-3bsig-met4-w4bsigobs-stat-syst.log
 

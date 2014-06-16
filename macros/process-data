@@ -15,7 +15,7 @@
 
     # root -b -q gen_lands_from_ws.c+\(\"outputfiles/ws-data-unblind-sigmass-$sigmass.root\"\) |& tee logfiles/gen-lands-file-$sigmass.log
 
-      root -b -q fitqual_plots.c+\(\"outputfiles/ws-data-unblind-sigmass-$sigmass.root\"\) |& tee logfiles/fitqual-data-unblind-sigmass-$sigmass.log
+    # root -b -q fitqual_plots.c+\(\"outputfiles/ws-data-unblind-sigmass-$sigmass.root\"\) |& tee logfiles/fitqual-data-unblind-sigmass-$sigmass.log
 
    end
 
